@@ -3,772 +3,1149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>历史人物趣味档案 · 你最像哪位历史人物？</title>
-<meta name="description" content="12 道情境题，从决断、共情、开创等八个维度，找出与你最相似的中国历史人物。">
+<title>时空档案 · 你最像哪位历史人物（968 位）</title>
 <style>
-/* ============================================================
-   历史人物趣味档案 · 样式
-   主题：紫青渐变 + 宣纸质感 + 印章元素
-   ============================================================ */
-:root{
-  --bg1:#F3F0FA; --bg2:#EFEAF8;
-  --card:#FFFFFF;
-  --ink:#2B2440; --ink2:#4A4363; --muted:#8A84A3;
-  --line:#E4DEF2; --line2:#CFC6E8;
-  --brand:#5B4B9E; --brand2:#7261C4; --brand3:#8E7DE0;
-  --brand-soft:#EEEAFA; --brand-soft2:#E4DEF6;
-  --gold:#B8923E; --gold-soft:#F6EEDB;
-  --seal:#A5484D;
-  --shadow-sm:0 1px 2px rgba(43,36,64,.05),0 4px 14px rgba(43,36,64,.06);
-  --shadow-md:0 2px 8px rgba(43,36,64,.07),0 20px 44px -14px rgba(43,36,64,.22);
-  --r-lg:24px; --r-md:16px; --r-sm:12px;
-  --serif:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC","KaiTi","STKaiti","SimSun",serif;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;padding:0;}
-html{-webkit-text-size-adjust:100%;}
-body{font-family:var(--sans);color:var(--ink);background:linear-gradient(165deg,var(--bg1),var(--bg2));line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;}
-img,svg{display:block;max-width:100%;}
-button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;border:none;background:none;}
-h1,h2,h3,h4,p{margin:0;}
+  :root{ --bg:#eef5ee; --bg-2:#e4efe4; --card:#fdfefd; --ink:#22362a; --ink-2:#3d5445; --sub:#7d9484;
+    --pri:#3f8f68; --pri-2:#8ec9a7; --pri-3:#b6dfc6; --soft:#e3f1e5; --soft-2:#d7ecda;
+    --line:#dbe9dc; --shadow:0 2px 10px rgba(45,90,60,.05); --shadow-2:0 10px 30px rgba(45,90,60,.09); }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(700px 340px at 88% -80px, #e0f0e2 0%, rgba(230,220,255,0) 70%),
+      radial-gradient(520px 300px at -80px 120px, #d8eeda 0%, rgba(226,215,255,0) 72%),
+      var(--bg);
+    display:flex; justify-content:center; padding:22px 14px 44px;
+    line-height:1.6;
+  }
+  #app{width:100%;max-width:540px}
 
-.bg-deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.bg-deco .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;}
-.bg-deco .b1{width:440px;height:440px;background:#DCD2F5;top:-180px;right:-140px;}
-.bg-deco .b2{width:380px;height:380px;background:#F1E6CE;bottom:-160px;left:-120px;}
-.bg-deco .grain{position:absolute;inset:0;opacity:.3;background-image:radial-gradient(rgba(43,36,64,.05) 1px,transparent 1px);background-size:24px 24px;}
+  /* ===== 通用卡片 ===== */
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+    box-shadow:0 14px 38px rgba(88,72,170,.10); padding:26px 22px 24px; position:relative;
+    animation:rise .34s cubic-bezier(.2,.7,.3,1);
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .hide{display:none!important}
+  .step{font-size:11.5px;letter-spacing:4px;color:var(--pri);font-weight:700;margin-bottom:9px}
+  h1{font-size:25px;line-height:1.35;letter-spacing:.5px}
+  h2{font-size:21px;line-height:1.4}
+  .muted{font-size:13.5px;color:var(--sub);line-height:1.75}
 
-.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 20px;}
-.page{display:none;}
-.page.active{display:block;animation:fadeUp .4s cubic-bezier(.2,.7,.3,1) both;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
-@keyframes popIn{0%{opacity:0;transform:scale(.9);}65%{transform:scale(1.03);}100%{opacity:1;transform:scale(1);}}
-@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(5px);}60%{transform:translateX(-3px);}80%{transform:translateX(2px);}}
+  /* ===== 插画区（纯 CSS/SVG 原创） ===== */
+  .illus{display:flex;justify-content:center;margin:2px 0 12px}
+  .illus svg{display:block;width:132px;height:132px;filter:drop-shadow(0 10px 20px rgba(108,92,231,.22))}
 
-/* 顶栏 */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0 4px;}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.04em;}
-.seal{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:16px;flex:none;box-shadow:0 3px 8px -2px rgba(91,75,158,.55);}
-.topbar .meta{font-size:12px;color:var(--muted);letter-spacing:.12em;}
+  /* ===== 首页 ===== */
+  .hero{text-align:center}
+  .hero h1{margin-bottom:8px}
+  .hero .muted{max-width:400px;margin:0 auto 18px}
+  .stat-row{display:flex;gap:8px;justify-content:center;margin:0 0 18px}
+  .stat{background:var(--soft);border-radius:12px;padding:7px 11px;font-size:11.5px;color:#3c7354;font-weight:600}
+  .stat b{font-size:14px;color:var(--pri);margin-right:2px}
+  .pick-label{font-size:13px;color:var(--ink-2);text-align:left;margin:0 0 10px;font-weight:600}
+  .chooses{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;text-align:left}
+  .choose{
+    display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:14px;
+    border:2px solid var(--line);background:#f8fcf8;cursor:pointer;transition:.16s;
+  }
+  .choose:hover{border-color:var(--pri-3);background:#f4faf4}
+  .choose.on{border-color:var(--pri);background:var(--soft);box-shadow:0 5px 16px rgba(108,92,231,.16)}
+  .choose .badge{
+    flex:0 0 38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:700;color:#fff;background:linear-gradient(140deg,#4d9b74,#a8d4bc);
+    transition:.16s;
+  }
+  .choose.on .badge{background:linear-gradient(140deg,var(--pri),#67b189);transform:scale(1.04)}
+  .choose b{display:block;font-size:14.5px;margin-bottom:1px}
+  .choose span{font-size:12px;color:var(--sub);line-height:1.5;display:block}
 
-/* 卡片 */
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);}
+  /* ===== 按钮 ===== */
+  .btns{display:flex;gap:10px}
+  .btn{
+    flex:1;font-family:inherit;font-size:15px;font-weight:600;border-radius:14px;padding:14px 12px;
+    cursor:pointer;border:none;transition:.16s;
+  }
+  .btn-main{background:linear-gradient(135deg,var(--pri),#74ba93 70%,var(--pri-2));color:#fff;
+    box-shadow:0 9px 20px rgba(108,92,231,.28)}
+  .btn-main:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(108,92,231,.34)}
+  .btn-main:not(:disabled):active{transform:translateY(0) scale(.99)}
+  .btn-main:disabled{background:#d6e6d6;color:#93a894;box-shadow:none;cursor:not-allowed}
+  .btn-ghost{background:#fff;color:var(--ink-2);border:2px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--pri-3);color:var(--pri)}
+  .btn-sm{padding:11px 12px;font-size:13.5px}
 
-/* ---------- 首页 ---------- */
-.hero{padding:26px 0 8px;text-align:center;}
-.hero .bigseal{width:64px;height:64px;border-radius:18px;background:linear-gradient(145deg,var(--brand2),var(--brand));color:#fff;display:grid;place-items:center;margin:0 auto;font-family:var(--serif);font-size:30px;box-shadow:0 10px 24px -8px rgba(91,75,158,.6);animation:popIn .5s cubic-bezier(.2,.7,.3,1) both;}
-h1.title{font-family:var(--serif);font-size:clamp(28px,6vw,40px);line-height:1.3;margin-top:18px;letter-spacing:.02em;font-weight:700;}
-.hero .en{margin-top:8px;font-size:11.5px;letter-spacing:.34em;color:var(--brand3);font-weight:600;}
-.hero .lede{margin:14px auto 0;max-width:34em;color:var(--ink2);font-size:15px;}
-.feats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;}
-.feat{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 14px;text-align:center;transition:.22s;}
-.feat:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.feat .ic{font-size:24px;}
-.feat b{display:block;margin-top:6px;font-size:14.5px;}
-.feat span{display:block;margin-top:2px;font-size:12px;color:var(--muted);}
-.note{margin-top:20px;background:var(--gold-soft);border:1px solid #E8D9B0;border-radius:var(--r-md);padding:14px 16px;font-size:13px;color:#6E5A24;display:flex;gap:10px;text-align:left;line-height:1.7;}
-.note .n-ic{flex:none;width:20px;height:20px;border-radius:6px;background:var(--gold);color:#fff;display:grid;place-items:center;font-size:12px;margin-top:1px;font-family:var(--serif);}
-.btns{display:grid;gap:11px;margin-top:24px;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 24px;border-radius:14px;font-weight:700;font-size:16px;transition:.18s;width:100%;}
-.btn-primary{background:linear-gradient(135deg,var(--brand2),var(--brand));color:#fff;box-shadow:0 10px 22px -8px rgba(91,75,158,.65);}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 26px -8px rgba(91,75,158,.7);}
-.btn-primary:active{transform:scale(.99);}
-.btn-ghost{background:#fff;border:1.5px solid var(--line2);color:var(--ink2);}
-.btn-ghost:hover{border-color:var(--brand3);color:var(--brand);}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:20px;text-align:left}
+  .feature{background:#f4faf4;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .feature b{display:block;font-size:12.5px;margin-bottom:1px}
+  .feature span{font-size:11.5px;color:var(--sub);line-height:1.5}
+  .note{font-size:11px;color:#a9bab0;text-align:center;margin-top:15px;line-height:1.7}
+  .link-line{text-align:center;margin-top:12px}
+  .link-line button{background:none;border:none;font-family:inherit;font-size:12.5px;color:var(--pri);
+    cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 
-/* ---------- 偏好页 ---------- */
-.step-tag{text-align:center;margin:26px 0 6px;font-size:12px;letter-spacing:.28em;color:var(--brand3);font-weight:700;}
-.dir-title{font-family:var(--serif);text-align:center;font-size:clamp(22px,4.6vw,28px);font-weight:700;}
-.dir-sub{text-align:center;color:var(--muted);font-size:13.5px;margin-top:8px;}
-.dir-list{display:grid;gap:12px;margin-top:24px;}
-.dir{display:flex;align-items:center;gap:14px;padding:17px 18px;background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);width:100%;text-align:left;transition:.18s;}
-.dir:hover{border-color:var(--brand3);background:#FBFAFE;transform:translateY(-1px);}
-.dir .g{flex:none;width:44px;height:44px;border-radius:12px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-family:var(--serif);font-size:20px;font-weight:700;}
-.dir[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);}
-.dir[aria-pressed="true"] .g{background:var(--brand);color:#fff;}
-.dir b{display:block;font-size:15.5px;}
-.dir span{display:block;font-size:12.5px;color:var(--muted);margin-top:1px;}
-.dir-foot{display:grid;grid-template-columns:auto 1fr;gap:11px;margin-top:22px;}
-.dir-foot .btn{width:auto;padding:15px 26px;}
-.dir-tip{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;}
+  /* ===== 答题页 ===== */
+  .qhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .qhead .back{background:none;border:none;font-family:inherit;font-size:13px;color:var(--sub);
+    cursor:pointer;padding:6px 2px;border-radius:8px}
+  .qhead .back:hover{color:var(--pri)}
+  .qhead .count{font-size:13px;color:var(--pri);font-weight:800;font-variant-numeric:tabular-nums}
+  .progress{height:8px;border-radius:99px;background:var(--soft);overflow:hidden;margin-bottom:6px}
+  .progress i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#4d9b74,var(--pri-2));transition:width .32s ease}
+  .progress-meta{display:flex;justify-content:space-between;font-size:11px;color:#a3b6a4;margin-bottom:20px}
+  .chip{display:inline-block;font-size:11.5px;font-weight:700;color:#3c7354;background:var(--soft);
+    padding:4px 11px;border-radius:99px;margin-bottom:11px}
+  .qtext{font-size:19px;font-weight:700;line-height:1.55;margin-bottom:18px;letter-spacing:.2px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    display:flex;gap:11px;align-items:flex-start;padding:13px 14px;border-radius:13px;
+    border:2px solid var(--line);background:#f8fcf8;cursor:pointer;font-size:14.5px;line-height:1.55;
+    transition:.14s;
+  }
+  .opt:hover{border-color:var(--pri-3);background:#f4faf4}
+  .opt .k{
+    flex:0 0 23px;height:23px;border-radius:8px;background:#e6f2e6;color:#5b7a66;
+    font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;
+    margin-top:1px;transition:.14s;
+  }
+  .opt.on{
+    border-color:var(--pri);background:var(--soft);
+    box-shadow:0 3px 12px rgba(63,143,104,.14);animation:pick .3s ease-out;
+  }
+  .opt.on .k{background:var(--pri);color:#fff}
+  @keyframes pick{0%{transform:scale(.99)}55%{transform:scale(1.008)}100%{transform:scale(1)}}
+  .warn{
+    margin-top:14px;padding:10px 13px;border-radius:11px;font-size:13px;
+    background:#fdf3ee;border:1px solid #f9ded2;color:#c0483f;display:none;
+  }
+  .warn.show{display:block;animation:rise .22s ease}
+  .qfoot{margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .qfoot .btns{flex:1 1 auto}
+  .qfoot .btns .btn{width:100%}
+  .autobtn{
+    flex:0 0 auto;background:none;border:1px solid var(--line);color:var(--sub);
+    font:inherit;font-size:12px;padding:9px 13px;border-radius:999px;cursor:pointer;
+    transition:.18s;white-space:nowrap}
+  .autobtn.on{background:var(--soft);border-color:var(--pri-3);color:#2f7654;font-weight:600}
+  .autobtn:hover{border-color:var(--pri-2)}
+  .dot-nav{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+  .dot-nav button{
+    width:22px;height:22px;border-radius:7px;border:1px solid var(--line);background:#fff;
+    font-size:10.5px;color:#97ac99;font-family:inherit;cursor:pointer;transition:.13s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .dot-nav button.done{background:var(--soft-2);border-color:var(--soft-2);color:#3c7354;font-weight:700}
+  .dot-nav button.now{background:var(--pri);border-color:var(--pri);color:#fff;font-weight:700;transform:scale(1.08)}
 
-/* ---------- 答题页 ---------- */
-.quiz-head{position:sticky;top:0;z-index:20;background:rgba(243,240,250,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:12px 0;border-bottom:1px solid rgba(228,222,242,.8);}
-.quiz-head-in{max-width:760px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:13px;}
-.qback{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);background:#fff;flex:none;}
-.qback:hover{background:var(--brand-soft);}
-.qback svg{width:16px;height:16px;}
-.progress-wrap{flex:1;}
-.pline{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:5px;}
-.pline b{color:var(--brand);font-family:var(--serif);font-size:15px;}
-.bar{height:7px;background:#E2DBF3;border-radius:99px;overflow:hidden;}
-.bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand3),var(--brand));border-radius:99px;transition:width .45s cubic-bezier(.2,.7,.3,1);}
-.qcard{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 26px 20px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
-.qcard::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#B7A5EC,#8E7DE0,#C9B8F2);}
-.qtag{display:inline-flex;gap:7px;align-items:center;font-size:11.5px;letter-spacing:.1em;font-weight:700;color:var(--brand);background:var(--brand-soft);padding:5px 12px;border-radius:999px;}
-.qtag .sq{width:6px;height:6px;border-radius:2px;background:var(--brand);}
-.qtext{font-family:var(--serif);font-size:clamp(19px,3vw,23px);line-height:1.6;margin:14px 0 4px;font-weight:700;}
-.qhint{font-size:13px;color:var(--muted);}
-.opts{display:grid;gap:10px;margin-top:18px;}
-.opt{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;background:#fff;text-align:left;width:100%;line-height:1.6;font-size:15px;transition:.16s;}
-.opt:hover{border-color:var(--brand3);background:#FBFAFE;}
-.opt .key{flex:none;width:24px;height:24px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:12px;font-weight:700;font-family:var(--serif);margin-top:1px;}
-.opt .check{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line2);margin-top:2px;display:grid;place-items:center;}
-.opt .check svg{width:12px;height:12px;opacity:0;transform:scale(.6);transition:.16s;}
-.opt[aria-pressed="true"]{border-color:var(--brand);background:#F5F2FC;}
-.opt[aria-pressed="true"] .key{background:var(--brand);color:#fff;}
-.opt[aria-pressed="true"] .check{background:var(--brand);border-color:var(--brand);}
-.opt[aria-pressed="true"] .check svg{opacity:1;transform:scale(1);}
-.qfoot{display:flex;justify-content:space-between;gap:11px;margin-top:22px;padding-top:16px;border-top:1px dashed var(--line);}
-.qfoot .btn{width:auto;flex:1;padding:13px 18px;font-size:15px;}
-.alert{display:none;align-items:center;gap:9px;margin-top:14px;font-size:13.5px;color:#8C3A3E;background:#FBEEEF;border:1px solid #EBCFD1;padding:10px 14px;border-radius:12px;}
-.alert.show{display:flex;animation:shake .45s;}
-.dots{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;justify-content:center;}
-.dots button{width:30px;height:30px;border-radius:9px;background:#fff;border:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:700;display:grid;place-items:center;transition:.15s;}
-.dots button:hover{border-color:var(--brand3);}
-.dots button.done{background:var(--brand-soft);color:var(--brand);border-color:var(--line2);}
-.dots button.cur{background:var(--brand);color:#fff;border-color:var(--brand);}
-.sheet-label{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;}
+  /* ===== 结果页 ===== */
+  .res-hero{text-align:center;padding-bottom:4px}
+  .res-illus svg{width:118px;height:118px}
+  .res-tag{font-size:11px;letter-spacing:4px;color:var(--pri);font-weight:700;margin-bottom:4px}
+  .res-name{font-size:33px;font-weight:800;letter-spacing:1px;line-height:1.25}
+  .res-era{font-size:12.5px;color:var(--sub);margin:4px 0 10px}
+  .res-type{display:inline-block;font-size:13.5px;font-weight:700;color:#376b4d;background:var(--soft);
+    padding:5px 14px;border-radius:99px;margin-bottom:14px}
+  .score-wrap{max-width:290px;margin:0 auto 4px;text-align:left}
+  .score-top{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;color:var(--sub);margin-bottom:5px}
+  .score-top b{font-size:19px;color:var(--pri);font-variant-numeric:tabular-nums}
+  .score-bar{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}
+  .score-bar i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#5aa87e,#cbebd5);transition:width .8s cubic-bezier(.2,.8,.3,1)}
+  .score-hint{font-size:11px;color:#a3b6a4;text-align:center;margin:7px 0 18px}
 
-/* ---------- 结果页 ---------- */
-.res-top{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px 22px 18px;text-align:center;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
-.res-top::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#B7A5EC,#8E7DE0,#C9B8F2);}
-.res-top .cap{font-size:12px;letter-spacing:.2em;color:var(--brand3);font-weight:700;}
-.res-top .fig-ic{font-size:44px;margin-top:10px;animation:popIn .6s cubic-bezier(.2,.7,.3,1) both;}
-.res-pct{font-family:var(--serif);font-size:clamp(46px,11vw,64px);font-weight:700;color:var(--brand);line-height:1.15;}
-.res-name{font-family:var(--serif);font-size:clamp(28px,6.6vw,38px);font-weight:700;letter-spacing:.06em;}
-.res-epi{font-size:13.5px;color:var(--muted);margin-top:4px;letter-spacing:.06em;}
-.res-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}
-.res-tags span{background:var(--brand-soft);color:var(--brand);border:1px solid var(--line2);padding:4px 13px;border-radius:999px;font-size:12.5px;font-weight:600;}
-.res-dim{margin-top:12px;}
-.res-dim span{display:inline-block;background:var(--ink);color:#fff;font-size:12px;padding:4px 13px;border-radius:999px;letter-spacing:.06em;}
-.voice{margin:16px auto 0;max-width:30em;background:var(--brand-soft);border:1px solid var(--line2);border-radius:var(--r-md);padding:13px 16px;text-align:left;}
-.voice b{font-size:12px;color:var(--brand);letter-spacing:.08em;}
-.voice p{font-family:var(--serif);font-size:16px;margin-top:4px;color:var(--ink);}
-.report-title{text-align:center;font-family:var(--serif);font-size:22px;font-weight:700;margin:26px 0 2px;}
-.report-sub{text-align:center;font-size:11px;letter-spacing:.2em;color:var(--muted);}
-.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 24px;margin-top:16px;box-shadow:var(--shadow-sm);}
-.panel h3{font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px;}
-.panel h3 .no{font-family:var(--serif);color:var(--brand3);font-size:14px;}
-.panel .lead{font-size:14.5px;color:var(--ink2);margin-top:11px;line-height:1.85;}
-.brow{margin-top:13px;}
-.brow .bt{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
-.brow .bt b{font-weight:700;}
-.brow .bt span{color:var(--muted);font-family:var(--serif);font-weight:700;}
-.btrack{height:9px;background:#EFEAF8;border-radius:99px;overflow:hidden;}
-.btrack > i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--brand3),var(--brand));transition:width 1s cubic-bezier(.2,.7,.3,1);}
-.mini{background:#FAF8FE;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-top:11px;}
-.mini b{font-size:14px;display:flex;align-items:center;gap:8px;}
-.mini b .tag-no{flex:none;width:20px;height:20px;border-radius:6px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:11px;font-family:var(--serif);}
-.mini b .pct{margin-left:auto;color:var(--brand);font-family:var(--serif);font-size:15px;}
-.mini p{font-size:13.5px;color:var(--ink2);margin-top:5px;line-height:1.75;}
-.blk{border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-top:11px;}
-.blk .bt-h{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;}
-.blk .bt-h .bic{flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-family:var(--serif);color:#fff;}
-.blk p{font-size:13.5px;color:var(--ink2);margin-top:6px;line-height:1.75;}
-.quotes{display:grid;gap:9px;margin-top:12px;}
-.quotes p{font-family:var(--serif);background:var(--brand-soft);border:1px solid var(--line2);border-radius:var(--r-sm);padding:11px 15px;font-size:14.5px;color:var(--ink);text-align:center;}
-.others{display:grid;gap:10px;margin-top:12px;}
-.other{display:flex;align-items:center;gap:12px;background:#FAF8FE;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;}
-.other .g-ic{flex:none;width:38px;height:38px;border-radius:10px;background:var(--brand-soft2);display:grid;place-items:center;font-size:19px;}
-.other b{font-size:14px;display:block;}
-.other span{font-size:12px;color:var(--muted);display:block;}
-.other .pct{margin-left:auto;font-family:var(--serif);font-weight:700;color:var(--brand);font-size:16px;}
-.notice{display:flex;gap:10px;align-items:flex-start;background:var(--gold-soft);border:1px solid #E8D9B0;border-radius:var(--r-md);padding:13px 15px;font-size:12.5px;color:#6E5A24;line-height:1.7;margin-top:16px;}
-.res-actions{display:grid;gap:10px;margin-top:20px;}
-footer{padding:26px 0 46px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8;}
-footer .sep{width:36px;height:1px;background:var(--line2);margin:0 auto 12px;}
+  .sec{background:#f8fcf8;border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:11px}
+  .sec h3{font-size:14.5px;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .sec p{font-size:13.5px;line-height:1.85;color:var(--ink-2)}
+  .sec ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:2px}
+  .sec li{font-size:13.5px;line-height:1.7;color:var(--ink-2);padding-left:18px;position:relative}
+  .sec li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;
+    background:var(--pri-2);transform:rotate(45deg)}
+  .dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:11px}
+  .dim{background:var(--soft);border-radius:12px;padding:10px 12px}
+  .dim .dh{display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:#376b4d}
+  .dim .dh span{font-variant-numeric:tabular-nums}
+  .dim .db{height:6px;border-radius:99px;background:#fff;margin:7px 0 4px;overflow:hidden}
+  .dim .db i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4d9b74,var(--pri-2));
+    border-radius:99px;transition:width .9s cubic-bezier(.2,.8,.3,1)}
+  .dim em{font-size:10.5px;color:var(--sub);font-style:normal}
+  .alts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .alt{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:11px 12px}
+  .alt b{font-size:14px;display:block}
+  .alt span{font-size:11px;color:var(--sub);display:block;margin:1px 0 4px}
+  .alt em{font-size:11px;color:var(--pri);font-style:normal;font-weight:700}
+  .res-btns{display:flex;gap:9px;margin-top:15px}
+  .disc{font-size:11px;color:#a9bab0;text-align:center;margin-top:13px;line-height:1.7}
 
-/* 图鉴 */
-.roster{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px;}
-.beast{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 12px;transition:.2s;}
-.beast:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.beast .av{font-size:26px;}
-.beast b{display:block;font-family:var(--serif);font-size:16px;margin-top:4px;}
-.beast .dy{font-size:11px;color:var(--brand3);letter-spacing:.1em;}
-.beast p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.6;}
-.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:rgba(43,36,64,.94);color:#fff;font-size:13.5px;padding:11px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:80;max-width:88vw;text-align:center;}
-.toast.show{opacity:1;transform:translate(-50%,0);}
+  /* ===== 结果页 · 报告式段落 ===== */
+  .pt{
+    background:#f8fcf8;border:1px solid var(--line);border-radius:16px;
+    padding:17px 18px;margin-bottom:12px;
+  }
+  .pt-h{
+    font-size:13px;font-weight:800;color:#2f7654;letter-spacing:.3px;
+    display:flex;align-items:center;gap:7px;margin-bottom:11px;
+    padding-bottom:9px;border-bottom:1px solid #e2efe2;
+  }
+  .pt p{font-size:13.5px;line-height:1.92;color:var(--ink-2);margin:0 0 8px}
+  .pt p:last-child{margin-bottom:0}
+  .pt .pt-lead{font-size:13px;line-height:1.85}
+  .pt b{color:#2f7654;font-weight:700}
+  .pt-f{font-size:11px!important;color:#93a894!important;line-height:1.7!important;margin-top:10px!important}
+  .pt ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .pt li{font-size:13.5px;line-height:1.78;color:var(--ink-2);padding-left:19px;position:relative}
+  .pt li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;
+    background:var(--pri-2);transform:rotate(45deg)}
+  .pt ul.plain li{padding-left:0}
+  .pt ul.plain li::before{
+    content:"";position:absolute;left:0;top:11px;width:4px;height:4px;border-radius:99px;
+    background:var(--pri-2);transform:none;
+  }
+  .pt ul.plain li{padding-left:15px}
+  .warn-pt{background:#fdfaf0;border-color:#ede4c8}
+  .warn-pt .pt-h{color:#9a7a2a;border-bottom-color:#efe7cd}
 
-@media (max-width:560px){
-  .wrap{padding:0 15px;}
-  .feats{grid-template-columns:1fr 1fr;gap:9px;}
-  .feat{padding:13px 8px;}
-  .feat b{font-size:13px;}
-  .qcard{padding:20px 17px 16px;border-radius:20px;}
-  .qfoot{flex-direction:column;}
-  .qfoot .btn{width:100%;}
-  .panel{padding:18px 16px;border-radius:20px;}
-  .roster{gap:9px;}
-  .beast{padding:12px 10px;}
-  .btns .btn{font-size:15.5px;padding:14px 20px;}
-  .dir-foot{grid-template-columns:1fr;}
-  .dir-foot .btn{width:100%;}
-}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+  /* 人物心声 */
+  .voice{
+    margin:0 0 2px;padding:12px 14px 12px 16px;border-radius:12px;
+    background:linear-gradient(135deg,#eaf5ec,#f6fbf6);
+    border-left:3px solid var(--pri-2);
+    font-size:14px;line-height:1.95;color:#2f4d3c;font-style:normal;
+    font-family:"Songti SC",STSong,"Noto Serif SC",serif;
+  }
+
+  /* 能力结构横条 */
+  .mbars{display:flex;flex-direction:column;gap:9px;margin:4px 0 12px}
+  .mrow{display:flex;align-items:center;gap:10px}
+  .mrow .mname{
+    flex:0 0 78px;font-size:12.5px;font-weight:700;color:#376b4d;
+    display:flex;align-items:center;gap:5px}
+  .mrow .tg{font-size:9px;font-weight:700;font-style:normal;padding:1px 5px;border-radius:4px;
+    letter-spacing:0;line-height:1.5;white-space:nowrap}
+  .mrow .tg:empty{display:none}
+  .mrow .tag-1{background:var(--pri);color:#fff}
+  .mrow .tag-2{background:var(--pri-3);color:#2f7654}
+  .mrow .tag-3{background:#eceeec;color:#93a894}
+  .mrow .mtrack{flex:1 1 auto;height:9px;border-radius:99px;background:#e9f2e9;overflow:hidden}
+  .mrow .mtrack i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#5aa87e,#bfe0cb);
+    transition:width .85s cubic-bezier(.2,.8,.3,1)}
+  .mrow:first-child .mtrack i{background:linear-gradient(90deg,#3f8f68,#8ec9a7)}
+  .mrow .mval{flex:0 0 26px;text-align:right;font-size:12px;font-weight:700;
+    color:#5b7a66;font-variant-numeric:tabular-nums}
+
+  /* 结尾金句 */
+  .quote-card{
+    position:relative;margin:4px 0 2px;padding:22px 22px 20px;border-radius:16px;
+    background:linear-gradient(150deg,#3f8f68,#5aa87e 60%,#74ba93);
+    color:#fff;overflow:hidden;text-align:center;
+  }
+  .quote-card .qc-title{
+    font-size:11.5px;letter-spacing:3px;opacity:.85;margin-bottom:4px;font-weight:600;
+  }
+  .quote-card .qc-mark{
+    font-family:Georgia,serif;font-size:52px;line-height:.6;opacity:.35;
+    height:26px;display:block;margin-bottom:2px;
+  }
+  .quote-card p{font-size:15px;line-height:1.85;margin:0;font-weight:600;letter-spacing:.4px;
+    font-family:"Songti SC",STSong,"Noto Serif SC",serif}
+
+  /* ===== 档案库 ===== */
+  .lib-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .lib-top h2{font-size:19px}
+  .lib-top .n{font-size:11.5px;color:var(--sub)}
+  .search{display:flex;gap:8px;margin-bottom:10px}
+  .search input{
+    flex:1;font-family:inherit;font-size:14px;padding:11px 14px;border-radius:12px;
+    border:2px solid var(--line);background:#f8fcf8;color:var(--ink);outline:none;min-width:0;
+  }
+  .search input:focus{border-color:var(--pri-2)}
+  .filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{
+    flex:0 0 auto;font-family:inherit;font-size:12px;padding:6px 12px;border-radius:99px;
+    border:1.5px solid var(--line);background:#fff;color:var(--ink-2);cursor:pointer;transition:.14s;
+  }
+  .filters button.on{background:var(--pri);border-color:var(--pri);color:#fff;font-weight:700}
+  .fig-count{font-size:11.5px;color:#a3b6a4;margin-bottom:8px}
+  .fig-list{display:flex;flex-direction:column;gap:7px;max-height:58vh;overflow-y:auto;padding-right:2px}
+  .fig-row{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:11px;
+    border:1px solid var(--line);background:#f8fcf8}
+  .fig-row .idx{flex:0 0 26px;font-size:10.5px;color:#a9bab0;font-variant-numeric:tabular-nums}
+  .fig-row .nm{flex:1;font-size:14px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .fig-row .nm i{font-size:10.5px;font-style:normal;color:var(--sub);font-weight:400;margin-left:5px}
+  .fig-row .tg{font-size:10.5px;color:#3c7354;background:var(--soft);border-radius:6px;padding:2px 7px;flex:0 0 auto}
+  .fig-row.me{border-color:var(--pri);background:var(--soft);box-shadow:0 4px 12px rgba(108,92,231,.14)}
+  .empty{font-size:13px;color:var(--sub);text-align:center;padding:26px 0}
+
+  /* ===== 浮层 ===== */
+  .overlay{position:fixed;inset:0;background:rgba(38,30,66,.42);backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;animation:fadeIn .2s}
+  .modal{background:#fff;border-radius:20px;padding:22px 20px;width:100%;max-width:400px;
+    box-shadow:0 24px 60px rgba(38,30,66,.3);animation:rise .26s ease;max-height:86vh;overflow-y:auto}
+  .modal h3{font-size:17px;margin-bottom:6px}
+  .modal .mrow{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px dashed var(--line);color:var(--ink-2)}
+  .modal .mrow b{color:var(--pri)}
+  .modal .mtxt{font-size:12.5px;color:var(--sub);line-height:1.8;margin-top:10px}
+
+  /* ===== 响应式 ===== */
+  @media (max-width:430px){
+    body{padding:14px 10px 36px}
+    .card{padding:22px 16px 20px;border-radius:16px}
+    h1{font-size:22px}
+    .qtext{font-size:17.5px}
+    .res-name{font-size:28px}
+    .btns,.res-btns{flex-direction:column-reverse}
+    .btn{padding:15px 12px}
+    .dim-grid{gap:8px}
+    .dim{padding:9px 10px}
+    .fig-list{max-height:52vh}
+    .pt{padding:15px 14px;border-radius:14px}
+    .pt-h{font-size:12.5px}
+    .pt p,.pt li{font-size:13px;line-height:1.85}
+    .voice{font-size:13.2px;padding:11px 12px}
+    .mrow .mname{flex:0 0 66px;font-size:12px}
+    .mrow .mval{flex:0 0 24px;font-size:11.5px}
+    .quote-card{padding:19px 18px;border-radius:14px}
+    .quote-card p{font-size:14px}
+    .qfoot{gap:9px}
+    .autobtn{font-size:11.5px;padding:8px 11px}
+  }
+  @media (min-width:721px){
+    body{padding-top:40px}
+    .card{padding:32px 30px 28px}
+  }
 </style>
 </head>
 <body>
-<div class="bg-deco" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="grain"></div></div>
-
-<div class="wrap">
-  <div class="topbar">
-    <div class="brand"><span class="seal">史</span><span>历史人物趣味档案</span></div>
-    <div class="meta">原创自评 · 仅供娱乐</div>
-  </div>
-
-  <!-- 首页 -->
-  <main id="page-home" class="page active">
-    <section class="hero">
-      <div class="bigseal">🏛</div>
-      <h1 class="title">你与哪位历史人物<br>最为相似？</h1>
-      <div class="en">FIGURE ATLAS · ANCIENT ARCHIVE</div>
-      <p class="lede">通过 12 道情境选择，读取你的<b>决断、共情、开创、洞察、表达、经营、独立、担当</b>八个维度，从清朝以前的中国历史人物中，为你匹配出最相似的一位。</p>
-      <div class="feats">
-        <div class="feat"><div class="ic">📜</div><b>古代画像</b><span>历代风云人物</span></div>
-        <div class="feat"><div class="ic">⚖️</div><b>男女皆有</b><span>多元角色档案</span></div>
-        <div class="feat"><div class="ic">🧭</div><b>多维分析</b><span>八维性格建构</span></div>
-        <div class="feat"><div class="ic">⚡</div><b>快速完成</b><span>即时生成档案</span></div>
-      </div>
-      <div class="note">
-        <span class="n-ic">说</span>
-        <span><b>测试说明：</b>没有标准答案，请选择最接近真实自己的反应。你的答案会直接参与八维能力向量计算，同样的答案永远得到同样的结果。</span>
-      </div>
-      <div class="btns">
-        <button class="btn btn-primary" id="btn-start">开始读取档案</button>
-        <button class="btn btn-ghost" id="btn-roster">先看看人物图鉴</button>
-      </div>
-    </section>
-    <footer><div class="sep"></div>本测试属于趣味性格自评，不构成心理测评或历史评价</footer>
-  </main>
-
-  <!-- 偏好页 -->
-  <main id="page-pref" class="page">
-    <div class="step-tag">第 一 步 · 档 案 映 射 偏 好</div>
-    <h2 class="dir-title">选择你更有代入感的人物方向</h2>
-    <p class="dir-sub">这只影响最终候选人物的范围，不影响答题内容与分数计算。</p>
-    <div class="dir-list" id="dir-list">
-      <button class="dir" data-g="f" aria-pressed="false"><span class="g">女</span><span><b>女性人物优先</b><span>从女性历史人物中寻找最相似的你</span></span></button>
-      <button class="dir" data-g="m" aria-pressed="false"><span class="g">男</span><span><b>男性人物优先</b><span>从男性历史人物中寻找最相似的你</span></span></button>
-      <button class="dir" data-g="a" aria-pressed="false"><span class="g">皆</span><span><b>不限性别</b><span>开放完整人物档案库，纯粹按性格匹配</span></span></button>
+<div id="app">
+  <!-- ========== 首页 ========== -->
+  <section class="card hero" id="pg-home">
+    <div class="illus" id="illus-home"></div>
+    <div class="step">时 空 档 案 馆 · 入 馆 登 记</div>
+    <h1>你最像哪位历史人物？</h1>
+    <p class="muted">24 道情境选择题，从野心、谋略、仁义、风骨、变通、雅趣六个维度为你定位坐标，在 <b id="home-total">968</b> 位历史人物档案中，找出与你最接近的那一个。</p>
+    <div class="stat-row">
+      <div class="stat"><b id="stat-total">968</b>位档案</div>
+      <div class="stat"><b>24</b>道题目</div>
+      <div class="stat"><b>6</b>维坐标</div>
     </div>
-    <div class="dir-foot">
-      <button class="btn btn-ghost" id="btn-pref-back">返回</button>
-      <button class="btn btn-primary" id="btn-pref-go" disabled>进入情境测试</button>
-    </div>
-    <p class="dir-tip">选好方向后才能继续 · 之后随时可以返回修改</p>
-    <footer><div class="sep"></div>历史人物趣味档案</footer>
-  </main>
-
-  <!-- 答题页 -->
-  <main id="page-quiz" class="page">
-    <div class="quiz-head"><div class="quiz-head-in">
-      <button class="qback" id="btn-back" aria-label="上一题"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="progress-wrap">
-        <div class="pline"><span>第 <b id="q-now">1</b> / <span id="q-total">12</span> 题</span><span id="q-pct">已完成 0%</span></div>
-        <div class="bar"><i id="bar-fill"></i></div>
+    <p class="pick-label">第一步 · 选择人物候选范围</p>
+    <div class="chooses" id="chooses">
+      <div class="choose" data-g="f" role="button" tabindex="0">
+        <div class="badge">女</div>
+        <div><b>女性人物优先</b><span id="cnt-f">从 157 位女性人物档案中寻找最相似的你</span></div>
       </div>
-      <button class="qback" id="btn-exit" aria-label="退出答题" style="font-size:13px;font-family:var(--serif);">归档</button>
-    </div></div>
-
-    <div class="qcard">
-      <span class="qtag"><span class="sq"></span><span id="q-cat">情境</span></span>
-      <h2 class="qtext" id="q-text">题目</h2>
-      <p class="qhint">选出最接近你真实反应的那一个</p>
-      <div class="opts" id="opts" role="group" aria-label="选项"></div>
-      <div class="alert" id="q-alert" role="alert">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5v5.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.1" fill="currentColor"/></svg>
-        <span>这题还没选哦，先选一个最接近的答案。</span>
+      <div class="choose" data-g="m" role="button" tabindex="0">
+        <div class="badge">男</div>
+        <div><b>男性人物优先</b><span id="cnt-m">从 811 位男性人物档案中寻找最相似的你</span></div>
       </div>
-      <div class="qfoot">
-        <button class="btn btn-ghost" id="btn-prev">上一题</button>
-        <button class="btn btn-primary" id="btn-next">下一题</button>
+      <div class="choose" data-g="a" role="button" tabindex="0">
+        <div class="badge">皆</div>
+        <div><b>不限性别</b><span>打开完整人物档案库，纯按性格坐标匹配</span></div>
       </div>
     </div>
-    <div class="dots" id="dots" aria-label="答题卡"></div>
-    <div class="sheet-label" id="sheet-label">点击数字可跳题修改，改完结果会自动重算</div>
-    <footer><div class="sep"></div>凭第一直觉作答即可</footer>
-  </main>
-
-  <!-- 图鉴页 -->
-  <main id="page-roster" class="page">
-    <div class="step-tag" style="margin-top:24px">人 物 图 鉴</div>
-    <h2 class="dir-title">十二位候选人档案</h2>
-    <p class="dir-sub">清朝以前 · 性别各半 · 每一位都对应一组独特的八维坐标</p>
-    <div class="roster" id="roster-grid"></div>
-    <div class="btns" style="margin-top:22px"><button class="btn btn-primary" id="btn-roster-back">返回首页</button></div>
-    <footer><div class="sep"></div>人物介绍为大众化简写，不代表历史定论</footer>
-  </main>
-
-  <!-- 结果页 -->
-  <main id="page-result" class="page">
-    <div class="res-top">
-      <div class="cap">你 的 历 史 人 物 匹 配 结 果</div>
-      <div class="fig-ic" id="r-icon">🏛</div>
-      <div class="res-pct" id="r-pct">—%</div>
-      <div class="res-name" id="r-name">—</div>
-      <div class="res-epi" id="r-epi">—</div>
-      <div class="res-tags" id="r-tags"></div>
-      <div class="res-dim"><span id="r-maindim">主导维度：—</span></div>
-      <div class="voice"><b>人 物 心 声</b><p id="r-voice">—</p></div>
+    <div class="btns">
+      <button class="btn btn-main" id="btn-start" disabled>请先选择候选范围</button>
     </div>
-
-    <div class="report-title">历史人物匹配报告</div>
-    <div class="report-sub">自画像 · 能力结构 · 共同底色 · 风险与台词</div>
-    <div id="res-body"></div>
-
-    <div class="res-actions">
-      <button class="btn btn-primary" id="btn-retest">重新读取档案</button>
-      <button class="btn btn-ghost" id="btn-review">回看并修改答案</button>
+    <div class="feature-grid">
+      <div class="feature"><b>🎯 六维坐标</b><span>野心·谋略·仁义·风骨·变通·雅趣</span></div>
+      <div class="feature"><b>📖 968 位档案</b><span>三国·水浒·红楼·历代名人</span></div>
+      <div class="feature"><b>✍️ 随时改答案</b><span>返回修改后实时重算</span></div>
+      <div class="feature"><b>💡 行动建议</b><span>按你的类型给出可行做法</span></div>
     </div>
-    <div class="notice">
-      <span style="font-family:var(--serif);font-weight:700;">说</span>
-      <span>本测试为原创趣味自评：结果由你 12 道题的作答实时计算（同样的答案永远得到同样的结果），不随机、不构成心理测评，更不代表对历史人物或你本人的专业评价。人在不同阶段会像不同的人，这很正常。</span>
+    <div class="link-line"><button id="btn-open-lib">先逛逛全部 <span id="lib-n">968</span> 位人物档案 →</button></div>
+    <p class="note">本测评为原创趣味自评，不构成任何专业心理诊断或历史评价。<br>全部计算在本地完成，不收集、不上传任何个人信息。</p>
+  </section>
+
+  <!-- ========== 答题页 ========== -->
+  <section class="card hide" id="pg-quiz">
+    <div class="qhead">
+      <button class="back" id="btn-prev">‹ 返回</button>
+      <span class="count"><span id="cur-n">1</span> / 24</span>
     </div>
-    <footer><div class="sep"></div>历史人物趣味档案 · REPORT<br>答案仅保存在你的浏览器本地，不上传任何数据</footer>
-  </main>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="progress-meta"><span id="meta-answered">已完成 0 题</span><span id="meta-left"></span></div>
+    <div id="q-body"></div>
+    <div class="warn" id="warn"></div>
+    <div class="qfoot">
+      <div class="btns"><button class="btn btn-main" id="btn-next">下一题</button></div>
+      <button class="autobtn on" id="btn-auto" type="button">⚡ 自动跳题：开</button>
+    </div>
+    <div class="dot-nav" id="dots"></div>
+  </section>
+
+  <!-- ========== 结果页 ========== -->
+  <section class="card hide" id="pg-result"></section>
+
+  <!-- ========== 档案库 ========== -->
+  <section class="card hide" id="pg-lib">
+    <div class="lib-top">
+      <h2>人物档案库</h2>
+      <span class="n" id="lib-total"></span>
+    </div>
+    <div class="search">
+      <input id="lib-search" type="search" placeholder="搜索人物名、朝代或身份，如「苏轼」「唐」" autocomplete="off">
+    </div>
+    <div class="filters" id="lib-filters"></div>
+    <div class="fig-count" id="lib-count"></div>
+    <div class="fig-list" id="lib-list"></div>
+    <div class="btns" style="margin-top:14px">
+      <button class="btn btn-ghost btn-sm" id="lib-back">← 返回首页</button>
+    </div>
+  </section>
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
-(function(){
-"use strict";
+/* ================= 1. 968 位人物数据集 ================= */
+const FIGURES=[{"n":"刘备","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[16.3,12.9,7.8,9.6,14.4,8.1]},{"n":"曹操","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[16.5,10.0,8.1,10.1,14.2,9.8]},{"n":"孙权","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[12.8,10.0,6.8,7.4,11.8,7.9]},{"n":"曹丕","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[14.1,11.3,7.7,7.5,10.9,6.8]},{"n":"曹叡","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[13.8,8.7,7.3,6.7,10.5,7.1]},{"n":"刘禅","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[14.4,10.6,6.5,8.4,11.9,7.7]},{"n":"孙策","e":"三国","g":"m","c":"General","l":"名将","d":[12.5,9.3,8.6,10.8,11.1,8.3]},{"n":"孙坚","e":"三国","g":"m","c":"General","l":"名将","d":[10.7,9.0,7.8,8.2,10.3,6.9]},{"n":"袁绍","e":"三国","g":"m","c":"General","l":"名将","d":[12.6,9.2,9.1,9.4,9.3,6.6]},{"n":"袁术","e":"三国","g":"m","c":"General","l":"名将","d":[15.1,10.0,10.0,12.6,11.5,7.9]},{"n":"刘表","e":"三国","g":"m","c":"Minister","l":"名臣","d":[9.9,11.8,10.7,8.4,11.4,8.8]},{"n":"刘璋","e":"三国","g":"m","c":"Minister","l":"名臣","d":[10.7,11.9,12.2,8.3,14.2,9.2]},{"n":"董卓","e":"三国","g":"m","c":"General","l":"名将","d":[12.7,9.8,9.0,9.8,10.4,7.3]},{"n":"吕布","e":"三国","g":"m","c":"General","l":"名将","d":[12.4,9.9,9.4,13.4,11.3,8.0]},{"n":"关羽","e":"三国","g":"m","c":"General","l":"名将","d":[11.2,8.7,7.3,10.3,11.2,7.6]},{"n":"张飞","e":"三国","g":"m","c":"General","l":"名将","d":[11.2,8.2,8.0,9.2,10.5,6.4]},{"n":"赵云","e":"三国","g":"m","c":"General","l":"名将","d":[16.2,10.7,9.3,12.2,11.7,7.9]},{"n":"马超","e":"三国","g":"m","c":"General","l":"名将","d":[12.7,8.8,8.3,11.9,11.4,6.4]},{"n":"黄忠","e":"三国","g":"m","c":"General","l":"名将","d":[12.3,9.5,8.2,12.5,10.7,6.9]},{"n":"魏延","e":"三国","g":"m","c":"General","l":"名将","d":[11.3,7.9,7.5,9.3,9.3,6.6]},{"n":"姜维","e":"三国","g":"m","c":"General","l":"名将","d":[11.8,9.9,7.6,9.7,9.8,7.4]},{"n":"张辽","e":"三国","g":"m","c":"General","l":"名将","d":[12.1,9.6,8.9,10.1,10.0,7.2]},{"n":"许褚","e":"三国","g":"m","c":"General","l":"名将","d":[12.2,10.3,9.1,12.5,11.2,7.4]},{"n":"典韦","e":"三国","g":"m","c":"General","l":"名将","d":[11.7,9.2,8.3,9.2,9.4,7.3]},{"n":"夏侯惇","e":"三国","g":"m","c":"General","l":"名将","d":[12.2,8.5,8.4,10.0,10.8,6.3]},{"n":"夏侯渊","e":"三国","g":"m","c":"General","l":"名将","d":[13.0,11.1,8.5,13.9,12.5,7.4]},{"n":"张郃","e":"三国","g":"m","c":"General","l":"名将","d":[13.7,10.1,10.5,11.1,11.8,7.0]},{"n":"徐晃","e":"三国","g":"m","c":"General","l":"名将","d":[10.4,7.3,7.8,10.4,9.2,6.3]},{"n":"于禁","e":"三国","g":"m","c":"General","l":"名将","d":[11.1,8.4,7.7,10.1,9.1,5.9]},{"n":"曹仁","e":"三国","g":"m","c":"General","l":"名将","d":[11.4,7.6,7.3,9.6,9.9,6.0]},{"n":"庞德","e":"三国","g":"m","c":"General","l":"名将","d":[13.1,10.6,10.0,11.9,10.4,7.9]},{"n":"甘宁","e":"三国","g":"m","c":"General","l":"名将","d":[11.3,9.0,7.4,8.6,9.7,6.6]},{"n":"太史慈","e":"三国","g":"m","c":"General","l":"名将","d":[15.2,10.6,10.9,12.5,12.1,7.3]},{"n":"周泰","e":"三国","g":"m","c":"General","l":"名将","d":[11.3,9.3,8.2,10.7,9.9,7.3]},{"n":"黄盖","e":"三国","g":"m","c":"General","l":"名将","d":[12.5,10.0,8.7,11.6,11.2,7.7]},{"n":"程普","e":"三国","g":"m","c":"General","l":"名将","d":[13.9,10.0,10.6,13.7,10.4,8.9]},{"n":"凌统","e":"三国","g":"m","c":"General","l":"名将","d":[11.8,9.1,8.3,10.5,10.2,7.3]},{"n":"丁奉","e":"三国","g":"m","c":"General","l":"名将","d":[12.6,9.0,8.2,9.2,9.9,6.4]},{"n":"吕蒙","e":"三国","g":"m","c":"General","l":"名将","d":[10.6,8.5,7.9,10.6,10.1,6.9]},{"n":"陆逊","e":"三国","g":"m","c":"General","l":"名将","d":[12.7,10.2,9.4,12.7,12.9,8.7]},{"n":"陆抗","e":"三国","g":"m","c":"General","l":"名将","d":[12.1,8.6,8.6,11.2,9.8,6.5]},{"n":"邓艾","e":"三国","g":"m","c":"General","l":"名将","d":[14.4,11.0,10.6,11.5,13.5,8.3]},{"n":"钟会","e":"三国","g":"m","c":"General","l":"名将","d":[13.6,9.9,9.0,10.7,11.1,6.9]},{"n":"张任","e":"三国","g":"m","c":"General","l":"名将","d":[12.1,8.3,8.5,10.1,10.8,6.5]},{"n":"严颜","e":"三国","g":"m","c":"General","l":"名将","d":[11.4,10.0,8.2,9.5,8.9,7.0]},{"n":"华雄","e":"三国","g":"m","c":"General","l":"名将","d":[11.6,10.4,10.2,12.1,11.1,7.3]},{"n":"颜良","e":"三国","g":"m","c":"General","l":"名将","d":[13.3,9.0,8.4,10.0,10.7,6.5]},{"n":"文丑","e":"三国","g":"m","c":"General","l":"名将","d":[13.0,9.7,9.2,12.8,10.5,7.0]},{"n":"高顺","e":"三国","g":"m","c":"General","l":"名将","d":[11.1,9.1,9.1,11.7,12.3,7.7]},{"n":"公孙瓒","e":"三国","g":"m","c":"General","l":"名将","d":[9.8,8.9,8.0,10.2,10.9,6.7]},{"n":"马腾","e":"三国","g":"m","c":"General","l":"名将","d":[13.5,8.8,9.0,10.0,11.0,7.1]},{"n":"廖化","e":"三国","g":"m","c":"General","l":"名将","d":[10.2,10.5,7.8,10.0,9.5,7.2]},{"n":"王平","e":"三国","g":"m","c":"General","l":"名将","d":[12.1,10.1,9.5,11.2,11.2,7.4]},{"n":"马岱","e":"三国","g":"m","c":"General","l":"名将","d":[11.5,9.2,8.8,12.0,10.3,6.5]},{"n":"关平","e":"三国","g":"m","c":"General","l":"名将","d":[14.4,8.7,8.0,9.6,11.0,6.8]},{"n":"诸葛亮","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.4,14.0,7.6,7.9,14.8,8.9]},{"n":"庞统","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[9.2,14.7,10.2,9.8,14.3,8.8]},{"n":"法正","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[9.2,14.4,9.5,10.4,16.2,8.4]},{"n":"郭嘉","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.3,14.0,8.4,9.5,13.6,8.9]},{"n":"荀彧","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.5,15.1,9.4,9.1,13.4,7.8]},{"n":"荀攸","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.3,15.8,8.4,8.7,14.6,8.5]},{"n":"贾诩","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[7.6,11.6,7.9,7.7,12.1,7.6]},{"n":"程昱","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[7.1,10.9,7.0,7.1,12.5,6.8]},{"n":"司马懿","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.6,13.4,10.0,9.0,15.3,9.6]},{"n":"司马昭","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.3,11.5,7.5,7.8,12.2,8.8]},{"n":"周瑜","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[7.5,14.0,7.3,7.7,13.2,7.5]},{"n":"鲁肃","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[6.5,11.1,6.8,7.4,12.5,7.0]},{"n":"张昭","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[7.1,13.3,7.9,8.0,14.0,8.1]},{"n":"徐庶","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.5,16.2,9.0,9.5,13.0,8.2]},{"n":"陈宫","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.2,16.0,10.1,9.2,16.3,7.7]},{"n":"田丰","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[9.2,16.0,9.5,10.1,15.0,8.8]},{"n":"沮授","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[6.7,13.3,7.2,7.5,13.8,7.1]},{"n":"审配","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.5,14.2,7.8,8.9,13.6,8.1]},{"n":"许攸","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[7.8,12.1,7.5,6.1,13.1,7.4]},{"n":"李儒","e":"三国","g":"m","c":"Strategist","l":"谋士","d":[8.5,14.4,9.3,7.4,14.1,8.4]},{"n":"蒋琬","e":"三国","g":"m","c":"Minister","l":"名臣","d":[9.0,10.9,10.8,9.3,12.9,7.7]},{"n":"费祎","e":"三国","g":"m","c":"Minister","l":"名臣","d":[8.2,9.3,10.8,6.6,10.7,8.0]},{"n":"简雍","e":"三国","g":"m","c":"Minister","l":"名臣","d":[8.7,11.3,10.6,6.7,12.5,8.0]},{"n":"糜竺","e":"三国","g":"m","c":"Merchant","l":"商贾","d":[12.1,12.7,8.6,8.0,13.7,7.1]},{"n":"陈群","e":"三国","g":"m","c":"Minister","l":"名臣","d":[11.6,12.6,12.8,8.7,14.2,9.4]},{"n":"杨修","e":"三国","g":"m","c":"Writer","l":"文人","d":[8.3,9.8,11.2,14.1,10.9,14.9]},{"n":"孔融","e":"三国","g":"m","c":"Writer","l":"文人","d":[8.4,9.6,11.3,13.1,10.3,14.9]},{"n":"祢衡","e":"三国","g":"m","c":"Writer","l":"文人","d":[6.5,7.6,8.9,9.8,7.8,10.8]},{"n":"曹植","e":"三国","g":"m","c":"Writer","l":"文人","d":[7.3,8.9,9.1,9.9,8.3,10.6]},{"n":"曹冲","e":"三国","g":"m","c":"Science","l":"科技","d":[8.2,11.2,10.1,9.3,10.8,10.9]},{"n":"华佗","e":"三国","g":"m","c":"Science","l":"科技","d":[9.0,14.4,11.0,11.2,12.1,9.8]},{"n":"张仲景","e":"三国","g":"m","c":"Science","l":"科技","d":[9.0,14.8,9.8,10.3,10.8,9.7]},{"n":"管辂","e":"三国","g":"m","c":"Science","l":"科技","d":[9.1,14.8,11.0,10.2,12.9,10.1]},{"n":"左慈","e":"三国","g":"m","c":"Artist","l":"艺术家","d":[7.3,7.2,8.6,13.8,9.5,14.1]},{"n":"于吉","e":"三国","g":"m","c":"Artist","l":"艺术家","d":[7.8,8.6,10.1,13.0,9.2,15.6]},{"n":"貂蝉","e":"三国","g":"f","c":"Beauty","l":"美人","d":[8.7,9.3,10.6,9.7,11.3,13.6]},{"n":"孙尚香","e":"三国","g":"f","c":"Heroine","l":"巾帼","d":[10.0,9.2,10.6,10.3,10.7,9.8]},{"n":"大乔","e":"三国","g":"f","c":"Beauty","l":"美人","d":[6.9,7.4,10.0,8.5,10.8,10.5]},{"n":"小乔","e":"三国","g":"f","c":"Beauty","l":"美人","d":[8.2,9.6,11.7,10.7,14.1,13.2]},{"n":"蔡文姬","e":"三国","g":"f","c":"Writer","l":"文人","d":[7.2,9.2,9.0,10.7,8.5,12.7]},{"n":"甄宓","e":"三国","g":"f","c":"Beauty","l":"美人","d":[8.2,9.7,9.6,9.1,12.0,13.6]},{"n":"甘夫人","e":"三国","g":"f","c":"Heroine","l":"巾帼","d":[10.6,9.3,12.4,12.5,11.5,9.6]},{"n":"糜夫人","e":"三国","g":"f","c":"Heroine","l":"巾帼","d":[10.9,10.1,13.0,13.6,11.2,9.3]},{"n":"黄月英","e":"三国","g":"f","c":"Science","l":"科技","d":[8.1,11.8,9.6,8.9,11.1,9.5]},{"n":"祝融夫人","e":"三国","g":"f","c":"General","l":"名将","d":[11.6,10.3,7.9,9.8,11.1,6.1]},{"n":"宋江","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.1,7.9,13.4,11.6,10.8,9.4]},{"n":"卢俊义","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.5,7.4,12.8,14.1,10.2,9.6]},{"n":"吴用","e":"北宋","g":"m","c":"Strategist","l":"谋士","d":[8.3,13.6,9.7,9.5,16.0,8.2]},{"n":"公孙胜","e":"北宋","g":"m","c":"Strategist","l":"谋士","d":[8.7,17.0,9.2,9.4,14.3,8.9]},{"n":"关胜","e":"北宋","g":"m","c":"General","l":"名将","d":[10.3,8.7,6.9,9.8,9.6,6.1]},{"n":"林冲","e":"北宋","g":"m","c":"General","l":"名将","d":[14.2,11.9,10.6,11.1,10.4,7.7]},{"n":"秦明","e":"北宋","g":"m","c":"General","l":"名将","d":[14.4,10.9,9.7,13.4,11.8,7.3]},{"n":"呼延灼","e":"北宋","g":"m","c":"General","l":"名将","d":[13.8,10.5,9.6,12.1,12.1,8.3]},{"n":"花荣","e":"北宋","g":"m","c":"General","l":"名将","d":[12.7,8.4,8.8,11.0,9.9,6.5]},{"n":"柴进","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[12.1,12.4,7.6,8.1,14.8,8.1]},{"n":"朱仝","e":"北宋","g":"m","c":"General","l":"名将","d":[11.1,8.9,8.2,11.1,9.5,7.3]},{"n":"鲁智深","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.1,7.2,10.4,10.1,7.9,8.3]},{"n":"武松","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.2,6.6,10.1,9.4,9.2,9.5]},{"n":"董平","e":"北宋","g":"m","c":"General","l":"名将","d":[11.9,9.5,7.7,10.6,10.7,6.4]},{"n":"张清","e":"北宋","g":"m","c":"General","l":"名将","d":[13.4,11.5,9.1,11.4,12.6,7.9]},{"n":"杨志","e":"北宋","g":"m","c":"General","l":"名将","d":[10.9,9.7,6.7,10.4,9.3,6.5]},{"n":"徐宁","e":"北宋","g":"m","c":"General","l":"名将","d":[12.6,11.5,9.7,11.5,12.3,7.8]},{"n":"索超","e":"北宋","g":"m","c":"General","l":"名将","d":[12.3,9.1,8.4,9.5,9.5,6.8]},{"n":"戴宗","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[7.5,6.6,10.6,9.8,9.3,8.6]},{"n":"刘唐","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.9,8.1,14.0,12.2,9.5,10.1]},{"n":"李逵","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.6,8.6,13.2,12.5,10.2,9.7]},{"n":"史进","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.2,8.0,12.9,12.2,10.3,10.2]},{"n":"雷横","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.1,6.3,10.7,10.6,9.3,7.9]},{"n":"李俊","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.5,6.8,10.9,12.5,10.1,9.1]},{"n":"阮小二","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.0,6.8,10.6,9.5,9.1,8.1]},{"n":"张顺","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.3,9.5,13.5,13.2,11.8,10.4]},{"n":"阮小七","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.5,8.0,9.8,10.6,9.3,9.0]},{"n":"石秀","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.3,8.7,13.7,14.3,10.5,9.9]},{"n":"燕青","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.7,8.5,11.9,12.1,9.7,9.1]},{"n":"杨雄","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.5,6.8,9.5,9.0,9.2,8.9]},{"n":"解珍","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.1,6.8,13.0,12.7,10.3,9.2]},{"n":"解宝","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.6,7.1,11.4,12.9,10.2,9.9]},{"n":"朱武","e":"北宋","g":"m","c":"Strategist","l":"谋士","d":[8.2,13.1,8.1,8.4,13.7,7.4]},{"n":"孙立","e":"北宋","g":"m","c":"General","l":"名将","d":[14.5,10.9,8.6,9.7,11.5,7.4]},{"n":"萧让","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[7.5,8.1,8.8,12.1,8.2,14.2]},{"n":"裴宣","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[9.0,9.9,10.3,7.5,11.3,7.0]},{"n":"凌振","e":"北宋","g":"m","c":"Science","l":"科技","d":[8.6,11.5,9.1,7.3,9.5,7.4]},{"n":"蒋敬","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[13.3,13.4,8.3,7.5,13.2,7.4]},{"n":"安道全","e":"北宋","g":"m","c":"Science","l":"科技","d":[8.3,11.6,8.5,8.0,10.1,9.1]},{"n":"皇甫端","e":"北宋","g":"m","c":"Science","l":"科技","d":[7.5,9.4,8.6,7.6,9.5,9.4]},{"n":"王英","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[11.3,8.0,11.9,13.0,10.4,10.2]},{"n":"扈三娘","e":"北宋","g":"f","c":"General","l":"名将","d":[11.6,10.7,8.1,10.4,11.2,7.0]},{"n":"樊瑞","e":"北宋","g":"m","c":"Strategist","l":"谋士","d":[7.8,13.3,7.1,6.6,12.2,6.5]},{"n":"金大坚","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[7.1,7.9,9.5,12.0,8.8,15.2]},{"n":"乐和","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[6.1,8.7,8.3,11.0,8.5,15.2]},{"n":"时迁","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.4,7.2,11.5,10.4,10.3,9.6]},{"n":"白胜","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.9,8.1,12.7,10.9,9.8,9.0]},{"n":"段景住","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.6,6.6,10.6,12.8,11.2,10.3]},{"n":"孙二娘","e":"北宋","g":"f","c":"Chivalrous","l":"侠士","d":[7.8,7.0,10.1,10.1,9.7,8.8]},{"n":"顾大嫂","e":"北宋","g":"f","c":"Chivalrous","l":"侠士","d":[9.4,6.4,11.5,11.3,9.2,7.4]},{"n":"张青","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.8,7.6,12.4,13.3,10.6,10.6]},{"n":"孙新","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.3,7.0,12.1,11.2,9.7,8.5]},{"n":"宋清","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[9.2,12.6,10.5,8.0,12.9,9.5]},{"n":"朱贵","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[9.6,9.6,6.6,6.8,12.1,6.7]},{"n":"朱富","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[10.3,9.7,6.9,5.6,11.8,6.9]},{"n":"杜兴","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[12.9,14.2,8.4,9.2,14.7,8.7]},{"n":"李云","e":"北宋","g":"m","c":"General","l":"名将","d":[12.8,12.9,9.2,13.3,11.1,7.7]},{"n":"施恩","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.2,6.8,10.9,10.2,8.5,10.0]},{"n":"穆弘","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.6,8.0,13.3,12.4,11.5,10.7]},{"n":"穆春","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.8,6.8,10.4,10.8,9.9,8.4]},{"n":"李应","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[12.0,13.5,9.0,8.7,13.2,7.9]},{"n":"杜迁","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.0,9.0,13.3,13.1,10.1,11.0]},{"n":"宋万","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.8,8.8,14.0,11.4,11.6,9.2]},{"n":"汤隆","e":"北宋","g":"m","c":"Science","l":"科技","d":[7.8,11.2,8.4,7.6,10.6,9.0]},{"n":"侯健","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[7.7,7.8,8.3,11.1,8.5,12.9]},{"n":"欧鹏","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.1,7.4,10.9,12.3,9.3,9.4]},{"n":"邓飞","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.5,7.0,10.7,11.7,10.3,8.0]},{"n":"燕顺","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.0,6.8,10.8,10.2,9.1,8.7]},{"n":"杨林","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.9,7.2,10.9,11.3,9.3,8.7]},{"n":"吕方","e":"北宋","g":"m","c":"General","l":"名将","d":[11.0,10.7,8.6,11.0,11.6,8.1]},{"n":"郭盛","e":"北宋","g":"m","c":"General","l":"名将","d":[10.9,9.2,8.1,9.6,10.8,8.2]},{"n":"蔡福","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[11.2,8.2,14.1,11.1,10.5,11.4]},{"n":"蔡庆","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.4,8.2,11.6,13.2,11.1,9.2]},{"n":"孔明","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.4,6.5,9.8,9.9,8.5,8.2]},{"n":"孔亮","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.3,7.0,11.6,10.4,9.3,9.7]},{"n":"项充","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.3,7.6,11.8,11.2,9.9,8.5]},{"n":"李衮","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.8,7.2,11.4,10.3,8.8,8.7]},{"n":"马麟","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.3,7.8,13.9,13.8,11.5,11.3]},{"n":"童威","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.0,7.7,11.4,11.9,9.1,9.3]},{"n":"童猛","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.1,7.1,11.2,11.9,9.0,7.9]},{"n":"郁保四","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.2,7.6,11.7,11.2,10.1,9.2]},{"n":"王定六","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.6,8.7,14.3,12.6,12.5,10.5]},{"n":"焦挺","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[7.7,6.2,9.6,11.3,9.0,7.5]},{"n":"龚旺","e":"北宋","g":"m","c":"General","l":"名将","d":[12.0,11.0,10.3,11.6,12.1,8.0]},{"n":"丁得孙","e":"北宋","g":"m","c":"General","l":"名将","d":[13.0,8.9,8.1,9.2,9.9,6.6]},{"n":"曹正","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.6,8.1,12.8,11.4,10.3,9.4]},{"n":"薛永","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[11.5,7.8,13.2,12.6,12.4,9.1]},{"n":"高俅","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[10.2,12.3,11.7,8.2,13.5,9.5]},{"n":"蔡京","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[10.2,12.6,10.5,8.0,13.9,9.6]},{"n":"童贯","e":"北宋","g":"m","c":"General","l":"名将","d":[11.7,8.9,8.1,11.2,9.5,7.3]},{"n":"晁盖","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.0,6.5,11.3,9.0,9.2,8.0]},{"n":"潘金莲","e":"北宋","g":"f","c":"Heroine","l":"巾帼","d":[12.0,11.1,13.5,13.5,9.4,9.7]},{"n":"武大郎","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[11.5,10.3,8.3,7.2,13.9,7.7]},{"n":"西门庆","e":"北宋","g":"m","c":"Merchant","l":"商贾","d":[10.9,11.5,7.7,7.5,12.3,7.4]},{"n":"李师师","e":"北宋","g":"f","c":"Beauty","l":"美人","d":[8.2,8.6,11.8,10.3,13.4,13.5]},{"n":"方腊","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[8.4,7.1,12.9,10.1,10.2,9.1]},{"n":"田虎","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[9.6,8.1,10.6,12.6,10.0,9.1]},{"n":"王庆","e":"北宋","g":"m","c":"Chivalrous","l":"侠士","d":[10.4,7.9,12.2,11.2,11.2,8.8]},{"n":"贾宝玉","e":"清代小说","g":"m","c":"Writer","l":"文人","d":[6.2,8.4,10.4,10.1,7.3,13.2]},{"n":"林黛玉","e":"清代小说","g":"f","c":"Writer","l":"文人","d":[6.8,9.3,9.9,12.8,8.8,13.5]},{"n":"薛宝钗","e":"清代小说","g":"f","c":"Writer","l":"文人","d":[6.8,8.6,10.1,10.9,8.3,14.7]},{"n":"王熙凤","e":"清代小说","g":"f","c":"Minister","l":"名臣","d":[8.1,11.2,9.0,8.6,11.0,8.2]},{"n":"贾母","e":"清代小说","g":"f","c":"Minister","l":"名臣","d":[7.7,11.0,10.1,7.7,11.8,6.9]},{"n":"贾政","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[10.1,13.1,12.0,8.0,15.2,9.7]},{"n":"贾赦","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[8.5,10.1,8.9,7.3,11.9,7.4]},{"n":"贾琏","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[10.9,9.6,8.0,7.2,14.0,7.6]},{"n":"贾珍","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[11.6,11.5,7.3,7.7,11.6,7.1]},{"n":"贾蓉","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[12.7,12.7,8.8,8.3,14.5,8.4]},{"n":"贾环","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[9.3,13.6,11.7,8.6,13.7,8.6]},{"n":"贾兰","e":"清代小说","g":"m","c":"Writer","l":"文人","d":[6.3,7.1,8.4,10.4,7.9,11.4]},{"n":"贾雨村","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[8.9,10.7,9.6,7.9,12.9,7.9]},{"n":"贾敬","e":"清代小说","g":"m","c":"Thinker","l":"思想家","d":[6.3,9.1,9.1,8.7,8.2,10.6]},{"n":"贾瑞","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[7.9,9.7,9.5,5.9,11.1,7.3]},{"n":"贾巧姐","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.7,9.2,11.0,11.1,9.0,8.4]},{"n":"贾迎春","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.3,7.5,10.8,10.8,9.4,9.0]},{"n":"贾探春","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.7,9.8,11.4,11.6,11.9,10.4]},{"n":"贾惜春","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.1,9.1,11.7,10.2,8.8,7.9]},{"n":"贾元春","e":"清代小说","g":"f","c":"Beauty","l":"美人","d":[8.4,8.1,9.8,9.1,11.5,12.0]},{"n":"史湘云","e":"清代小说","g":"f","c":"Writer","l":"文人","d":[7.1,8.8,9.6,10.3,8.3,12.6]},{"n":"妙玉","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.2,8.0,9.1,8.3,8.4,8.5]},{"n":"李纨","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.7,8.6,11.9,9.8,8.8,9.5]},{"n":"秦可卿","e":"清代小说","g":"f","c":"Beauty","l":"美人","d":[8.8,9.5,13.2,9.2,11.7,13.5]},{"n":"王夫人","e":"清代小说","g":"f","c":"Minister","l":"名臣","d":[10.7,12.8,11.4,9.4,13.9,8.3]},{"n":"邢夫人","e":"清代小说","g":"f","c":"Minister","l":"名臣","d":[10.8,12.0,12.1,8.9,14.6,8.2]},{"n":"薛姨妈","e":"清代小说","g":"f","c":"Minister","l":"名臣","d":[9.0,11.1,11.6,9.0,14.4,8.0]},{"n":"尤氏","e":"清代小说","g":"f","c":"Minister","l":"名臣","d":[9.2,13.4,12.2,7.7,13.2,9.1]},{"n":"刘姥姥","e":"清代小说","g":"f","c":"Merchant","l":"商贾","d":[12.2,11.7,7.7,6.8,13.4,7.1]},{"n":"平儿","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.8,7.4,11.3,9.9,9.1,8.2]},{"n":"袭人","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.4,8.1,11.0,10.5,9.8,8.0]},{"n":"晴雯","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.5,9.9,14.9,12.5,11.4,8.9]},{"n":"麝月","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.1,8.1,10.6,9.9,8.8,7.7]},{"n":"紫鹃","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.2,8.9,13.2,10.8,11.6,8.9]},{"n":"雪雁","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.5,9.9,12.4,12.3,10.3,10.1]},{"n":"鸳鸯","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.8,9.9,11.0,10.7,10.3,9.4]},{"n":"金钏","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.6,8.6,13.3,12.2,11.9,9.2]},{"n":"玉钏","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.5,10.9,11.1,13.1,12.1,9.9]},{"n":"司棋","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.5,10.3,11.2,11.9,11.6,10.5]},{"n":"香菱","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[8.3,7.5,9.7,8.8,9.3,8.3]},{"n":"莺儿","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.8,8.6,10.7,13.0,9.6,10.0]},{"n":"芳官","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.5,9.2,14.5,12.4,11.1,10.5]},{"n":"龄官","e":"清代小说","g":"f","c":"Artist","l":"艺术家","d":[7.9,9.8,9.4,12.3,9.1,16.9]},{"n":"藕官","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.3,8.2,9.6,9.4,9.9,8.8]},{"n":"蕊官","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.4,10.6,12.3,12.1,11.5,9.6]},{"n":"小红","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.8,7.0,10.4,9.5,9.2,8.3]},{"n":"坠儿","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.1,8.3,13.1,11.0,10.3,8.5]},{"n":"四儿","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.2,9.8,14.0,12.4,11.3,10.9]},{"n":"五儿","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.5,9.1,10.2,9.8,10.9,8.4]},{"n":"春燕","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.0,8.6,11.5,11.0,10.4,9.6]},{"n":"彩云","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.9,8.7,11.9,10.1,9.1,8.2]},{"n":"彩霞","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.6,8.8,12.9,11.4,10.4,9.7]},{"n":"金桂","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.2,8.9,10.1,10.3,11.3,8.2]},{"n":"尤二姐","e":"清代小说","g":"f","c":"Beauty","l":"美人","d":[9.6,9.4,12.0,9.9,12.4,14.2]},{"n":"尤三姐","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.1,8.1,13.1,11.0,10.1,10.3]},{"n":"薛蟠","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[13.2,13.4,8.1,10.3,13.7,8.3]},{"n":"薛蝌","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[13.2,11.6,8.6,8.0,13.8,8.0]},{"n":"薛宝琴","e":"清代小说","g":"f","c":"Writer","l":"文人","d":[7.3,8.8,9.3,11.1,10.2,16.1]},{"n":"邢岫烟","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.0,9.3,10.8,11.0,10.6,8.4]},{"n":"李纹","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.8,8.2,11.2,8.2,9.0,8.8]},{"n":"李绮","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.0,9.4,13.2,12.4,11.2,9.9]},{"n":"柳湘莲","e":"清代小说","g":"m","c":"Chivalrous","l":"侠士","d":[8.3,6.6,10.8,10.6,8.5,7.5]},{"n":"蒋玉菡","e":"清代小说","g":"m","c":"Artist","l":"艺术家","d":[6.3,7.1,8.2,10.3,7.6,12.5]},{"n":"秦钟","e":"清代小说","g":"m","c":"Writer","l":"文人","d":[6.0,8.4,8.4,10.2,8.7,11.3]},{"n":"秦业","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[8.5,12.3,10.9,7.6,11.3,8.5]},{"n":"北静王","e":"清代小说","g":"m","c":"Ruler","l":"帝王","d":[14.4,10.5,9.0,8.3,13.1,8.4]},{"n":"甄士隐","e":"清代小说","g":"m","c":"Thinker","l":"思想家","d":[7.0,10.8,8.3,10.4,8.7,9.9]},{"n":"甄英莲","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[8.6,6.9,10.9,9.7,9.6,7.8]},{"n":"甄宝玉","e":"清代小说","g":"m","c":"Writer","l":"文人","d":[6.9,8.3,9.4,9.9,9.1,13.0]},{"n":"娇杏","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.3,8.9,10.2,9.3,9.4,8.6]},{"n":"冷子兴","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[11.0,10.6,8.1,8.3,13.2,8.2]},{"n":"张道士","e":"清代小说","g":"m","c":"Thinker","l":"思想家","d":[6.3,11.7,9.9,9.7,9.5,11.3]},{"n":"马道婆","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.6,7.8,10.7,10.3,11.2,8.2]},{"n":"赖大","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[10.6,13.4,12.9,9.0,13.1,9.6]},{"n":"赖嬷嬷","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[8.7,8.0,9.2,9.0,9.0,8.1]},{"n":"林如海","e":"清代小说","g":"m","c":"Minister","l":"名臣","d":[9.0,9.4,11.8,7.3,12.0,8.4]},{"n":"贾敏","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.3,11.3,11.4,13.2,10.1,10.8]},{"n":"空空道人","e":"清代小说","g":"m","c":"Thinker","l":"思想家","d":[5.5,10.1,9.3,9.8,7.9,9.4]},{"n":"癞头和尚","e":"清代小说","g":"m","c":"Thinker","l":"思想家","d":[6.2,10.4,9.3,9.3,9.1,9.1]},{"n":"跛足道人","e":"清代小说","g":"m","c":"Thinker","l":"思想家","d":[7.5,11.9,9.7,11.2,10.0,11.4]},{"n":"警幻仙姑","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[10.0,8.7,10.9,11.1,10.8,9.6]},{"n":"冯渊","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[13.2,12.3,8.4,7.8,14.0,7.6]},{"n":"石呆子","e":"清代小说","g":"m","c":"Writer","l":"文人","d":[7.5,9.6,10.6,12.4,9.2,15.6]},{"n":"倪二","e":"清代小说","g":"m","c":"Chivalrous","l":"侠士","d":[10.0,8.6,13.6,14.1,11.8,11.1]},{"n":"卜世仁","e":"清代小说","g":"m","c":"Merchant","l":"商贾","d":[9.6,9.9,7.2,5.8,12.0,7.3]},{"n":"孙绍祖","e":"清代小说","g":"m","c":"General","l":"名将","d":[12.6,9.9,8.7,11.7,11.1,6.5]},{"n":"周瑞家的","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[11.4,10.5,12.8,12.7,9.8,10.2]},{"n":"来旺妇","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[8.2,8.3,10.1,9.5,9.4,7.9]},{"n":"焦大","e":"清代小说","g":"m","c":"Chivalrous","l":"侠士","d":[9.7,7.9,11.6,14.9,11.4,9.4]},{"n":"多姑娘","e":"清代小说","g":"f","c":"Heroine","l":"巾帼","d":[9.8,9.9,10.5,10.7,9.9,8.1]},{"n":"茗烟","e":"清代小说","g":"m","c":"Chivalrous","l":"侠士","d":[9.0,7.6,11.2,11.9,8.3,8.8]},{"n":"李贵","e":"清代小说","g":"m","c":"Chivalrous","l":"侠士","d":[10.6,8.1,12.9,12.1,13.2,11.2]},{"n":"盘古","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[14.1,10.6,7.4,7.9,13.7,9.0]},{"n":"女娲","e":"上古","g":"f","c":"Ruler","l":"帝王","d":[11.6,10.2,7.5,7.0,11.5,7.3]},{"n":"伏羲","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[14.1,13.7,7.8,9.3,12.5,8.5]},{"n":"神农","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[13.0,9.7,6.1,7.4,10.5,7.4]},{"n":"黄帝","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[12.9,10.2,7.2,8.5,11.1,7.0]},{"n":"尧","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[11.9,9.5,7.7,7.9,11.6,6.6]},{"n":"舜","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[13.0,12.2,8.4,8.4,10.9,8.2]},{"n":"禹","e":"上古","g":"m","c":"Ruler","l":"帝王","d":[11.7,10.7,6.5,8.8,11.7,7.2]},{"n":"后羿","e":"上古","g":"m","c":"General","l":"名将","d":[11.5,10.2,7.9,9.2,10.8,6.6]},{"n":"启","e":"夏","g":"m","c":"Ruler","l":"帝王","d":[13.2,8.6,8.1,7.3,11.7,6.9]},{"n":"少康","e":"夏","g":"m","c":"Ruler","l":"帝王","d":[11.2,9.8,6.6,6.8,10.3,7.2]},{"n":"桀","e":"夏","g":"m","c":"Ruler","l":"帝王","d":[15.8,11.5,9.1,8.6,13.2,8.4]},{"n":"妹喜","e":"夏","g":"f","c":"Beauty","l":"美人","d":[8.5,9.3,11.6,9.6,10.7,12.9]},{"n":"商汤","e":"商","g":"m","c":"Ruler","l":"帝王","d":[12.2,9.5,6.4,6.8,11.0,6.5]},{"n":"伊尹","e":"商","g":"m","c":"Minister","l":"名臣","d":[9.5,13.4,11.5,8.5,12.5,10.0]},{"n":"盘庚","e":"商","g":"m","c":"Ruler","l":"帝王","d":[11.6,9.8,7.4,6.4,11.3,7.9]},{"n":"武丁","e":"商","g":"m","c":"Ruler","l":"帝王","d":[13.9,9.6,6.8,7.6,10.7,7.5]},{"n":"妇好","e":"商","g":"f","c":"General","l":"名将","d":[10.0,8.7,7.0,11.0,8.6,6.0]},{"n":"妲己","e":"商","g":"f","c":"Beauty","l":"美人","d":[7.3,7.1,9.4,8.1,9.5,12.1]},{"n":"纣王","e":"商","g":"m","c":"Ruler","l":"帝王","d":[15.7,11.0,8.5,8.9,13.7,8.8]},{"n":"比干","e":"商","g":"m","c":"Minister","l":"名臣","d":[8.8,9.3,8.4,7.2,11.7,7.5]},{"n":"箕子","e":"商","g":"m","c":"Thinker","l":"思想家","d":[7.6,13.8,11.8,11.7,10.6,12.7]},{"n":"周文王","e":"西周","g":"m","c":"Ruler","l":"帝王","d":[12.7,9.8,6.9,7.4,9.8,6.9]},{"n":"周武王","e":"西周","g":"m","c":"Ruler","l":"帝王","d":[14.0,9.0,7.7,8.1,11.5,7.6]},{"n":"周公旦","e":"西周","g":"m","c":"Minister","l":"名臣","d":[8.9,9.3,9.2,7.1,10.9,7.2]},{"n":"姜子牙","e":"西周","g":"m","c":"Strategist","l":"谋士","d":[8.1,12.6,8.5,8.0,13.0,7.6]},{"n":"周成王","e":"西周","g":"m","c":"Ruler","l":"帝王","d":[11.7,8.6,7.0,7.0,11.1,7.1]},{"n":"周穆王","e":"西周","g":"m","c":"Ruler","l":"帝王","d":[15.7,13.6,8.3,7.9,13.4,9.2]},{"n":"周厉王","e":"西周","g":"m","c":"Ruler","l":"帝王","d":[14.9,12.4,8.8,9.8,13.6,9.2]},{"n":"周幽王","e":"西周","g":"m","c":"Ruler","l":"帝王","d":[12.5,9.2,6.4,6.7,10.3,6.3]},{"n":"褒姒","e":"西周","g":"f","c":"Beauty","l":"美人","d":[6.7,8.7,11.3,9.2,10.7,11.2]},{"n":"齐桓公","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[15.9,11.7,7.9,8.5,14.7,7.7]},{"n":"晋文公","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[12.6,9.2,6.0,6.4,10.4,6.8]},{"n":"秦穆公","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[15.5,12.5,8.0,9.0,13.6,7.4]},{"n":"楚庄王","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[12.8,8.1,7.0,5.9,10.7,7.5]},{"n":"宋襄公","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[10.9,10.3,6.3,6.5,11.4,7.1]},{"n":"郑庄公","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[12.7,9.6,7.1,8.1,11.0,7.2]},{"n":"吴王阖闾","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[13.4,9.0,7.0,8.5,13.1,7.8]},{"n":"吴王夫差","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[13.0,9.7,6.7,7.4,10.0,6.8]},{"n":"越王勾践","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[15.8,11.6,7.9,9.0,13.1,8.6]},{"n":"齐景公","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[13.4,11.1,8.2,8.4,14.1,8.6]},{"n":"楚灵王","e":"春秋","g":"m","c":"Ruler","l":"帝王","d":[13.4,11.2,7.8,9.0,11.4,7.8]},{"n":"秦始皇","e":"秦","g":"m","c":"Ruler","l":"帝王","d":[14.5,13.3,9.8,8.1,12.8,10.6]},{"n":"秦二世","e":"秦","g":"m","c":"Ruler","l":"帝王","d":[15.8,10.0,7.7,9.4,12.4,8.6]},{"n":"子婴","e":"秦","g":"m","c":"Ruler","l":"帝王","d":[11.3,9.1,6.8,7.6,10.2,6.9]},{"n":"刘邦","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[13.8,10.1,7.7,9.1,13.8,7.7]},{"n":"汉惠帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[11.9,8.9,5.9,7.3,11.5,7.0]},{"n":"吕后","e":"西汉","g":"f","c":"Ruler","l":"帝王","d":[15.9,11.1,7.5,7.9,14.2,8.8]},{"n":"汉文帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[14.2,10.5,7.1,8.2,12.0,8.0]},{"n":"汉景帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[12.8,10.5,6.4,7.3,10.6,7.1]},{"n":"汉武帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[12.5,9.7,6.5,5.9,10.9,7.5]},{"n":"汉昭帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[11.5,10.2,6.8,6.9,11.4,6.7]},{"n":"汉宣帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[12.4,9.7,6.1,6.6,11.9,7.4]},{"n":"汉元帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[13.4,9.9,7.3,7.5,10.7,8.0]},{"n":"汉成帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[11.7,9.2,7.7,8.0,12.3,7.3]},{"n":"汉哀帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[14.2,12.0,8.4,9.1,14.6,7.6]},{"n":"汉平帝","e":"西汉","g":"m","c":"Ruler","l":"帝王","d":[13.9,10.8,8.0,10.0,15.3,8.5]},{"n":"王莽","e":"新莽","g":"m","c":"Ruler","l":"帝王","d":[11.8,9.5,6.8,7.4,11.4,7.1]},{"n":"刘玄","e":"新莽","g":"m","c":"Ruler","l":"帝王","d":[14.3,10.8,7.5,8.2,11.6,7.7]},{"n":"光武帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[15.2,10.9,8.5,8.9,13.7,8.2]},{"n":"汉明帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[14.2,12.2,7.8,9.1,13.5,9.2]},{"n":"汉章帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[12.4,10.3,7.8,7.4,11.9,6.9]},{"n":"汉和帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[11.5,8.5,7.1,7.3,11.0,7.1]},{"n":"汉桓帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[13.8,11.6,7.5,7.7,13.4,7.1]},{"n":"汉灵帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[14.2,11.2,8.0,8.4,12.5,8.4]},{"n":"汉献帝","e":"东汉","g":"m","c":"Ruler","l":"帝王","d":[11.7,9.5,6.8,7.5,12.0,8.2]},{"n":"曹奂","e":"三国","g":"m","c":"Ruler","l":"帝王","d":[14.4,13.0,8.5,10.2,13.3,9.2]},{"n":"司马炎","e":"西晋","g":"m","c":"Ruler","l":"帝王","d":[11.6,9.4,7.4,6.7,11.6,7.8]},{"n":"晋惠帝","e":"西晋","g":"m","c":"Ruler","l":"帝王","d":[15.1,11.9,6.9,8.3,13.4,8.8]},{"n":"晋元帝","e":"东晋","g":"m","c":"Ruler","l":"帝王","d":[14.7,12.4,7.6,9.0,13.4,8.8]},{"n":"晋明帝","e":"东晋","g":"m","c":"Ruler","l":"帝王","d":[10.8,10.0,7.4,6.8,10.3,7.8]},{"n":"晋孝武帝","e":"东晋","g":"m","c":"Ruler","l":"帝王","d":[14.0,10.1,7.3,7.2,13.4,8.0]},{"n":"刘裕","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[15.1,9.7,7.8,8.0,13.6,6.9]},{"n":"宋文帝","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[12.9,10.5,8.4,7.8,11.1,7.6]},{"n":"萧道成","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[13.1,9.2,7.1,7.5,11.3,7.5]},{"n":"萧衍","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[13.2,9.1,6.4,8.1,11.0,7.4]},{"n":"陈霸先","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[13.4,9.9,7.1,7.0,12.1,7.2]},{"n":"拓跋珪","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[13.3,9.9,6.5,6.6,11.2,7.6]},{"n":"拓跋宏","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[13.0,11.2,7.9,7.6,13.2,8.8]},{"n":"高欢","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[13.4,11.7,8.1,8.3,11.0,8.1]},{"n":"宇文泰","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[15.5,11.8,8.2,8.6,12.9,8.9]},{"n":"宇文邕","e":"南北朝","g":"m","c":"Ruler","l":"帝王","d":[12.2,11.5,8.7,8.3,13.7,8.3]},{"n":"隋文帝","e":"隋","g":"m","c":"Ruler","l":"帝王","d":[15.6,12.7,8.4,8.7,15.1,8.6]},{"n":"隋炀帝","e":"隋","g":"m","c":"Ruler","l":"帝王","d":[14.2,10.8,8.0,9.0,13.2,8.5]},{"n":"李渊","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[10.3,9.1,7.0,6.8,12.0,6.7]},{"n":"李世民","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[15.2,11.1,7.3,9.7,12.9,8.7]},{"n":"李治","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[15.6,10.6,8.2,7.9,11.6,7.8]},{"n":"武则天","e":"唐","g":"f","c":"Ruler","l":"帝王","d":[10.7,9.3,7.0,7.1,10.5,6.8]},{"n":"李隆基","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[15.6,11.6,8.2,8.8,12.8,9.4]},{"n":"唐肃宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[14.7,11.6,7.8,8.2,11.5,8.3]},{"n":"唐代宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[12.0,9.5,7.5,8.7,11.3,7.2]},{"n":"唐德宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[12.9,10.0,6.4,7.4,11.5,7.5]},{"n":"唐宪宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[17.2,10.8,8.3,9.7,13.0,10.1]},{"n":"唐武宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[14.5,13.1,8.2,8.8,15.0,9.1]},{"n":"唐宣宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[12.8,11.9,6.8,7.9,12.2,8.4]},{"n":"唐懿宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[13.2,8.3,6.7,6.6,11.1,7.1]},{"n":"唐僖宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[15.6,11.6,7.6,8.9,11.8,8.8]},{"n":"唐昭宗","e":"唐","g":"m","c":"Ruler","l":"帝王","d":[15.1,10.8,8.2,8.5,12.9,8.3]},{"n":"朱温","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[12.1,9.2,6.3,6.4,11.1,6.9]},{"n":"李存勖","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[14.6,12.0,9.2,8.8,15.6,8.9]},{"n":"石敬瑭","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[13.2,8.3,7.6,7.4,10.4,6.7]},{"n":"郭威","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[15.6,11.8,8.6,7.4,14.1,8.3]},{"n":"柴荣","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[15.9,12.5,8.1,8.7,13.9,9.1]},{"n":"钱镠","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[14.8,13.1,7.8,9.8,12.3,10.3]},{"n":"杨行密","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[12.1,9.7,6.5,6.9,10.8,6.4]},{"n":"王建","e":"五代十国","g":"m","c":"Ruler","l":"帝王","d":[15.3,9.7,7.0,9.1,13.1,7.9]},{"n":"赵匡胤","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[13.7,12.1,7.9,9.0,14.5,7.7]},{"n":"赵光义","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[12.8,8.4,6.6,6.6,11.5,7.1]},{"n":"宋真宗","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[14.7,11.0,8.0,8.4,12.3,8.8]},{"n":"宋仁宗","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[15.7,11.6,8.0,8.7,13.0,9.6]},{"n":"宋神宗","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[15.3,10.8,8.1,8.5,14.3,8.4]},{"n":"宋徽宗","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[12.8,10.2,8.0,8.1,12.4,7.4]},{"n":"宋钦宗","e":"北宋","g":"m","c":"Ruler","l":"帝王","d":[16.1,12.4,8.2,9.0,13.2,9.2]},{"n":"宋高宗","e":"南宋","g":"m","c":"Ruler","l":"帝王","d":[15.0,9.9,7.8,8.6,12.5,8.4]},{"n":"宋孝宗","e":"南宋","g":"m","c":"Ruler","l":"帝王","d":[11.9,9.4,6.8,7.3,10.7,7.0]},{"n":"宋理宗","e":"南宋","g":"m","c":"Ruler","l":"帝王","d":[13.4,8.6,7.0,6.6,11.3,7.7]},{"n":"宋末帝","e":"南宋","g":"m","c":"Ruler","l":"帝王","d":[15.1,11.2,9.0,8.9,13.9,9.0]},{"n":"耶律阿保机","e":"辽","g":"m","c":"Ruler","l":"帝王","d":[14.2,11.8,7.5,8.5,12.4,8.7]},{"n":"耶律德光","e":"辽","g":"m","c":"Ruler","l":"帝王","d":[15.8,10.9,9.4,10.2,14.1,8.2]},{"n":"完颜阿骨打","e":"金","g":"m","c":"Ruler","l":"帝王","d":[13.0,8.9,7.6,6.8,10.2,7.0]},{"n":"完颜亮","e":"金","g":"m","c":"Ruler","l":"帝王","d":[12.5,10.9,7.5,7.6,12.7,7.7]},{"n":"成吉思汗","e":"元","g":"m","c":"Ruler","l":"帝王","d":[14.4,12.3,9.1,10.3,14.5,8.6]},{"n":"窝阔台","e":"元","g":"m","c":"Ruler","l":"帝王","d":[15.3,10.8,8.0,7.8,13.4,8.0]},{"n":"忽必烈","e":"元","g":"m","c":"Ruler","l":"帝王","d":[12.9,10.1,8.0,7.7,11.2,7.4]},{"n":"元仁宗","e":"元","g":"m","c":"Ruler","l":"帝王","d":[14.1,9.1,7.2,7.8,11.1,7.5]},{"n":"元顺帝","e":"元","g":"m","c":"Ruler","l":"帝王","d":[12.7,9.9,7.1,7.8,11.9,7.5]},{"n":"朱元璋","e":"明","g":"m","c":"Ruler","l":"帝王","d":[12.3,10.0,6.2,7.8,11.7,8.1]},{"n":"朱允炆","e":"明","g":"m","c":"Ruler","l":"帝王","d":[12.1,10.1,8.1,7.9,11.7,7.3]},{"n":"朱棣","e":"明","g":"m","c":"Ruler","l":"帝王","d":[14.1,11.5,8.1,7.6,11.7,7.5]},{"n":"朱高炽","e":"明","g":"m","c":"Ruler","l":"帝王","d":[13.7,10.7,8.5,8.9,12.3,8.6]},{"n":"朱瞻基","e":"明","g":"m","c":"Ruler","l":"帝王","d":[15.8,10.5,8.4,7.6,13.7,8.3]},{"n":"朱祁镇","e":"明","g":"m","c":"Ruler","l":"帝王","d":[14.5,12.0,7.3,7.2,13.5,7.2]},{"n":"朱祁钰","e":"明","g":"m","c":"Ruler","l":"帝王","d":[15.8,11.7,8.9,8.1,13.8,8.2]},{"n":"朱见深","e":"明","g":"m","c":"Ruler","l":"帝王","d":[12.7,12.3,9.0,8.9,13.6,9.4]},{"n":"朱祐樘","e":"明","g":"m","c":"Ruler","l":"帝王","d":[13.2,12.4,6.9,8.9,12.4,8.4]},{"n":"朱厚照","e":"明","g":"m","c":"Ruler","l":"帝王","d":[12.5,9.2,6.7,6.1,10.4,7.5]},{"n":"朱厚熜","e":"明","g":"m","c":"Ruler","l":"帝王","d":[15.0,10.5,8.0,8.6,10.7,7.6]},{"n":"朱载坖","e":"明","g":"m","c":"Ruler","l":"帝王","d":[13.1,10.0,8.0,9.4,10.9,8.2]},{"n":"朱翊钧","e":"明","g":"m","c":"Ruler","l":"帝王","d":[14.8,12.1,8.0,9.0,14.7,9.6]},{"n":"朱由校","e":"明","g":"m","c":"Ruler","l":"帝王","d":[12.9,9.7,6.3,6.9,10.9,6.8]},{"n":"朱由检","e":"明","g":"m","c":"Ruler","l":"帝王","d":[14.0,9.2,7.6,7.1,10.9,8.0]},{"n":"努尔哈赤","e":"清","g":"m","c":"Ruler","l":"帝王","d":[15.3,11.3,8.0,9.0,15.3,8.2]},{"n":"皇太极","e":"清","g":"m","c":"Ruler","l":"帝王","d":[14.1,9.8,7.5,9.5,11.4,7.2]},{"n":"顺治帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[14.0,11.9,8.0,9.1,11.9,7.7]},{"n":"康熙帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[13.2,8.5,6.8,6.8,10.7,7.6]},{"n":"雍正帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[13.0,11.5,7.5,8.8,11.8,9.0]},{"n":"乾隆帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[13.4,11.1,7.9,7.1,11.6,7.4]},{"n":"嘉庆帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[12.6,10.2,7.7,8.5,11.3,8.6]},{"n":"道光帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[16.1,11.4,9.1,8.9,14.4,8.8]},{"n":"咸丰帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[13.7,10.2,7.9,8.1,12.1,9.1]},{"n":"同治帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[16.5,13.3,9.3,7.9,13.0,8.7]},{"n":"光绪帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[14.3,10.7,7.8,8.8,13.0,8.6]},{"n":"宣统帝","e":"清","g":"m","c":"Ruler","l":"帝王","d":[14.3,10.3,8.1,8.2,12.8,8.0]},{"n":"管仲","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[10.9,13.2,12.3,9.0,13.3,10.0]},{"n":"鲍叔牙","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[11.0,13.8,12.5,8.5,13.2,8.6]},{"n":"晏婴","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[10.2,13.3,12.0,8.3,15.4,9.5]},{"n":"子产","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[9.5,14.2,11.7,8.6,14.3,8.3]},{"n":"伍子胥","e":"春秋","g":"m","c":"General","l":"名将","d":[13.8,11.5,8.7,11.0,11.0,8.9]},{"n":"范蠡","e":"春秋","g":"m","c":"Strategist","l":"谋士","d":[10.3,15.0,10.4,8.7,15.9,8.4]},{"n":"文种","e":"春秋","g":"m","c":"Strategist","l":"谋士","d":[7.7,12.0,7.0,6.8,10.6,7.2]},{"n":"狐偃","e":"春秋","g":"m","c":"Strategist","l":"谋士","d":[7.5,11.0,8.5,8.9,11.5,7.8]},{"n":"先轸","e":"春秋","g":"m","c":"General","l":"名将","d":[13.3,11.1,10.2,13.5,10.8,8.7]},{"n":"孙叔敖","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[9.7,13.1,12.9,8.4,14.0,8.4]},{"n":"百里奚","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[9.4,13.1,12.5,9.3,13.7,9.0]},{"n":"蹇叔","e":"春秋","g":"m","c":"Minister","l":"名臣","d":[10.0,13.9,12.0,8.8,12.1,8.7]},{"n":"季札","e":"春秋","g":"m","c":"Thinker","l":"思想家","d":[7.6,11.9,10.2,11.0,9.4,10.5]},{"n":"柳下惠","e":"春秋","g":"m","c":"Thinker","l":"思想家","d":[6.7,10.6,9.2,11.2,8.2,10.3]},{"n":"曹刿","e":"春秋","g":"m","c":"Strategist","l":"谋士","d":[8.7,15.5,8.7,8.1,13.4,8.3]},{"n":"专诸","e":"春秋","g":"m","c":"Chivalrous","l":"侠士","d":[10.1,7.5,14.6,13.2,10.3,10.2]},{"n":"要离","e":"春秋","g":"m","c":"Chivalrous","l":"侠士","d":[9.0,7.8,11.7,9.5,9.5,8.6]},{"n":"孙武","e":"春秋","g":"m","c":"General","l":"名将","d":[11.5,10.2,7.9,11.6,11.1,7.3]},{"n":"孔子","e":"春秋","g":"m","c":"Thinker","l":"思想家","d":[6.6,10.0,8.9,8.4,8.6,10.0]},{"n":"老子","e":"春秋","g":"m","c":"Thinker","l":"思想家","d":[7.4,12.2,9.9,13.8,10.3,12.9]},{"n":"颜回","e":"春秋","g":"m","c":"Thinker","l":"思想家","d":[6.6,12.5,8.5,11.7,9.2,11.0]},{"n":"子路","e":"春秋","g":"m","c":"General","l":"名将","d":[12.2,11.8,9.5,12.7,12.5,8.9]},{"n":"子贡","e":"春秋","g":"m","c":"Merchant","l":"商贾","d":[12.3,12.3,8.6,8.1,15.0,8.4]},{"n":"曾子","e":"春秋","g":"m","c":"Thinker","l":"思想家","d":[8.7,12.4,10.1,12.5,11.6,12.8]},{"n":"左丘明","e":"春秋","g":"m","c":"Writer","l":"文人","d":[7.4,9.5,11.2,11.4,8.5,13.7]},{"n":"西施","e":"春秋","g":"f","c":"Beauty","l":"美人","d":[8.4,8.9,11.5,8.4,11.2,13.8]},{"n":"商鞅","e":"战国","g":"m","c":"Minister","l":"名臣","d":[8.0,10.8,10.7,7.8,10.8,7.5]},{"n":"张仪","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[7.8,12.0,7.9,7.0,12.8,6.5]},{"n":"苏秦","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[8.3,12.5,9.0,8.2,11.5,8.4]},{"n":"鬼谷子","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[7.4,14.4,8.0,8.5,13.5,8.1]},{"n":"范雎","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[8.2,15.1,9.7,9.2,15.9,9.0]},{"n":"吕不韦","e":"战国","g":"m","c":"Merchant","l":"商贾","d":[10.8,9.2,7.4,6.7,11.1,6.7]},{"n":"李斯","e":"战国","g":"m","c":"Minister","l":"名臣","d":[10.0,12.0,11.3,6.7,11.4,8.6]},{"n":"蔺相如","e":"战国","g":"m","c":"Minister","l":"名臣","d":[9.3,11.1,9.9,7.7,11.9,7.4]},{"n":"平原君","e":"战国","g":"m","c":"Minister","l":"名臣","d":[10.0,12.0,11.7,9.5,13.8,8.3]},{"n":"信陵君","e":"战国","g":"m","c":"Minister","l":"名臣","d":[8.4,10.8,10.4,8.3,11.8,8.2]},{"n":"孟尝君","e":"战国","g":"m","c":"Minister","l":"名臣","d":[9.1,10.3,10.2,6.9,10.0,7.6]},{"n":"春申君","e":"战国","g":"m","c":"Minister","l":"名臣","d":[8.2,10.8,9.2,7.5,10.7,7.7]},{"n":"毛遂","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[8.2,13.0,8.6,7.4,13.3,7.3]},{"n":"冯谖","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[7.1,12.2,7.6,7.2,12.8,7.2]},{"n":"侯嬴","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[6.5,11.4,8.1,6.6,13.0,6.8]},{"n":"邹忌","e":"战国","g":"m","c":"Minister","l":"名臣","d":[11.4,11.7,11.0,7.2,13.0,8.9]},{"n":"邹衍","e":"战国","g":"m","c":"Thinker","l":"思想家","d":[8.6,13.9,11.4,13.2,10.0,12.1]},{"n":"甘茂","e":"战国","g":"m","c":"Minister","l":"名臣","d":[8.6,11.2,9.0,6.6,11.5,7.7]},{"n":"田单","e":"战国","g":"m","c":"General","l":"名将","d":[13.7,10.9,7.7,11.2,9.8,7.2]},{"n":"乐毅","e":"战国","g":"m","c":"General","l":"名将","d":[10.3,9.6,8.2,9.9,10.3,5.8]},{"n":"赵奢","e":"战国","g":"m","c":"General","l":"名将","d":[15.2,10.1,10.8,12.0,11.8,7.7]},{"n":"赵括","e":"战国","g":"m","c":"General","l":"名将","d":[10.7,8.6,7.2,10.4,9.1,7.0]},{"n":"廉颇","e":"战国","g":"m","c":"General","l":"名将","d":[11.1,8.5,7.7,8.9,9.4,5.7]},{"n":"李牧","e":"战国","g":"m","c":"General","l":"名将","d":[11.2,9.7,8.1,11.3,10.2,6.4]},{"n":"白起","e":"战国","g":"m","c":"General","l":"名将","d":[12.9,9.8,9.5,12.9,11.2,6.9]},{"n":"王翦","e":"战国","g":"m","c":"General","l":"名将","d":[11.6,9.1,7.8,10.7,8.7,6.2]},{"n":"吴起","e":"战国","g":"m","c":"General","l":"名将","d":[12.6,8.4,8.3,10.5,9.2,6.1]},{"n":"孙膑","e":"战国","g":"m","c":"Strategist","l":"谋士","d":[7.8,14.9,9.6,8.6,16.1,9.0]},{"n":"庞涓","e":"战国","g":"m","c":"General","l":"名将","d":[11.9,9.8,10.1,9.9,10.3,6.9]},{"n":"田忌","e":"战国","g":"m","c":"General","l":"名将","d":[10.7,9.6,8.1,9.6,8.9,5.5]},{"n":"孟贲","e":"战国","g":"m","c":"Chivalrous","l":"侠士","d":[9.3,7.5,12.5,13.0,10.6,10.4]},{"n":"荆轲","e":"战国","g":"m","c":"Chivalrous","l":"侠士","d":[8.6,8.0,12.9,11.6,9.9,10.1]},{"n":"高渐离","e":"战国","g":"m","c":"Artist","l":"艺术家","d":[8.4,10.3,9.2,13.9,10.9,15.3]},{"n":"聂政","e":"战国","g":"m","c":"Chivalrous","l":"侠士","d":[7.9,7.4,9.9,10.8,10.2,8.5]},{"n":"豫让","e":"战国","g":"m","c":"Chivalrous","l":"侠士","d":[9.4,8.5,12.1,11.0,10.4,9.7]},{"n":"钟无艳","e":"战国","g":"f","c":"Heroine","l":"巾帼","d":[10.1,9.9,13.0,13.4,12.4,9.3]},{"n":"赵姬","e":"战国","g":"f","c":"Beauty","l":"美人","d":[8.5,10.4,11.8,11.1,12.4,14.5]},{"n":"屈原","e":"战国","g":"m","c":"Writer","l":"文人","d":[6.7,9.5,10.8,13.0,8.8,14.4]},{"n":"宋玉","e":"战国","g":"m","c":"Writer","l":"文人","d":[7.8,8.8,10.2,13.0,9.5,14.9]},{"n":"荀子","e":"战国","g":"m","c":"Thinker","l":"思想家","d":[6.1,10.8,10.1,9.6,9.8,10.4]},{"n":"孟子","e":"战国","g":"m","c":"Thinker","l":"思想家","d":[6.4,10.4,8.2,9.2,9.1,9.6]},{"n":"庄子","e":"战国","g":"m","c":"Thinker","l":"思想家","d":[7.7,13.4,11.4,12.1,8.9,13.5]},{"n":"墨子","e":"战国","g":"m","c":"Thinker","l":"思想家","d":[8.4,13.8,11.3,12.3,10.7,10.5]},{"n":"公输般","e":"战国","g":"m","c":"Science","l":"科技","d":[9.9,11.4,11.6,8.2,11.0,9.4]},{"n":"韩非","e":"战国","g":"m","c":"Thinker","l":"思想家","d":[8.3,12.9,9.7,12.7,10.6,13.0]},{"n":"蒙恬","e":"秦","g":"m","c":"General","l":"名将","d":[14.3,9.0,9.4,11.8,9.9,6.2]},{"n":"蒙毅","e":"秦","g":"m","c":"General","l":"名将","d":[10.8,10.0,7.2,8.9,9.0,6.6]},{"n":"王贲","e":"秦","g":"m","c":"General","l":"名将","d":[14.3,11.4,8.4,12.8,12.6,7.0]},{"n":"章邯","e":"秦","g":"m","c":"General","l":"名将","d":[11.2,9.2,8.6,9.4,10.2,6.5]},{"n":"赵高","e":"秦","g":"m","c":"Minister","l":"名臣","d":[9.3,11.8,11.1,8.8,13.3,8.9]},{"n":"虞姬","e":"秦","g":"f","c":"Beauty","l":"美人","d":[6.6,7.1,8.9,7.5,10.6,11.2]},{"n":"萧何","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[10.1,9.1,10.3,7.8,11.3,7.6]},{"n":"曹参","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[9.7,12.6,11.4,7.3,10.9,8.2]},{"n":"陈平","e":"西汉","g":"m","c":"Strategist","l":"谋士","d":[8.8,13.4,8.5,7.1,12.1,8.5]},{"n":"张良","e":"西汉","g":"m","c":"Strategist","l":"谋士","d":[8.0,13.0,8.4,6.2,11.9,7.1]},{"n":"韩信","e":"西汉","g":"m","c":"General","l":"名将","d":[11.3,8.4,9.1,10.2,10.2,6.5]},{"n":"樊哙","e":"西汉","g":"m","c":"General","l":"名将","d":[14.1,10.6,8.9,11.8,13.5,8.1]},{"n":"周勃","e":"西汉","g":"m","c":"General","l":"名将","d":[12.5,8.9,8.4,10.3,11.2,7.0]},{"n":"灌婴","e":"西汉","g":"m","c":"General","l":"名将","d":[12.0,9.9,8.4,10.7,10.1,6.8]},{"n":"英布","e":"西汉","g":"m","c":"General","l":"名将","d":[14.0,10.9,9.3,12.1,12.0,7.7]},{"n":"彭越","e":"西汉","g":"m","c":"General","l":"名将","d":[13.7,11.3,10.1,13.1,12.7,8.4]},{"n":"夏侯婴","e":"西汉","g":"m","c":"General","l":"名将","d":[13.6,11.2,9.2,9.5,10.6,7.0]},{"n":"叔孙通","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[9.9,12.2,12.6,7.9,13.6,9.2]},{"n":"陆贾","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[8.5,9.5,8.5,7.8,10.7,7.5]},{"n":"郦食其","e":"西汉","g":"m","c":"Strategist","l":"谋士","d":[6.9,13.5,8.4,7.3,12.0,7.6]},{"n":"娄敬","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[8.3,10.1,8.5,7.3,10.6,7.2]},{"n":"周亚夫","e":"西汉","g":"m","c":"General","l":"名将","d":[11.8,10.9,8.6,11.3,12.3,7.8]},{"n":"李广","e":"西汉","g":"m","c":"General","l":"名将","d":[11.5,8.3,8.8,9.8,10.1,6.6]},{"n":"卫青","e":"西汉","g":"m","c":"General","l":"名将","d":[14.8,10.1,9.0,10.3,12.2,7.5]},{"n":"霍去病","e":"西汉","g":"m","c":"General","l":"名将","d":[11.9,9.1,7.2,9.2,8.5,6.0]},{"n":"李陵","e":"西汉","g":"m","c":"General","l":"名将","d":[11.6,10.4,8.6,10.4,10.7,8.3]},{"n":"赵充国","e":"西汉","g":"m","c":"General","l":"名将","d":[13.4,10.6,9.1,11.5,12.2,7.0]},{"n":"苏武","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[8.7,10.8,8.2,7.5,11.2,7.7]},{"n":"张骞","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[8.5,10.9,10.7,6.9,11.9,8.9]},{"n":"桑弘羊","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[10.5,12.1,11.5,7.8,12.6,9.2]},{"n":"霍光","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[10.9,12.3,12.7,8.9,11.6,9.0]},{"n":"金日磾","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[10.0,11.1,11.3,7.6,10.9,8.1]},{"n":"丙吉","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[8.5,10.4,9.8,6.7,11.4,7.9]},{"n":"魏相","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[10.1,12.1,11.3,8.1,12.7,9.0]},{"n":"董仲舒","e":"西汉","g":"m","c":"Thinker","l":"思想家","d":[7.2,13.9,9.3,12.4,11.3,13.9]},{"n":"司马迁","e":"西汉","g":"m","c":"Writer","l":"文人","d":[8.3,9.6,12.3,13.6,10.8,14.6]},{"n":"东方朔","e":"西汉","g":"m","c":"Writer","l":"文人","d":[8.6,8.0,11.3,12.4,9.5,14.5]},{"n":"司马相如","e":"西汉","g":"m","c":"Writer","l":"文人","d":[9.0,9.9,9.5,13.5,10.4,14.3]},{"n":"卓文君","e":"西汉","g":"f","c":"Writer","l":"文人","d":[6.5,8.0,8.9,9.2,8.9,12.1]},{"n":"贾谊","e":"西汉","g":"m","c":"Writer","l":"文人","d":[8.6,8.8,10.7,13.0,8.5,13.6]},{"n":"晁错","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[9.9,11.8,11.8,9.3,12.0,8.9]},{"n":"主父偃","e":"西汉","g":"m","c":"Minister","l":"名臣","d":[10.3,10.9,10.5,7.7,12.6,7.5]},{"n":"王昭君","e":"西汉","g":"f","c":"Beauty","l":"美人","d":[7.3,7.6,9.5,6.9,10.2,11.9]},{"n":"赵飞燕","e":"西汉","g":"f","c":"Beauty","l":"美人","d":[7.0,8.2,10.1,7.9,10.0,11.4]},{"n":"赵合德","e":"西汉","g":"f","c":"Beauty","l":"美人","d":[10.1,9.3,12.1,9.9,12.6,15.2]},{"n":"卫子夫","e":"西汉","g":"f","c":"Heroine","l":"巾帼","d":[12.0,10.3,11.4,12.2,12.4,9.2]},{"n":"陈阿娇","e":"西汉","g":"f","c":"Heroine","l":"巾帼","d":[8.6,8.6,9.9,9.9,8.8,8.3]},{"n":"李夫人","e":"西汉","g":"f","c":"Beauty","l":"美人","d":[6.9,7.8,8.7,7.5,9.7,11.3]},{"n":"钩弋夫人","e":"西汉","g":"f","c":"Heroine","l":"巾帼","d":[10.5,8.4,10.8,10.3,11.1,10.5]},{"n":"王政君","e":"西汉","g":"f","c":"Heroine","l":"巾帼","d":[8.8,7.8,9.4,9.0,8.4,9.0]},{"n":"班婕妤","e":"西汉","g":"f","c":"Writer","l":"文人","d":[8.2,9.6,11.9,12.0,9.7,15.5]},{"n":"冯嫽","e":"西汉","g":"f","c":"Heroine","l":"巾帼","d":[8.7,7.8,9.5,10.1,9.6,7.7]},{"n":"解忧公主","e":"西汉","g":"f","c":"Heroine","l":"巾帼","d":[9.8,9.9,12.7,12.6,11.5,8.4]},{"n":"邓禹","e":"东汉","g":"m","c":"General","l":"名将","d":[13.9,10.9,7.9,10.0,10.1,7.7]},{"n":"冯异","e":"东汉","g":"m","c":"General","l":"名将","d":[11.1,8.7,7.2,10.5,8.9,7.2]},{"n":"耿弇","e":"东汉","g":"m","c":"General","l":"名将","d":[11.4,10.0,7.8,9.9,10.7,6.4]},{"n":"寇恂","e":"东汉","g":"m","c":"Minister","l":"名臣","d":[9.4,10.9,11.4,7.6,12.1,8.0]},{"n":"马援","e":"东汉","g":"m","c":"General","l":"名将","d":[10.6,10.0,7.9,9.2,11.4,7.2]},{"n":"班超","e":"东汉","g":"m","c":"General","l":"名将","d":[11.8,8.1,7.5,9.2,9.7,6.1]},{"n":"班固","e":"东汉","g":"m","c":"Writer","l":"文人","d":[7.4,9.5,10.4,13.2,8.3,12.8]},{"n":"班昭","e":"东汉","g":"f","c":"Writer","l":"文人","d":[8.4,8.3,10.0,13.2,9.8,16.2]},{"n":"窦宪","e":"东汉","g":"m","c":"General","l":"名将","d":[11.9,9.0,7.5,10.2,9.9,6.1]},{"n":"虞诩","e":"东汉","g":"m","c":"Minister","l":"名臣","d":[10.6,11.2,10.1,7.1,11.9,8.6]},{"n":"杨震","e":"东汉","g":"m","c":"Minister","l":"名臣","d":[9.5,12.3,10.9,7.6,12.7,7.5]},{"n":"李固","e":"东汉","g":"m","c":"Minister","l":"名臣","d":[9.8,10.3,11.4,7.7,11.9,8.3]},{"n":"陈蕃","e":"东汉","g":"m","c":"Minister","l":"名臣","d":[10.4,11.2,12.7,9.4,11.5,8.6]},{"n":"何进","e":"东汉","g":"m","c":"General","l":"名将","d":[13.1,9.9,9.1,11.3,9.8,6.9]},{"n":"皇甫嵩","e":"东汉","g":"m","c":"General","l":"名将","d":[11.1,9.3,8.1,9.1,9.0,5.8]},{"n":"朱儁","e":"东汉","g":"m","c":"General","l":"名将","d":[13.2,11.3,8.7,9.9,10.5,8.1]},{"n":"卢植","e":"东汉","g":"m","c":"Minister","l":"名臣","d":[10.7,13.3,11.0,9.6,12.1,9.7]},{"n":"蔡邕","e":"东汉","g":"m","c":"Writer","l":"文人","d":[6.0,8.5,8.5,11.5,8.3,11.8]},{"n":"郑玄","e":"东汉","g":"m","c":"Thinker","l":"思想家","d":[6.5,12.5,9.4,9.0,8.5,9.9]},{"n":"张衡","e":"东汉","g":"m","c":"Science","l":"科技","d":[6.9,11.6,8.1,9.3,8.6,7.9]},{"n":"蔡伦","e":"东汉","g":"m","c":"Science","l":"科技","d":[10.8,14.6,9.8,11.5,11.3,10.6]},{"n":"张道陵","e":"东汉","g":"m","c":"Thinker","l":"思想家","d":[6.4,9.6,9.6,8.2,8.5,9.0]},{"n":"王充","e":"东汉","g":"m","c":"Thinker","l":"思想家","d":[6.2,12.1,9.1,9.6,8.8,10.5]},{"n":"邓绥","e":"东汉","g":"f","c":"Heroine","l":"巾帼","d":[10.0,8.5,10.8,10.3,9.2,8.5]},{"n":"阴丽华","e":"东汉","g":"f","c":"Heroine","l":"巾帼","d":[11.4,9.5,12.1,11.7,10.6,10.2]},{"n":"羊祜","e":"西晋","g":"m","c":"Minister","l":"名臣","d":[11.0,14.0,13.1,8.7,12.8,8.5]},{"n":"杜预","e":"西晋","g":"m","c":"Strategist","l":"谋士","d":[8.2,15.9,9.5,8.6,15.3,8.5]},{"n":"王濬","e":"西晋","g":"m","c":"General","l":"名将","d":[10.9,8.8,8.1,11.6,9.7,7.0]},{"n":"张华","e":"西晋","g":"m","c":"Minister","l":"名臣","d":[11.3,12.4,11.2,7.8,14.1,10.8]},{"n":"贾南风","e":"西晋","g":"f","c":"Heroine","l":"巾帼","d":[8.7,8.3,9.7,10.2,9.8,8.5]},{"n":"王导","e":"东晋","g":"m","c":"Minister","l":"名臣","d":[8.7,10.8,9.7,6.9,10.4,7.0]},{"n":"谢安","e":"东晋","g":"m","c":"Minister","l":"名臣","d":[9.9,9.5,11.9,6.7,12.4,9.0]},{"n":"谢玄","e":"东晋","g":"m","c":"General","l":"名将","d":[14.4,11.9,9.6,13.3,12.5,7.6]},{"n":"桓温","e":"东晋","g":"m","c":"General","l":"名将","d":[10.9,7.7,7.8,8.1,10.6,6.8]},{"n":"祖逖","e":"东晋","g":"m","c":"General","l":"名将","d":[12.4,9.2,7.6,10.8,10.7,6.0]},{"n":"刘琨","e":"东晋","g":"m","c":"General","l":"名将","d":[14.2,11.1,10.9,12.8,12.4,7.8]},{"n":"陶侃","e":"东晋","g":"m","c":"General","l":"名将","d":[12.3,9.1,8.6,11.1,10.1,6.6]},{"n":"庾亮","e":"东晋","g":"m","c":"Minister","l":"名臣","d":[9.8,11.9,12.2,8.4,12.8,9.2]},{"n":"郗鉴","e":"东晋","g":"m","c":"Minister","l":"名臣","d":[9.0,11.3,10.4,8.2,10.7,8.8]},{"n":"王敦","e":"东晋","g":"m","c":"General","l":"名将","d":[10.6,8.4,8.6,10.4,9.5,7.1]},{"n":"王羲之","e":"东晋","g":"m","c":"Artist","l":"艺术家","d":[6.6,7.9,8.2,12.5,8.9,14.7]},{"n":"王献之","e":"东晋","g":"m","c":"Artist","l":"艺术家","d":[7.7,9.6,11.9,13.0,8.8,17.1]},{"n":"顾恺之","e":"东晋","g":"m","c":"Artist","l":"艺术家","d":[6.7,8.8,8.3,12.9,9.6,13.7]},{"n":"谢道韫","e":"东晋","g":"f","c":"Writer","l":"文人","d":[8.2,8.4,9.4,9.9,8.7,11.6]},{"n":"陶渊明","e":"东晋","g":"m","c":"Writer","l":"文人","d":[7.2,9.1,11.4,12.2,9.0,16.5]},{"n":"檀道济","e":"南北朝","g":"m","c":"General","l":"名将","d":[10.8,8.1,7.2,9.6,9.1,6.6]},{"n":"谢灵运","e":"南北朝","g":"m","c":"Writer","l":"文人","d":[7.0,6.7,8.3,10.8,7.6,11.5]},{"n":"鲍照","e":"南北朝","g":"m","c":"Writer","l":"文人","d":[8.0,9.9,10.6,11.9,8.8,13.0]},{"n":"祖冲之","e":"南北朝","g":"m","c":"Science","l":"科技","d":[7.5,11.7,8.7,8.3,9.7,8.1]},{"n":"郦道元","e":"南北朝","g":"m","c":"Science","l":"科技","d":[9.6,13.0,9.6,9.2,12.2,10.1]},{"n":"贾思勰","e":"南北朝","g":"m","c":"Science","l":"科技","d":[8.8,12.8,10.5,8.6,9.5,9.2]},{"n":"韦孝宽","e":"南北朝","g":"m","c":"General","l":"名将","d":[12.7,10.0,8.9,11.4,12.1,7.7]},{"n":"斛律光","e":"南北朝","g":"m","c":"General","l":"名将","d":[14.0,11.7,9.3,10.5,12.9,8.0]},{"n":"高长恭","e":"南北朝","g":"m","c":"General","l":"名将","d":[14.1,11.2,9.5,12.9,12.1,7.3]},{"n":"陈庆之","e":"南北朝","g":"m","c":"General","l":"名将","d":[13.0,10.8,10.0,12.5,11.2,7.4]},{"n":"韦睿","e":"南北朝","g":"m","c":"General","l":"名将","d":[14.1,11.7,10.9,12.6,11.4,7.4]},{"n":"萧统","e":"南北朝","g":"m","c":"Writer","l":"文人","d":[6.8,7.5,9.3,10.2,8.1,11.7]},{"n":"刘勰","e":"南北朝","g":"m","c":"Writer","l":"文人","d":[8.4,10.6,12.0,13.3,9.4,15.4]},{"n":"钟嵘","e":"南北朝","g":"m","c":"Writer","l":"文人","d":[7.4,9.8,10.4,13.4,10.2,12.6]},{"n":"花木兰","e":"南北朝","g":"f","c":"General","l":"名将","d":[11.4,8.4,7.1,10.0,8.1,6.3]},{"n":"冯太后","e":"南北朝","g":"f","c":"Heroine","l":"巾帼","d":[8.7,8.8,12.2,11.5,9.5,8.2]},{"n":"冼夫人","e":"南北朝","g":"f","c":"General","l":"名将","d":[13.2,11.3,8.7,13.5,12.2,9.2]},{"n":"苏小小","e":"南北朝","g":"f","c":"Beauty","l":"美人","d":[7.3,7.8,9.3,7.8,9.8,12.0]},{"n":"张丽华","e":"南北朝","g":"f","c":"Beauty","l":"美人","d":[8.8,10.8,12.0,10.2,12.3,14.6]},{"n":"李冲","e":"南北朝","g":"m","c":"Minister","l":"名臣","d":[8.6,10.8,12.4,7.8,11.8,7.6]},{"n":"苏绰","e":"南北朝","g":"m","c":"Minister","l":"名臣","d":[9.7,12.5,11.6,7.4,12.6,9.9]},{"n":"独孤信","e":"南北朝","g":"m","c":"General","l":"名将","d":[13.2,10.4,8.5,11.4,11.2,8.1]},{"n":"杨素","e":"隋","g":"m","c":"General","l":"名将","d":[12.5,10.2,9.1,12.1,11.2,7.1]},{"n":"韩擒虎","e":"隋","g":"m","c":"General","l":"名将","d":[13.7,11.3,8.5,13.3,13.4,7.9]},{"n":"贺若弼","e":"隋","g":"m","c":"General","l":"名将","d":[16.2,11.8,9.6,11.6,11.8,7.7]},{"n":"史万岁","e":"隋","g":"m","c":"General","l":"名将","d":[11.6,12.4,9.1,10.2,10.5,7.7]},{"n":"高颎","e":"隋","g":"m","c":"Minister","l":"名臣","d":[9.5,12.2,12.0,8.6,14.4,8.7]},{"n":"宇文述","e":"隋","g":"m","c":"General","l":"名将","d":[12.3,8.9,7.2,10.3,10.8,6.2]},{"n":"长孙晟","e":"隋","g":"m","c":"Minister","l":"名臣","d":[11.8,13.3,11.0,8.4,12.7,9.3]},{"n":"独孤伽罗","e":"隋","g":"f","c":"Heroine","l":"巾帼","d":[10.2,7.2,11.8,8.9,10.2,9.0]},{"n":"李密","e":"隋","g":"m","c":"General","l":"名将","d":[11.2,8.4,7.6,8.1,9.0,6.9]},{"n":"窦建德","e":"隋","g":"m","c":"General","l":"名将","d":[10.8,8.2,8.3,10.1,9.2,6.5]},{"n":"王世充","e":"隋","g":"m","c":"General","l":"名将","d":[12.0,9.4,9.1,10.0,10.8,7.7]},{"n":"房玄龄","e":"唐","g":"m","c":"Minister","l":"名臣","d":[8.9,11.7,10.0,7.1,10.7,8.0]},{"n":"杜如晦","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.2,13.2,10.8,9.2,13.0,7.9]},{"n":"魏征","e":"唐","g":"m","c":"Minister","l":"名臣","d":[11.2,11.8,11.7,8.5,13.7,8.5]},{"n":"李靖","e":"唐","g":"m","c":"General","l":"名将","d":[12.5,9.1,7.4,10.3,9.1,6.8]},{"n":"李勣","e":"唐","g":"m","c":"General","l":"名将","d":[9.9,9.0,7.2,9.4,10.1,6.3]},{"n":"尉迟恭","e":"唐","g":"m","c":"General","l":"名将","d":[15.5,11.4,9.3,11.8,12.9,8.3]},{"n":"秦琼","e":"唐","g":"m","c":"General","l":"名将","d":[11.1,9.3,8.5,8.9,10.4,7.4]},{"n":"程咬金","e":"唐","g":"m","c":"General","l":"名将","d":[11.6,9.0,8.6,9.7,10.9,6.5]},{"n":"长孙无忌","e":"唐","g":"m","c":"Minister","l":"名臣","d":[9.2,10.6,10.2,7.1,10.6,7.3]},{"n":"褚遂良","e":"唐","g":"m","c":"Minister","l":"名臣","d":[8.9,11.5,9.9,7.8,12.4,6.9]},{"n":"长孙皇后","e":"唐","g":"f","c":"Heroine","l":"巾帼","d":[10.1,9.7,9.8,10.0,9.5,8.7]},{"n":"狄仁杰","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.3,13.0,12.1,9.0,14.1,9.1]},{"n":"姚崇","e":"唐","g":"m","c":"Minister","l":"名臣","d":[9.3,12.1,10.6,7.6,11.0,7.2]},{"n":"宋璟","e":"唐","g":"m","c":"Minister","l":"名臣","d":[8.1,9.5,9.7,7.0,11.0,7.6]},{"n":"张说","e":"唐","g":"m","c":"Minister","l":"名臣","d":[7.9,9.1,9.0,6.9,10.7,7.7]},{"n":"张九龄","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.6,14.0,12.1,9.1,13.5,9.3]},{"n":"李林甫","e":"唐","g":"m","c":"Minister","l":"名臣","d":[9.9,12.4,10.7,9.4,13.4,9.1]},{"n":"杨国忠","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.3,12.8,11.5,7.7,12.6,8.4]},{"n":"高力士","e":"唐","g":"m","c":"Minister","l":"名臣","d":[9.9,12.7,10.2,8.6,11.8,8.9]},{"n":"安禄山","e":"唐","g":"m","c":"General","l":"名将","d":[14.0,10.8,9.6,11.6,10.4,7.9]},{"n":"史思明","e":"唐","g":"m","c":"General","l":"名将","d":[13.1,9.7,8.2,10.9,12.2,7.5]},{"n":"郭子仪","e":"唐","g":"m","c":"General","l":"名将","d":[11.9,10.1,9.4,8.6,11.0,7.3]},{"n":"李光弼","e":"唐","g":"m","c":"General","l":"名将","d":[14.2,11.3,9.8,10.3,12.6,8.3]},{"n":"仆固怀恩","e":"唐","g":"m","c":"General","l":"名将","d":[12.4,8.5,7.4,11.3,9.7,7.4]},{"n":"哥舒翰","e":"唐","g":"m","c":"General","l":"名将","d":[11.0,9.4,8.1,10.1,10.2,6.3]},{"n":"高仙芝","e":"唐","g":"m","c":"General","l":"名将","d":[11.9,8.4,8.0,8.9,10.5,5.8]},{"n":"封常清","e":"唐","g":"m","c":"General","l":"名将","d":[12.0,8.3,6.8,9.7,8.5,6.6]},{"n":"张巡","e":"唐","g":"m","c":"General","l":"名将","d":[14.7,9.7,9.1,11.8,11.7,7.3]},{"n":"许远","e":"唐","g":"m","c":"General","l":"名将","d":[14.1,10.6,8.6,12.0,12.0,7.6]},{"n":"南霁云","e":"唐","g":"m","c":"General","l":"名将","d":[14.3,9.6,9.3,12.2,11.3,7.1]},{"n":"颜真卿","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[6.9,9.1,9.8,11.1,8.6,16.2]},{"n":"颜杲卿","e":"唐","g":"m","c":"Minister","l":"名臣","d":[7.5,10.1,9.4,6.6,11.4,7.4]},{"n":"李晟","e":"唐","g":"m","c":"General","l":"名将","d":[12.9,12.4,10.2,10.4,12.5,8.6]},{"n":"浑瑊","e":"唐","g":"m","c":"General","l":"名将","d":[10.4,9.2,7.6,9.9,8.7,6.7]},{"n":"李愬","e":"唐","g":"m","c":"General","l":"名将","d":[10.8,8.4,8.5,10.1,9.7,6.4]},{"n":"裴度","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.8,12.9,12.3,9.5,12.5,9.0]},{"n":"李德裕","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.2,12.7,12.1,7.7,11.4,8.1]},{"n":"杜佑","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.8,13.1,11.2,9.4,14.3,9.3]},{"n":"刘晏","e":"唐","g":"m","c":"Minister","l":"名臣","d":[7.5,10.2,11.5,8.5,12.8,7.9]},{"n":"陆贽","e":"唐","g":"m","c":"Minister","l":"名臣","d":[10.2,14.1,11.1,8.4,14.1,8.1]},{"n":"李泌","e":"唐","g":"m","c":"Strategist","l":"谋士","d":[8.6,15.4,9.0,8.9,14.0,7.4]},{"n":"王忠嗣","e":"唐","g":"m","c":"General","l":"名将","d":[12.9,9.0,10.5,13.1,10.7,8.6]},{"n":"李龟年","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[7.3,8.0,9.2,13.1,10.6,15.0]},{"n":"吴道子","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[6.7,9.0,8.4,12.9,9.3,13.7]},{"n":"阎立本","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[6.7,8.9,9.8,13.5,8.2,16.2]},{"n":"张旭","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[5.9,7.4,8.0,10.1,8.6,13.6]},{"n":"怀素","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[6.8,8.0,8.1,9.7,8.4,13.6]},{"n":"欧阳询","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[6.8,8.5,9.4,13.2,8.3,16.4]},{"n":"虞世南","e":"唐","g":"m","c":"Artist","l":"艺术家","d":[6.6,8.0,7.3,10.4,7.5,13.1]},{"n":"孙思邈","e":"唐","g":"m","c":"Science","l":"科技","d":[8.2,14.9,9.9,9.7,11.9,9.8]},{"n":"李淳风","e":"唐","g":"m","c":"Science","l":"科技","d":[9.8,13.7,10.3,9.9,12.8,10.5]},{"n":"袁天罡","e":"唐","g":"m","c":"Science","l":"科技","d":[8.0,13.5,11.8,9.3,11.4,8.7]},{"n":"僧一行","e":"唐","g":"m","c":"Science","l":"科技","d":[8.0,11.4,9.3,6.8,8.7,8.2]},{"n":"玄奘","e":"唐","g":"m","c":"Thinker","l":"思想家","d":[6.9,11.6,10.2,10.0,9.1,9.6]},{"n":"鉴真","e":"唐","g":"m","c":"Thinker","l":"思想家","d":[8.2,11.8,11.3,11.5,10.4,14.4]},{"n":"慧能","e":"唐","g":"m","c":"Thinker","l":"思想家","d":[6.5,12.5,9.1,9.0,9.6,10.0]},{"n":"王维","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.2,8.6,9.5,12.1,8.9,13.8]},{"n":"李白","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.9,9.5,12.1,11.2,9.8,14.9]},{"n":"杜甫","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.2,7.3,8.9,9.5,8.0,11.0]},{"n":"白居易","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.0,7.1,8.2,9.1,8.2,12.2]},{"n":"元稹","e":"唐","g":"m","c":"Writer","l":"文人","d":[9.1,9.6,11.3,13.1,10.4,14.7]},{"n":"韩愈","e":"唐","g":"m","c":"Writer","l":"文人","d":[8.9,9.0,11.2,15.1,9.9,13.5]},{"n":"柳宗元","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.0,7.7,9.8,10.4,8.7,12.7]},{"n":"刘禹锡","e":"唐","g":"m","c":"Writer","l":"文人","d":[8.5,9.5,12.0,14.2,9.6,13.7]},{"n":"孟浩然","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.5,9.7,10.8,13.1,8.8,17.1]},{"n":"王勃","e":"唐","g":"m","c":"Writer","l":"文人","d":[8.9,11.0,11.5,11.2,9.4,16.7]},{"n":"骆宾王","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.5,10.3,10.7,14.2,10.3,15.5]},{"n":"陈子昂","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.2,8.4,9.9,10.3,8.6,11.3]},{"n":"贺知章","e":"唐","g":"m","c":"Writer","l":"文人","d":[6.8,7.3,9.3,10.6,8.2,12.9]},{"n":"张若虚","e":"唐","g":"m","c":"Writer","l":"文人","d":[8.2,9.2,11.1,12.2,10.6,14.7]},{"n":"高适","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.5,10.1,10.3,10.8,9.6,12.7]},{"n":"岑参","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.6,9.8,11.6,13.3,8.8,13.3]},{"n":"王昌龄","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.4,8.4,10.7,10.2,9.1,13.2]},{"n":"李贺","e":"唐","g":"m","c":"Writer","l":"文人","d":[8.1,8.9,11.2,12.8,8.9,15.0]},{"n":"韦应物","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.0,7.6,10.1,10.9,8.2,13.5]},{"n":"杜牧","e":"唐","g":"m","c":"Writer","l":"文人","d":[8.1,8.7,9.8,12.9,9.4,14.8]},{"n":"李商隐","e":"唐","g":"m","c":"Writer","l":"文人","d":[6.2,8.0,9.6,10.7,8.3,10.8]},{"n":"温庭筠","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.6,8.2,9.5,11.2,8.5,13.9]},{"n":"罗隐","e":"唐","g":"m","c":"Writer","l":"文人","d":[7.2,9.4,9.9,10.0,8.0,12.7]},{"n":"韦庄","e":"唐","g":"m","c":"Writer","l":"文人","d":[6.6,8.2,9.2,11.2,7.3,12.2]},{"n":"杨玉环","e":"唐","g":"f","c":"Beauty","l":"美人","d":[7.9,7.5,9.9,7.3,10.2,11.2]},{"n":"梅妃","e":"唐","g":"f","c":"Beauty","l":"美人","d":[7.1,8.2,8.8,9.0,9.3,12.8]},{"n":"上官婉儿","e":"唐","g":"f","c":"Writer","l":"文人","d":[7.4,8.3,8.7,11.1,8.8,11.9]},{"n":"太平公主","e":"唐","g":"f","c":"Heroine","l":"巾帼","d":[8.6,7.6,9.8,9.1,8.4,8.3]},{"n":"安乐公主","e":"唐","g":"f","c":"Heroine","l":"巾帼","d":[8.4,7.1,10.6,9.8,9.1,8.4]},{"n":"韦皇后","e":"唐","g":"f","c":"Heroine","l":"巾帼","d":[10.6,10.5,13.4,11.5,11.8,9.3]},{"n":"武惠妃","e":"唐","g":"f","c":"Heroine","l":"巾帼","d":[9.8,9.5,13.0,12.0,11.9,10.3]},{"n":"平阳昭公主","e":"唐","g":"f","c":"General","l":"名将","d":[13.4,11.0,8.0,9.8,10.1,7.2]},{"n":"文成公主","e":"唐","g":"f","c":"Heroine","l":"巾帼","d":[11.6,10.0,11.8,12.9,11.5,9.8]},{"n":"鱼玄机","e":"唐","g":"f","c":"Writer","l":"文人","d":[6.9,8.5,9.1,10.8,7.5,11.4]},{"n":"薛涛","e":"唐","g":"f","c":"Writer","l":"文人","d":[6.5,7.9,11.0,12.2,9.6,14.4]},{"n":"李冶","e":"唐","g":"f","c":"Writer","l":"文人","d":[7.8,9.9,10.5,10.7,8.8,15.0]},{"n":"公孙大娘","e":"唐","g":"f","c":"Artist","l":"艺术家","d":[6.2,7.4,8.9,9.9,9.3,12.3]},{"n":"樊梨花","e":"唐","g":"f","c":"General","l":"名将","d":[12.3,9.9,9.1,12.9,11.9,7.1]},{"n":"赵普","e":"北宋","g":"m","c":"Strategist","l":"谋士","d":[8.6,13.5,8.3,9.6,13.4,7.7]},{"n":"曹彬","e":"北宋","g":"m","c":"General","l":"名将","d":[10.6,8.6,7.7,8.4,9.6,6.4]},{"n":"潘美","e":"北宋","g":"m","c":"General","l":"名将","d":[13.9,11.1,10.6,14.2,11.2,7.6]},{"n":"杨业","e":"北宋","g":"m","c":"General","l":"名将","d":[12.8,11.0,10.0,13.0,11.0,7.0]},{"n":"杨延昭","e":"北宋","g":"m","c":"General","l":"名将","d":[12.2,9.9,7.7,9.6,10.7,6.8]},{"n":"狄青","e":"北宋","g":"m","c":"General","l":"名将","d":[11.6,7.2,8.3,10.2,10.2,6.6]},{"n":"范仲淹","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[9.1,12.3,10.7,7.7,11.7,9.0]},{"n":"包拯","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[7.7,9.4,9.6,7.1,10.3,7.2]},{"n":"欧阳修","e":"北宋","g":"m","c":"Writer","l":"文人","d":[6.9,8.2,8.9,13.1,8.7,14.7]},{"n":"王安石","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[10.3,11.3,12.0,8.1,12.9,9.7]},{"n":"司马光","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[8.5,10.9,8.8,6.5,10.7,6.5]},{"n":"苏轼","e":"北宋","g":"m","c":"Writer","l":"文人","d":[6.7,7.6,9.4,11.4,8.1,11.9]},{"n":"苏洵","e":"北宋","g":"m","c":"Writer","l":"文人","d":[7.0,8.1,9.9,12.8,9.8,14.1]},{"n":"苏辙","e":"北宋","g":"m","c":"Writer","l":"文人","d":[6.4,7.9,8.9,10.8,7.8,11.7]},{"n":"曾巩","e":"北宋","g":"m","c":"Writer","l":"文人","d":[6.7,8.0,8.7,9.1,7.4,12.0]},{"n":"晏殊","e":"北宋","g":"m","c":"Writer","l":"文人","d":[6.5,8.9,8.8,11.4,7.5,12.1]},{"n":"晏几道","e":"北宋","g":"m","c":"Writer","l":"文人","d":[8.1,9.7,11.1,13.3,8.8,13.8]},{"n":"柳永","e":"北宋","g":"m","c":"Writer","l":"文人","d":[7.7,10.0,10.3,11.9,10.3,14.1]},{"n":"秦观","e":"北宋","g":"m","c":"Writer","l":"文人","d":[7.2,8.5,9.1,13.8,9.5,13.5]},{"n":"黄庭坚","e":"北宋","g":"m","c":"Writer","l":"文人","d":[7.5,7.7,9.8,11.0,7.7,13.1]},{"n":"周邦彦","e":"北宋","g":"m","c":"Writer","l":"文人","d":[6.3,8.2,10.5,9.6,7.7,11.2]},{"n":"米芾","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[8.7,9.3,9.9,15.4,9.9,16.0]},{"n":"蔡襄","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[7.0,7.4,8.8,10.0,8.1,12.7]},{"n":"张择端","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[6.7,7.6,7.4,10.8,7.6,12.3]},{"n":"范宽","e":"北宋","g":"m","c":"Artist","l":"艺术家","d":[7.9,9.6,10.1,11.5,10.0,16.3]},{"n":"沈括","e":"北宋","g":"m","c":"Science","l":"科技","d":[8.8,14.5,9.5,10.7,11.3,10.7]},{"n":"苏颂","e":"北宋","g":"m","c":"Science","l":"科技","d":[9.1,11.4,9.2,9.6,12.8,10.2]},{"n":"毕昇","e":"北宋","g":"m","c":"Science","l":"科技","d":[9.7,12.8,10.2,9.2,11.2,10.6]},{"n":"张载","e":"北宋","g":"m","c":"Thinker","l":"思想家","d":[6.8,14.5,10.6,11.0,10.1,10.3]},{"n":"程颢","e":"北宋","g":"m","c":"Thinker","l":"思想家","d":[7.8,13.7,10.1,12.4,11.0,12.4]},{"n":"程颐","e":"北宋","g":"m","c":"Thinker","l":"思想家","d":[7.0,9.9,9.5,9.9,8.4,10.5]},{"n":"邵雍","e":"北宋","g":"m","c":"Thinker","l":"思想家","d":[6.8,10.4,9.5,9.7,8.5,9.1]},{"n":"周敦颐","e":"北宋","g":"m","c":"Thinker","l":"思想家","d":[7.5,13.7,9.5,11.7,10.7,12.3]},{"n":"吕惠卿","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[11.0,11.8,12.5,7.7,14.3,9.2]},{"n":"章惇","e":"北宋","g":"m","c":"Minister","l":"名臣","d":[8.8,13.1,12.4,7.5,13.5,9.0]},{"n":"李纲","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[11.0,11.8,11.5,9.6,13.5,10.2]},{"n":"宗泽","e":"南宋","g":"m","c":"General","l":"名将","d":[13.5,11.8,8.7,10.7,12.5,8.3]},{"n":"岳飞","e":"南宋","g":"m","c":"General","l":"名将","d":[11.3,8.4,7.2,10.4,9.1,7.1]},{"n":"韩世忠","e":"南宋","g":"m","c":"General","l":"名将","d":[11.4,8.0,7.9,9.1,9.4,6.7]},{"n":"张俊","e":"南宋","g":"m","c":"General","l":"名将","d":[12.2,12.5,11.2,11.5,12.7,8.4]},{"n":"刘光世","e":"南宋","g":"m","c":"General","l":"名将","d":[11.7,10.0,8.6,10.8,10.3,7.0]},{"n":"吴玠","e":"南宋","g":"m","c":"General","l":"名将","d":[11.2,9.3,8.0,9.0,9.7,6.8]},{"n":"刘锜","e":"南宋","g":"m","c":"General","l":"名将","d":[15.1,11.4,9.7,12.1,11.7,8.0]},{"n":"虞允文","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[9.4,12.5,11.5,9.2,12.9,8.3]},{"n":"辛弃疾","e":"南宋","g":"m","c":"Writer","l":"文人","d":[8.6,9.1,11.3,13.7,9.6,13.6]},{"n":"陆游","e":"南宋","g":"m","c":"Writer","l":"文人","d":[7.6,10.7,11.8,11.8,9.7,14.8]},{"n":"姜夔","e":"南宋","g":"m","c":"Writer","l":"文人","d":[7.4,8.8,9.8,12.9,9.6,13.7]},{"n":"范成大","e":"南宋","g":"m","c":"Writer","l":"文人","d":[8.5,10.6,10.5,12.3,9.8,14.9]},{"n":"杨万里","e":"南宋","g":"m","c":"Writer","l":"文人","d":[7.8,8.2,9.9,11.7,8.6,13.3]},{"n":"刘克庄","e":"南宋","g":"m","c":"Writer","l":"文人","d":[7.4,9.2,9.2,12.5,9.1,14.2]},{"n":"朱淑真","e":"南宋","g":"f","c":"Writer","l":"文人","d":[8.2,9.0,9.9,13.0,9.2,15.5]},{"n":"李清照","e":"南宋","g":"f","c":"Writer","l":"文人","d":[6.7,8.3,9.9,11.7,8.7,12.0]},{"n":"唐婉","e":"南宋","g":"f","c":"Writer","l":"文人","d":[8.0,8.8,9.2,9.7,8.9,13.7]},{"n":"严蕊","e":"南宋","g":"f","c":"Writer","l":"文人","d":[7.1,7.9,9.6,10.2,8.2,12.6]},{"n":"朱熹","e":"南宋","g":"m","c":"Thinker","l":"思想家","d":[7.1,12.5,10.4,10.9,10.8,11.0]},{"n":"陆九渊","e":"南宋","g":"m","c":"Thinker","l":"思想家","d":[6.5,11.6,7.6,10.3,8.5,10.6]},{"n":"叶适","e":"南宋","g":"m","c":"Thinker","l":"思想家","d":[6.8,11.9,8.8,11.0,10.0,10.0]},{"n":"陈亮","e":"南宋","g":"m","c":"Thinker","l":"思想家","d":[6.6,9.9,8.9,10.2,8.8,10.8]},{"n":"文天祥","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[8.9,10.1,10.0,6.6,10.9,7.0]},{"n":"陆秀夫","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[8.8,12.3,12.0,8.1,12.6,7.3]},{"n":"张世杰","e":"南宋","g":"m","c":"General","l":"名将","d":[10.4,9.2,7.4,9.6,9.2,6.5]},{"n":"谢太后","e":"南宋","g":"f","c":"Heroine","l":"巾帼","d":[10.0,10.0,11.9,11.1,11.5,10.3]},{"n":"梁红玉","e":"南宋","g":"f","c":"General","l":"名将","d":[12.5,10.3,8.1,12.1,10.3,7.8]},{"n":"秦桧","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[9.6,11.6,12.2,8.0,12.3,8.5]},{"n":"贾似道","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[9.3,11.5,11.1,8.9,11.6,8.2]},{"n":"韩侂胄","e":"南宋","g":"m","c":"Minister","l":"名臣","d":[9.4,9.8,11.2,7.1,13.3,8.6]},{"n":"孟珙","e":"南宋","g":"m","c":"General","l":"名将","d":[9.4,9.1,8.3,8.5,9.6,7.0]},{"n":"余玠","e":"南宋","g":"m","c":"General","l":"名将","d":[11.7,11.0,8.2,12.1,11.7,7.4]},{"n":"王坚","e":"南宋","g":"m","c":"General","l":"名将","d":[13.2,10.8,9.5,11.6,11.0,6.6]},{"n":"耶律大石","e":"辽","g":"m","c":"Ruler","l":"帝王","d":[14.3,10.5,8.2,8.0,11.6,8.6]},{"n":"萧观音","e":"辽","g":"f","c":"Writer","l":"文人","d":[6.6,7.9,8.5,11.7,8.3,10.5]},{"n":"述律平","e":"辽","g":"f","c":"Heroine","l":"巾帼","d":[9.7,9.7,11.6,12.1,9.4,9.2]},{"n":"萧绰","e":"辽","g":"f","c":"Heroine","l":"巾帼","d":[8.9,8.1,8.9,9.5,7.6,8.3]},{"n":"完颜宗弼","e":"金","g":"m","c":"General","l":"名将","d":[13.4,9.8,8.2,11.5,11.6,7.7]},{"n":"完颜陈和尚","e":"金","g":"m","c":"General","l":"名将","d":[13.2,9.1,8.6,8.9,10.3,7.3]},{"n":"元好问","e":"金","g":"m","c":"Writer","l":"文人","d":[6.5,7.7,10.5,9.9,8.1,11.9]},{"n":"木华黎","e":"元","g":"m","c":"General","l":"名将","d":[11.1,8.3,6.8,9.4,10.0,6.4]},{"n":"哲别","e":"元","g":"m","c":"General","l":"名将","d":[9.7,8.9,7.8,9.4,9.2,6.8]},{"n":"速不台","e":"元","g":"m","c":"General","l":"名将","d":[14.4,10.8,9.3,10.8,13.1,8.2]},{"n":"伯颜","e":"元","g":"m","c":"General","l":"名将","d":[13.0,11.3,10.4,13.2,12.5,7.1]},{"n":"郭守敬","e":"元","g":"m","c":"Science","l":"科技","d":[9.0,15.1,10.8,11.0,11.3,9.3]},{"n":"王祯","e":"元","g":"m","c":"Science","l":"科技","d":[9.1,13.8,11.9,10.3,12.0,11.1]},{"n":"黄道婆","e":"元","g":"f","c":"Science","l":"科技","d":[9.0,13.7,11.9,10.9,10.7,10.2]},{"n":"关汉卿","e":"元","g":"m","c":"Writer","l":"文人","d":[7.4,7.5,9.5,10.3,8.1,13.9]},{"n":"马致远","e":"元","g":"m","c":"Writer","l":"文人","d":[7.4,8.6,10.7,12.1,8.4,15.5]},{"n":"白朴","e":"元","g":"m","c":"Writer","l":"文人","d":[7.9,8.8,9.8,11.1,8.0,13.8]},{"n":"王实甫","e":"元","g":"m","c":"Writer","l":"文人","d":[8.5,10.2,10.8,12.6,8.9,15.4]},{"n":"张养浩","e":"元","g":"m","c":"Writer","l":"文人","d":[8.4,9.0,11.3,11.6,9.3,13.6]},{"n":"赵孟頫","e":"元","g":"m","c":"Artist","l":"艺术家","d":[7.4,6.9,8.3,12.8,8.8,13.6]},{"n":"黄公望","e":"元","g":"m","c":"Artist","l":"艺术家","d":[7.0,8.7,8.5,12.2,7.7,14.8]},{"n":"倪瓒","e":"元","g":"m","c":"Artist","l":"艺术家","d":[6.7,9.9,9.8,12.2,10.6,15.6]},{"n":"管道升","e":"元","g":"f","c":"Artist","l":"艺术家","d":[6.1,7.4,7.9,10.1,7.7,12.1]},{"n":"刘伯温","e":"明","g":"m","c":"Strategist","l":"谋士","d":[8.9,15.2,9.0,9.2,15.7,9.2]},{"n":"李善长","e":"明","g":"m","c":"Minister","l":"名臣","d":[10.5,13.0,12.1,8.8,13.7,9.4]},{"n":"徐达","e":"明","g":"m","c":"General","l":"名将","d":[10.4,10.0,7.6,10.2,10.5,5.9]},{"n":"常遇春","e":"明","g":"m","c":"General","l":"名将","d":[11.4,8.8,8.5,8.6,9.9,6.3]},{"n":"蓝玉","e":"明","g":"m","c":"General","l":"名将","d":[12.0,9.4,8.4,9.9,8.7,7.2]},{"n":"汤和","e":"明","g":"m","c":"General","l":"名将","d":[12.8,11.8,9.1,11.9,10.8,7.4]},{"n":"戚继光","e":"明","g":"m","c":"General","l":"名将","d":[14.7,11.0,8.5,12.9,11.5,7.4]},{"n":"俞大猷","e":"明","g":"m","c":"General","l":"名将","d":[11.9,8.8,7.8,9.6,9.0,6.4]},{"n":"袁崇焕","e":"明","g":"m","c":"General","l":"名将","d":[11.0,8.2,7.8,9.1,9.0,6.8]},{"n":"孙承宗","e":"明","g":"m","c":"Minister","l":"名臣","d":[8.7,9.6,9.6,6.7,12.2,7.8]},{"n":"熊廷弼","e":"明","g":"m","c":"General","l":"名将","d":[12.9,9.4,8.8,12.4,12.0,7.1]},{"n":"卢象升","e":"明","g":"m","c":"General","l":"名将","d":[12.3,10.7,9.6,11.0,11.4,7.2]},{"n":"孙传庭","e":"明","g":"m","c":"General","l":"名将","d":[11.9,9.2,7.6,11.5,10.3,7.8]},{"n":"洪承畴","e":"明","g":"m","c":"General","l":"名将","d":[11.2,10.4,8.3,9.5,10.2,8.2]},{"n":"吴三桂","e":"明","g":"m","c":"General","l":"名将","d":[14.0,9.6,9.4,13.5,13.6,8.0]},{"n":"祖大寿","e":"明","g":"m","c":"General","l":"名将","d":[14.2,10.8,9.5,11.4,11.1,7.9]},{"n":"毛文龙","e":"明","g":"m","c":"General","l":"名将","d":[14.8,11.0,10.5,12.4,12.0,8.5]},{"n":"秦良玉","e":"明","g":"f","c":"General","l":"名将","d":[13.6,9.9,8.8,10.0,10.0,7.1]},{"n":"郑成功","e":"明","g":"m","c":"General","l":"名将","d":[12.2,8.2,9.3,10.8,11.9,7.6]},{"n":"史可法","e":"明","g":"m","c":"Minister","l":"名臣","d":[9.4,12.1,10.0,6.5,13.1,7.3]},{"n":"阎应元","e":"明","g":"m","c":"General","l":"名将","d":[12.5,11.0,8.9,10.9,10.3,7.0]},{"n":"夏完淳","e":"明","g":"m","c":"Writer","l":"文人","d":[6.8,8.6,10.2,10.2,7.4,12.6]},{"n":"于谦","e":"明","g":"m","c":"Minister","l":"名臣","d":[8.3,11.5,10.1,8.2,10.9,8.2]},{"n":"王守仁","e":"明","g":"m","c":"Thinker","l":"思想家","d":[7.1,12.1,9.9,13.4,11.6,12.4]},{"n":"张居正","e":"明","g":"m","c":"Minister","l":"名臣","d":[9.2,10.4,10.9,7.6,12.5,7.9]},{"n":"高拱","e":"明","g":"m","c":"Minister","l":"名臣","d":[8.5,13.0,11.3,8.4,12.3,9.3]},{"n":"徐阶","e":"明","g":"m","c":"Minister","l":"名臣","d":[8.6,9.2,10.7,6.6,11.1,7.9]},{"n":"严嵩","e":"明","g":"m","c":"Minister","l":"名臣","d":[10.7,12.0,11.4,10.1,14.2,8.6]},{"n":"夏言","e":"明","g":"m","c":"Minister","l":"名臣","d":[8.2,12.4,11.5,8.0,11.0,7.9]},{"n":"海瑞","e":"明","g":"m","c":"Minister","l":"名臣","d":[10.0,12.3,10.3,7.7,13.3,8.6]},{"n":"杨继盛","e":"明","g":"m","c":"Minister","l":"名臣","d":[10.3,11.2,11.9,8.1,12.6,7.6]},{"n":"魏忠贤","e":"明","g":"m","c":"Minister","l":"名臣","d":[9.4,13.6,10.8,9.5,13.1,8.5]},{"n":"客氏","e":"明","g":"f","c":"Heroine","l":"巾帼","d":[9.9,8.8,11.2,9.8,9.6,8.7]},{"n":"王振","e":"明","g":"m","c":"Minister","l":"名臣","d":[7.8,9.6,9.9,6.7,10.7,7.2]},{"n":"刘瑾","e":"明","g":"m","c":"Minister","l":"名臣","d":[9.1,11.4,12.2,8.6,13.1,9.0]},{"n":"解缙","e":"明","g":"m","c":"Writer","l":"文人","d":[8.6,10.2,9.9,12.3,9.8,17.2]},{"n":"杨慎","e":"明","g":"m","c":"Writer","l":"文人","d":[8.8,9.1,12.5,11.5,11.1,13.4]},{"n":"唐寅","e":"明","g":"m","c":"Artist","l":"艺术家","d":[5.9,7.6,8.5,9.7,7.2,12.4]},{"n":"文徵明","e":"明","g":"m","c":"Artist","l":"艺术家","d":[6.1,8.0,9.0,11.1,8.6,12.3]},{"n":"沈周","e":"明","g":"m","c":"Artist","l":"艺术家","d":[5.9,7.9,8.5,10.1,8.2,13.4]},{"n":"仇英","e":"明","g":"m","c":"Artist","l":"艺术家","d":[7.3,10.1,9.4,11.5,9.9,14.4]},{"n":"徐渭","e":"明","g":"m","c":"Artist","l":"艺术家","d":[7.7,8.6,10.1,11.8,10.1,14.2]},{"n":"董其昌","e":"明","g":"m","c":"Artist","l":"艺术家","d":[8.2,9.5,10.5,12.8,10.1,18.0]},{"n":"李时珍","e":"明","g":"m","c":"Science","l":"科技","d":[7.5,10.1,8.2,9.0,9.9,7.7]},{"n":"宋应星","e":"明","g":"m","c":"Science","l":"科技","d":[9.9,12.9,10.4,11.4,11.8,11.1]},{"n":"徐光启","e":"明","g":"m","c":"Science","l":"科技","d":[8.5,13.9,9.6,9.6,10.7,10.8]},{"n":"徐霞客","e":"明","g":"m","c":"Science","l":"科技","d":[9.7,12.1,10.5,9.7,11.6,10.1]},{"n":"朱载堉","e":"明","g":"m","c":"Science","l":"科技","d":[7.2,10.7,9.2,8.6,9.6,8.7]},{"n":"汤显祖","e":"明","g":"m","c":"Writer","l":"文人","d":[6.9,8.1,9.1,11.5,8.6,13.7]},{"n":"冯梦龙","e":"明","g":"m","c":"Writer","l":"文人","d":[6.4,8.0,9.2,10.3,7.4,12.2]},{"n":"吴承恩","e":"明","g":"m","c":"Writer","l":"文人","d":[8.8,10.1,11.0,14.0,8.7,16.0]},{"n":"罗贯中","e":"明","g":"m","c":"Writer","l":"文人","d":[8.8,9.5,11.5,13.0,9.1,14.1]},{"n":"施耐庵","e":"明","g":"m","c":"Writer","l":"文人","d":[8.3,9.7,10.9,13.2,9.7,16.8]},{"n":"李贽","e":"明","g":"m","c":"Thinker","l":"思想家","d":[8.4,15.0,11.2,13.2,9.7,11.0]},{"n":"顾宪成","e":"明","g":"m","c":"Thinker","l":"思想家","d":[7.4,13.0,10.2,10.7,10.0,11.4]},{"n":"黄宗羲","e":"明","g":"m","c":"Thinker","l":"思想家","d":[7.5,12.0,11.0,11.2,10.3,11.2]},{"n":"王夫之","e":"明","g":"m","c":"Thinker","l":"思想家","d":[6.2,10.2,8.8,9.6,9.0,10.7]},{"n":"顾炎武","e":"明","g":"m","c":"Thinker","l":"思想家","d":[7.4,12.8,12.0,11.7,11.4,13.9]},{"n":"柳如是","e":"明","g":"f","c":"Writer","l":"文人","d":[8.4,8.9,10.7,14.7,10.2,13.0]},{"n":"李香君","e":"明","g":"f","c":"Beauty","l":"美人","d":[7.6,8.4,9.2,7.4,10.7,11.9]},{"n":"陈圆圆","e":"明","g":"f","c":"Beauty","l":"美人","d":[8.1,10.5,12.6,9.4,12.5,13.3]},{"n":"董小宛","e":"明","g":"f","c":"Beauty","l":"美人","d":[6.6,9.4,10.9,8.2,11.3,11.4]},{"n":"顾媚","e":"明","g":"f","c":"Beauty","l":"美人","d":[7.7,9.4,10.4,10.1,11.8,14.3]},{"n":"马湘兰","e":"明","g":"f","c":"Artist","l":"艺术家","d":[6.5,8.1,9.0,10.4,8.4,14.8]},{"n":"卞玉京","e":"明","g":"f","c":"Artist","l":"艺术家","d":[6.5,6.8,8.0,10.4,8.7,11.6]},{"n":"寇白门","e":"明","g":"f","c":"Artist","l":"艺术家","d":[7.2,9.5,9.3,13.5,9.7,18.3]},{"n":"万贵妃","e":"明","g":"f","c":"Heroine","l":"巾帼","d":[11.0,11.1,12.6,10.3,12.2,9.8]},{"n":"郑贵妃","e":"明","g":"f","c":"Heroine","l":"巾帼","d":[10.3,10.0,11.5,13.3,10.2,9.6]},{"n":"马皇后","e":"明","g":"f","c":"Heroine","l":"巾帼","d":[10.1,8.4,10.8,10.3,9.3,7.9]},{"n":"唐赛儿","e":"明","g":"f","c":"Heroine","l":"巾帼","d":[11.5,9.3,12.0,11.3,10.0,9.2]},{"n":"范文程","e":"清","g":"m","c":"Strategist","l":"谋士","d":[7.4,12.0,7.3,6.7,11.7,6.8]},{"n":"鳌拜","e":"清","g":"m","c":"General","l":"名将","d":[10.5,10.4,8.6,9.7,9.8,6.6]},{"n":"索尼","e":"清","g":"m","c":"Minister","l":"名臣","d":[10.0,11.5,11.5,8.6,12.4,9.3]},{"n":"索额图","e":"清","g":"m","c":"Minister","l":"名臣","d":[11.1,12.1,11.3,9.5,13.2,9.9]},{"n":"隆科多","e":"清","g":"m","c":"Minister","l":"名臣","d":[8.7,9.0,9.2,6.5,11.1,8.0]},{"n":"年羹尧","e":"清","g":"m","c":"General","l":"名将","d":[14.0,8.7,9.6,10.6,11.1,7.1]},{"n":"岳钟琪","e":"清","g":"m","c":"General","l":"名将","d":[12.4,10.2,8.1,11.7,11.6,7.1]},{"n":"福康安","e":"清","g":"m","c":"General","l":"名将","d":[11.1,8.2,8.3,9.9,8.4,6.4]},{"n":"阿桂","e":"清","g":"m","c":"General","l":"名将","d":[13.0,12.1,9.5,12.5,10.9,7.5]},{"n":"海兰察","e":"清","g":"m","c":"General","l":"名将","d":[11.7,9.8,9.5,11.4,9.6,6.8]},{"n":"曾国藩","e":"清","g":"m","c":"General","l":"名将","d":[11.4,9.4,7.3,9.6,8.7,7.2]},{"n":"李鸿章","e":"清","g":"m","c":"Minister","l":"名臣","d":[9.8,11.5,12.1,8.0,14.6,9.3]},{"n":"左宗棠","e":"清","g":"m","c":"General","l":"名将","d":[12.8,9.6,8.9,9.4,10.7,7.0]},{"n":"张之洞","e":"清","g":"m","c":"Minister","l":"名臣","d":[9.2,11.9,10.5,8.4,13.9,7.9]},{"n":"胡林翼","e":"清","g":"m","c":"General","l":"名将","d":[13.8,10.6,8.7,13.2,12.2,7.5]},{"n":"彭玉麟","e":"清","g":"m","c":"General","l":"名将","d":[12.9,10.1,8.6,10.8,12.3,8.5]},{"n":"曾国荃","e":"清","g":"m","c":"General","l":"名将","d":[13.3,11.7,9.0,12.3,11.3,7.3]},{"n":"僧格林沁","e":"清","g":"m","c":"General","l":"名将","d":[12.5,8.0,8.0,10.9,9.5,6.2]},{"n":"林则徐","e":"清","g":"m","c":"Minister","l":"名臣","d":[10.8,12.7,12.5,9.3,14.5,7.8]},{"n":"邓廷桢","e":"清","g":"m","c":"Minister","l":"名臣","d":[10.2,12.8,10.5,8.5,11.1,8.0]},{"n":"关天培","e":"清","g":"m","c":"General","l":"名将","d":[11.9,9.2,7.5,9.4,9.5,6.1]},{"n":"奕䜣","e":"清","g":"m","c":"Minister","l":"名臣","d":[8.5,10.9,10.8,6.7,12.0,7.3]},{"n":"荣禄","e":"清","g":"m","c":"Minister","l":"名臣","d":[10.4,14.2,12.8,9.6,12.0,8.0]},{"n":"载沣","e":"清","g":"m","c":"Minister","l":"名臣","d":[11.4,11.6,11.7,7.5,13.5,9.1]},{"n":"袁世凯","e":"清","g":"m","c":"General","l":"名将","d":[10.0,8.6,7.7,8.9,9.8,6.5]},{"n":"刘永福","e":"清","g":"m","c":"General","l":"名将","d":[11.3,10.6,9.0,10.5,11.5,6.6]},{"n":"冯子材","e":"清","g":"m","c":"General","l":"名将","d":[12.2,10.3,9.2,10.2,11.7,7.4]},{"n":"刘铭传","e":"清","g":"m","c":"General","l":"名将","d":[13.0,11.5,10.0,12.2,12.3,8.5]},{"n":"丁汝昌","e":"清","g":"m","c":"General","l":"名将","d":[12.1,9.2,8.4,9.8,9.8,7.4]},{"n":"邓世昌","e":"清","g":"m","c":"General","l":"名将","d":[14.4,11.6,9.6,11.4,12.8,8.8]},{"n":"聂士成","e":"清","g":"m","c":"General","l":"名将","d":[14.3,10.6,10.1,11.0,12.0,8.0]},{"n":"丘逢甲","e":"清","g":"m","c":"Writer","l":"文人","d":[7.1,7.8,9.7,9.8,7.8,11.9]},{"n":"谭嗣同","e":"清","g":"m","c":"Writer","l":"文人","d":[6.9,8.9,10.2,9.9,8.0,11.7]},{"n":"康有为","e":"清","g":"m","c":"Thinker","l":"思想家","d":[6.8,14.1,8.9,10.7,11.6,12.8]},{"n":"梁启超","e":"清","g":"m","c":"Writer","l":"文人","d":[8.7,10.2,11.5,14.9,9.4,13.4]},{"n":"严复","e":"清","g":"m","c":"Thinker","l":"思想家","d":[7.1,11.9,11.2,10.5,9.9,13.2]},{"n":"秋瑾","e":"清","g":"f","c":"Heroine","l":"巾帼","d":[11.6,9.0,12.0,10.6,11.0,10.7]},{"n":"沈葆桢","e":"清","g":"m","c":"Minister","l":"名臣","d":[9.0,11.9,10.7,7.5,12.5,9.0]},{"n":"丁宝桢","e":"清","g":"m","c":"Minister","l":"名臣","d":[9.1,13.5,10.7,8.7,13.2,8.6]},{"n":"张謇","e":"清","g":"m","c":"Merchant","l":"商贾","d":[10.9,12.0,8.9,8.3,11.3,7.6]},{"n":"盛宣怀","e":"清","g":"m","c":"Merchant","l":"商贾","d":[12.3,11.5,8.7,7.6,12.7,7.7]},{"n":"胡雪岩","e":"清","g":"m","c":"Merchant","l":"商贾","d":[11.2,9.7,6.9,7.1,13.3,7.6]},{"n":"曹雪芹","e":"清","g":"m","c":"Writer","l":"文人","d":[7.0,8.9,10.5,10.9,10.1,14.1]},{"n":"吴敬梓","e":"清","g":"m","c":"Writer","l":"文人","d":[6.4,8.0,8.3,10.2,7.3,11.2]},{"n":"蒲松龄","e":"清","g":"m","c":"Writer","l":"文人","d":[7.2,10.7,11.1,11.0,9.8,12.8]},{"n":"纪晓岚","e":"清","g":"m","c":"Writer","l":"文人","d":[6.5,7.1,8.4,11.3,8.4,11.8]},{"n":"袁枚","e":"清","g":"m","c":"Writer","l":"文人","d":[6.6,8.3,8.4,10.7,6.9,11.5]},{"n":"纳兰性德","e":"清","g":"m","c":"Writer","l":"文人","d":[8.1,8.1,11.3,11.4,7.8,11.7]},{"n":"郑板桥","e":"清","g":"m","c":"Artist","l":"艺术家","d":[6.8,8.9,9.6,11.6,8.9,13.1]},{"n":"金农","e":"清","g":"m","c":"Artist","l":"艺术家","d":[6.4,7.4,8.1,8.9,8.5,13.6]},{"n":"郎世宁","e":"清","g":"m","c":"Artist","l":"艺术家","d":[6.9,8.0,8.6,11.2,8.1,12.8]},{"n":"石涛","e":"清","g":"m","c":"Artist","l":"艺术家","d":[8.3,9.0,11.0,13.9,9.5,15.9]},{"n":"八大山人","e":"清","g":"m","c":"Artist","l":"艺术家","d":[7.8,11.4,10.2,13.2,9.7,15.3]},{"n":"吴昌硕","e":"清","g":"m","c":"Artist","l":"艺术家","d":[6.8,8.7,8.8,10.2,9.3,14.0]},{"n":"王清任","e":"清","g":"m","c":"Science","l":"科技","d":[6.8,10.7,8.2,7.6,10.1,7.9]},{"n":"李善兰","e":"清","g":"m","c":"Science","l":"科技","d":[8.9,12.3,8.6,7.5,9.8,9.6]},{"n":"詹天佑","e":"清","g":"m","c":"Science","l":"科技","d":[9.2,11.9,10.6,9.5,9.5,8.7]},{"n":"孝庄文皇后","e":"清","g":"f","c":"Heroine","l":"巾帼","d":[10.1,10.3,12.0,10.7,11.0,8.1]},{"n":"慈禧太后","e":"清","g":"f","c":"Heroine","l":"巾帼","d":[7.8,7.6,9.9,10.6,9.8,8.4]},{"n":"慈安太后","e":"清","g":"f","c":"Heroine","l":"巾帼","d":[11.9,9.6,13.6,12.3,12.0,9.3]},{"n":"王贞仪","e":"清","g":"f","c":"Science","l":"科技","d":[7.8,10.9,8.8,7.2,8.7,8.0]},{"n":"吕碧城","e":"清","g":"f","c":"Writer","l":"文人","d":[7.7,8.4,10.4,12.0,9.3,15.4]},{"n":"顾太清","e":"清","g":"f","c":"Writer","l":"文人","d":[7.7,9.5,10.0,13.0,9.4,13.6]},{"n":"王聪儿","e":"清","g":"f","c":"Heroine","l":"巾帼","d":[10.6,10.3,11.3,12.5,11.6,10.8]},{"n":"冯婉贞","e":"清","g":"f","c":"Heroine","l":"巾帼","d":[10.5,9.1,11.9,10.2,10.5,8.3]},{"n":"穆桂英","e":"北宋","g":"f","c":"General","l":"名将","d":[11.9,9.9,9.1,10.8,10.2,6.5]},{"n":"折太君","e":"北宋","g":"f","c":"General","l":"名将","d":[13.1,11.7,11.0,12.5,11.4,8.0]}];
 
-/* ============ 八维 ============ */
+/* ================= 2. 维度与身份设定 ================= */
 const DIMS = [
-  {k:"jd", n:"决断", high:"拍板定案", low:"谋定后动"},
-  {k:"gq", n:"共情", high:"体察人心", low:"对事不对人"},
-  {k:"kc", n:"开创", high:"另起一行", low:"守成精修"},
-  {k:"dc", n:"洞察", high:"见微知著", low:"难得糊涂"},
-  {k:"bd", n:"表达", high:"直抒胸臆", low:"藏而不露"},
-  {k:"jy", n:"经营", high:"细水长流", low:"不拘小节"},
-  {k:"dl", n:"独立", high:"自有主见", low:"善于借力"},
-  {k:"dd", n:"担当", high:"扛事兜底", low:"轻装上阵"}
+  {k:"A", ico:"🔥", name:"野心", sub:"目标与推进", low:"进取", high:"目标感与推进欲"},
+  {k:"B", ico:"🧠", name:"谋略", sub:"分析与章法", low:"直觉", high:"分析与章法"},
+  {k:"C", ico:"🤝", name:"仁义", sub:"共情与担当", low:"自我", high:"共情与担当"},
+  {k:"D", ico:"🏔️", name:"风骨", sub:"原则与个性", low:"圆融", high:"个性与原则"},
+  {k:"E", ico:"🌀", name:"变通", sub:"应势与转圜", low:"守正", high:"应势与转圜"},
+  {k:"F", ico:"🎐", name:"雅趣", sub:"审美与自处", low:"务实", high:"审美与自处"}
 ];
-const DKEYS = DIMS.map(d=>d.k);
+const DKEYS = ["A","B","C","D","E","F"];
+const CAT_META = {
+  Ruler:{ico:"👑", desc:"手握决策权的人，擅长在不确定中拍板，为大局承担后果。"},
+  General:{ico:"⚔️", desc:"在对抗与压力中兑现结果的人，敢担风险、能带队伍冲锋。"},
+  Minister:{ico:"🏛️", desc:"维系体系运转的人，靠信用、分寸与责任感赢得长期信任。"},
+  Strategist:{ico:"🕯️", desc:"看局势、找关键点的人，习惯先在脑中推演几步再出手。"},
+  Writer:{ico:"✒️", desc:"以表达安放自我的人，敏感、有审美，从文字里获得力量。"},
+  Thinker:{ico:"📿", desc:"追问本质的人，喜欢把经验提炼成原则，再用原则校准生活。"},
+  Science:{ico:"🔭", desc:"以实证求真的人，相信可验证的结论，享受把难题拆开的过程。"},
+  Artist:{ico:"🎨", desc:"用感官理解世界的人，靠直觉与手感创作，追求独一无二的表达。"},
+  Chivalrous:{ico:"🗡️", desc:"把道义放在利害之前的人，关键时刻愿意为别人的事站出来。"},
+  Merchant:{ico:"⚖️", desc:"善用资源与机会的人，对价值流动敏感，敢赌也懂得算账。"},
+  Heroine:{ico:"🌺", desc:"在被规定好的处境里自己开路的人，把担当与风骨活成了日常。"},
+  Beauty:{ico:"🌸", desc:"被时代记住容貌、更被记住姿态的人，把审美变成了自我保护与表达。"}
+};
+/* 身份 × 主导维度的类型命名 */
+/* 主导维度 × 身份 → 类型命名（E 变通 / F 雅趣 单独成组） */
+const TYPE_NAME = {
+  "A-Ruler":"掌局型领袖", "A-General":"进取型战将", "A-Minister":"推进型权臣", "A-Strategist":"目标型谋主",
+  "A-Writer":"外放型才子", "A-Thinker":"入世型哲人", "A-Science":"破局型实干家", "A-Artist":"锋芒型创作者",
+  "A-Chivalrous":"热血型侠者", "A-Merchant":"扩张型经营者",
+  "B-Ruler":"筹算型君主", "B-General":"谋胜型名将", "B-Minister":"理政型能臣", "B-Strategist":"帷幄型军师",
+  "B-Writer":"精工型文人", "B-Thinker":"体系型思想家", "B-Science":"求真型学者", "B-Artist":"构造型匠人",
+  "B-Chivalrous":"谋定型侠士", "B-Merchant":"算账型商人",
+  "C-Ruler":"仁厚型守成者", "C-General":"护众型将领", "C-Minister":"辅政型良臣", "C-Strategist":"顾全局的幕僚",
+  "C-Writer":"寄情型诗人", "C-Thinker":"悲悯型智者", "C-Science":"济世型医者", "C-Artist":"温润型艺术家",
+  "C-Chivalrous":"担当型义士", "C-Merchant":"厚道型掌柜",
+  "D-Ruler":"孤高型君者", "D-General":"死战型猛将", "D-Minister":"直谏型谏臣", "D-Strategist":"隐世型高士",
+  "D-Writer":"不羁型名士", "D-Thinker":"独立型哲人", "D-Science":"执拗型钻研者", "D-Artist":"狂狷型艺术家",
+  "D-Chivalrous":"孤勇型侠客", "D-Merchant":"独行型商贾",
+  "E-Ruler":"应势型君主", "E-General":"机变型名将", "E-Minister":"调剂型能臣", "E-Strategist":"权变型谋士",
+  "E-Writer":"流转型文人", "E-Thinker":"圆融型智者", "E-Science":"活用型工巧", "E-Artist":"随性型创作者",
+  "E-Chivalrous":"周旋型侠者", "E-Merchant":"通变型商人",
+  "F-Ruler":"风雅型君者", "F-General":"儒雅型名将", "F-Minister":"文雅型名臣", "F-Strategist":"清赏型高士",
+  "F-Writer":"诗酒型文人", "F-Thinker":"澄怀型哲人", "F-Science":"格物型学者", "F-Artist":"造境型艺术家",
+  "F-Chivalrous":"名士型侠客", "F-Merchant":"雅好型商贾",
+  "A-Heroine":"执旗型巾帼", "A-Beauty":"夺目型佳人",
+  "B-Heroine":"运筹型女杰", "B-Beauty":"玲珑型佳人",
+  "C-Heroine":"护众型巾帼", "C-Beauty":"温婉型佳人",
+  "D-Heroine":"烈性型巾帼", "D-Beauty":"清冷型佳人",
+  "E-Heroine":"周旋型女杰", "E-Beauty":"灵动型佳人",
+  "F-Heroine":"风华型巾帼", "F-Beauty":"诗意型佳人"
+};
+/* 主导维度 → 行动建议 */
+const ADVICE = {
+  A:["把野心拆成季度目标：写下 3 个可量化结果，比空想的宏大叙事更有用。",
+     "每天留出一段不被打断的深度时间，专门推进最重要的那件事。",
+     "找人同行：你需要盟友，而不是观众。主动给合作者分利。"],
+  B:["重要决定前给自己设「三问」：目标是什么、关键变量是什么、最坏结果能否承受。",
+     "把想法写成方案再开口，你的说服力会成倍提升。",
+     "警惕过度规划：给方案设截止时间，80 分就先动手。"],
+  C:["每周做一件具体的助人之事，不必宏大，具体才有力量。",
+     "学会设边界：帮忙前先问「这是不是我该承担的」。",
+     "把感受说出来，尤其是委屈。长期沉默会让善意变成消耗。"],
+  D:["写一份「不可妥协清单」，只留三条，其余学会弹性处理。",
+     "为热爱找稳定的输出渠道：作品、作品集或固定练习时间。",
+     "把「我不屑于解释」换成「我愿意说一次」，减少误解成本。"],
+  E:["在接任务时多问一句「真正的目标是什么」，你会比同龄人更快找到更省的路径。",
+     "练习「三套方案」思维：正做、反做、绕过去做，别把路走成一条。",
+     "警惕「太灵活就没人敢托付」：关键时刻要给出确定的态度。"],
+  F:["给审美留固定预算：每月一笔只花在「没用但好看」的事上。",
+     "把一个爱好做成可积累的东西：本子、相册、清单，让雅趣有落点。",
+     "别让雅趣变成逃避：它是充电桩，不是避难所。"]
+};
+/* 主导维度 → 关系模式 */
+const RELATE = {
+  A:"在关系里你偏主动，喜欢掌握节奏，也因此容易忽略对方的感受。适当放慢、多问一句「你怎么想」，会让合作更长久。",
+  B:"你习惯先观察再投入，信任建立得慢但很牢。注意别把亲近的人也放进「评估模式」，偶尔不计算地表达关心。",
+  C:"你很容易成为别人的依靠，但要小心「被需要」上瘾。真正稳固的关系是互相麻烦，而不是单向供给。",
+  D:"你重质不重量，朋友少但交情深。要留意别用「不合就散」处理所有分歧，有些摩擦值得耐心穿过。",
+  E:"你在人群里很会看气氛，跟谁都能聊两句，也很会替别人找台阶。但太会照顾场面的人，往往没人知道真实的你在想什么。",
+  F:"你不太爱凑热闹，但你的生活里有自己的秩序和美感，同频的人一进来就会觉得舒服。要留意：自在不等于封闭。"
+};
 
-/* ============ 人物库 ============ */
-const FIGURES = [
-{id:"zhougong",icon:"🏛",name:"周公",epi:"西周 · 礼制奠基者 · 守护者",gender:"m",emoji:"🏛",
- tags:["担当","忠诚","坚韧"],
- profile:{jd:70,gq:72,kc:60,dc:76,bd:62,jy:84,dl:55,dd:94},
- voice:"守住规则，才守得住人心。",
- portrait:"你与周公相似的，并不是具体经历，而是处理世界的方式。你把承诺看得很重，越是艰难的局面，你越倾向于站稳、照顾整体，并用可靠的行动保护自己认定的人和价值观。",
- reality:"在团队里，你常常是那个默默把规矩立好、把烂摊子收完的人。",
- top3:{dd:"越是艰难的时刻，你越愿意把责任扛在自己肩上。",jy:"你不追求一时的声势，而相信制度和长期经营的力量。",dc:"你能在混乱中看清什么必须被守住，什么是真正的主线。"},
- blind:"容易把所有责任揽到自己身上，累了自己，也惯坏了团队。",
- risk:"当「担当」被过度使用时，你可能变成唯一的承重墙。压力之下，记得检查自己是否不敢放权、不敢休息。",
- advice:"学会把责任分出去：不是每件事都需要你兜底，信任别人也是一种担当。",
- quotes:["守住规则，才守得住人心。","一沐三捉发，一饭三吐哺。","制度的传承，比个人的英雄更长久。"]},
-{id:"shangyang",icon:"⚖️",name:"商鞅",epi:"战国 · 变法家 · 改革者",gender:"m",emoji:"⚖️",
- tags:["决断","锐利","破局"],
- profile:{jd:95,gq:38,kc:90,dc:70,bd:80,jy:76,dl:88,dd:58},
- voice:"真正的改变，要落进可以执行的制度。",
- portrait:"你与商鞅相似的，是处理世界的方式。你对「不合理但大家已习惯」的事尤其敏感。只要确认方向正确，你愿意承受质疑，推动规则、观念或系统发生真正的改变。",
- reality:"看到低效的流程，你会忍不住动手重构，哪怕得罪人。",
- top3:{jd:"你能砍掉犹豫，在最短的时间里做出取舍。",kc:"旧办法行不通时，你敢立新规矩，哪怕从零开始。",dl:"你的判断有自己的一套坐标，不容易被人言带走。"},
- blind:"推进过快时，容易低估旧结构的惯性和他人的安全感。",
- risk:"当「改革」被过度使用时，你可能把它变成唯一答案。尤其在压力状态下，记得检查自己是否忽略了关系、节奏或新的证据。",
- advice:"改变不仅需要锋芒，也需要节奏、同盟和可复制的路径。",
- quotes:["真正的改变，要落进可以执行的制度。","疑行无名，疑事无功。","治世不一道，便国不法古。"]},
-{id:"zhugeliang",icon:"🪶",name:"诸葛亮",epi:"三国 · 鞠躬尽瘁 · 谋国者",gender:"m",emoji:"🪶",
- tags:["洞察","尽责","谋定"],
- profile:{jd:66,gq:62,kc:58,dc:92,bd:64,jy:84,dl:50,dd:90},
- voice:"先胜而后求战，谋定而后动。",
- portrait:"你与诸葛亮相似的，是处理世界的方式。你习惯先看全局，再决定局部如何落子。面对混乱，你的本能不是逃开，而是建立秩序、分清轻重，并为最终结果负责。",
- reality:"做计划时，你总会比别人多想两步之后的风险。",
- top3:{dc:"你总能提前看到别人还没注意到的变量。",dd:"答应过的事，你会一路负责到底，绝不含糊。",jy:"你擅长把有限资源安排出最大的效用。"},
- blind:"容易把效率置于感受之前，让身边人误以为你只关心结果。",
- risk:"当「谋定」被过度使用时，你可能迟迟不肯出手，错失时机。记得检查自己是在算清风险，还是单纯害怕不确定。",
- advice:"接受「七分把握就出手」。完美计划不存在，复盘可以之后做。",
- quotes:["先胜而后求战，谋定而后动。","鞠躬尽瘁，死而后已。","受任于败军之际，奉命于危难之间。"]},
-{id:"wangyangming",icon:"🌑",name:"王阳明",epi:"明 · 心学宗师 · 求真者",gender:"m",emoji:"🌑",
- tags:["求知","理性","专注"],
- profile:{jd:64,gq:66,kc:74,dc:94,bd:72,jy:46,dl:86,dd:60},
- voice:"知行本是一件事。",
- portrait:"你与王阳明相似的，是处理世界的方式。你尊重证据、逻辑和长期积累。比起马上被看见，你更愿意把一件事研究透彻，让结论经得住时间和反复推敲。",
- reality:"遇到争论，你更想先弄明白「到底是怎么回事」，而不是急着站队。",
- top3:{dc:"你对「事情本来是什么」有近乎本能的追问。",dl:"你的结论由自己一步步验证得来，不轻易被权威带走。",kc:"你能把旧的框架拆开，重组出更贴近真实的答案。"},
- blind:"想得太透时，容易觉得「不值得争」，错过表达和影响他人的机会。",
- risk:"当「求真」被过度使用时，你可能把思考变成悬置行动的理由。记得检查自己是在沉淀，还是在回避下场。",
- advice:"给思考设一个截止日，然后去做。事上磨练，本身就是求真的一部分。",
- quotes:["知行本是一件事。","此心光明，亦复何言。","人须在事上磨，方立得住。"]},
-{id:"sushi",icon:"🍶",name:"苏轼",epi:"北宋 · 千古才子 · 乐天派",gender:"m",emoji:"🍶",
- tags:["豁达","才情","共情"],
- profile:{jd:42,gq:88,kc:70,dc:64,bd:95,jy:48,dl:66,dd:56},
- voice:"此心安处，即是吾乡。",
- portrait:"你与苏轼相似的，是处理世界的方式。你感受力强、表达欲旺盛，能在寻常日子里发现趣味。哪怕境遇不顺，你也有把苦日子过出滋味来的本事，并把这份豁达传递给身边的人。",
- reality:"朋友低落时，你一句话就能把气氛盘活。",
- top3:{bd:"你的表达自带温度和画面感，说出来的话容易被记住。",gq:"你对人的处境有天然的体察，懂得什么话该在什么时候说。",kc:"你能在限制里玩出新意，把平常事做出自己的风格。"},
- blind:"兴致上来容易同时开太多头，收尾和兑现容易掉链子。",
- risk:"当「豁达」被过度使用时，你可能用幽默回避真正需要严肃面对的问题。记得检查自己是在消化情绪，还是在绕开它。",
- advice:"给最重要的承诺设一个硬截止日期，其余的都可以随性。",
- quotes:["此心安处，即是吾乡。","竹杖芒鞋轻胜马，谁怕？","人间有味是清欢。"]},
-{id:"zhangqian",icon:"🐪",name:"张骞",epi:"西汉 · 凿空西域 · 开拓者",gender:"m",emoji:"🐪",
- tags:["探索","坚韧","独立"],
- profile:{jd:68,gq:48,kc:92,dc:58,bd:50,jy:56,dl:90,dd:74},
- voice:"路是走出来的，不是问出来的。",
- portrait:"你与张骞相似的，是处理世界的方式。你对未知有真实的好奇和行动欲。别人还在讨论可行性时，你已经出发；被耽误、被搁置，也压不灭你「再试一次」的念头。",
- reality:"面对全新领域，你往往是第一个举手说「我去试试」的人。",
- top3:{kc:"没有路的地方，在你眼里等于有机会。",dl:"你能一个人扛住长时间的不确定，不靠喝彩也能前进。",dd:"一旦承诺了目的地，中间的千难万险都只是路线问题。"},
- blind:"出发太急时，容易低估补给、盟友和退路的成本。",
- risk:"当「开拓」被过度使用时，你可能把新鲜感当成方向本身。记得检查自己是在开路，还是在逃避重复的坚持。",
- advice:"每次开路前，先为持续投入和退出条件各写一行——远行也需要后勤。",
- quotes:["路是走出来的，不是问出来的。","凿空西域，始通西北。","不辱使命者，惟其志坚。"]},
-{id:"leizu",icon:"🧵",name:"嫘祖",epi:"上古 · 养蚕缫丝 · 奠基者",gender:"f",emoji:"🧵",
- tags:["经营","创造","务实"],
- profile:{jd:50,gq:74,kc:76,dc:58,bd:44,jy:90,dl:52,dd:68},
- voice:"把一件事做到极致，就是开创。",
- portrait:"你与嫘祖相似的，是处理世界的方式。你不爱空谈，擅长从日常里发现可以沉淀为方法的东西。别人觉得琐碎的事，你能把它做成体系，并让更多人因此受益。",
- reality:"你总能把手头的资源整理出条理，让生活井井有条。",
- top3:{jy:"你有把零散日常变成可靠体系的天赋。",kc:"你能从最普通的事物里，发现改变生活的可能性。",gq:"你改善的东西，最终都落在具体的人身上。"},
- blind:"埋头做事时，容易低估「被看见」的价值，功劳常常无声。",
- risk:"当「经营」被过度使用时，你可能守着细节错过更大的图景。记得检查自己是在精耕，还是在回避变化。",
- advice:"定期抬头看路：把你的方法讲出来、传出去，价值会翻倍。",
- quotes:["把一件事做到极致，就是开创。","桑土既蚕，斯民乃衣。","泽被后世者，不必居其名。"]},
-{id:"wuzetian",icon:"👑",name:"武则天",epi:"唐 · 一代女皇 · 破局者",gender:"f",emoji:"👑",
- tags:["决断","权谋","坚韧"],
- profile:{jd:94,gq:42,kc:66,dc:80,bd:70,jy:84,dl:76,dd:54},
- voice:"规则若不容我，我便重写规则。",
- portrait:"你与武则天相似的，是处理世界的方式。你在关键时刻敢拍板，也扛得住拍板之后的代价。你不靠情绪做决定，而是冷静评估局面、经营手上的资源，等到属于你的时机。",
- reality:"多方僵持时，大家会不自觉等你先表态。",
- top3:{jd:"机会窗口出现的瞬间，你敢下重手。",jy:"你从不打无准备之仗，资源都提前铺在你手上。",dc:"你对人心和局势的判断，往往比在场所有人都早一步。"},
- blind:"目标感太强时，容易让人感到压迫， allies 变成旁观者。",
- risk:"当「决断」被过度使用时，你可能把独断当成效率。记得检查自己是否太久没有听到反对的声音。",
- advice:"留一个敢对你说「不」的位置，它比多三个支持者更值钱。",
- quotes:["规则若不容我，我便重写规则。","身不正，虽令不从。","天下英雄，入吾彀中矣。"]},
-{id:"liqingzhao",icon:"🖋",name:"李清照",epi:"宋 · 一代词宗 · 风骨才女",gender:"f",emoji:"🖋",
- tags:["才情","风骨","敏锐"],
- profile:{jd:48,gq:68,kc:62,dc:78,bd:92,jy:44,dl:80,dd:58},
- voice:"宁向直中取，不向曲中求。",
- portrait:"你与李清照相似的，是处理世界的方式。你的感受力和审美是真才华：同样的境遇，你能说出别人说不出那层意思。同时你有一副硬骨头——认定的事，不因外界声音而改口。",
- reality:"你的点评总是一针见血，又让人服气。",
- top3:{bd:"你的表达精准而有力，寥寥数语就能击中要害。",dl:"你对人情和作品的好坏，有很难被说服的独立判断。",dl:"你的字句自带风骨，是那种不肯将就的认真。"},
- blind:"对「不对味」的东西容忍度低，容易因为真话失去一些同盟。",
- risk:"当「风骨」被过度使用时，你可能把坚持原则变成不肯转身。记得检查自己守的是底线，还是自尊。",
- advice:"原则之外留三分弹性：先让人听进去，再让人服气。",
- quotes:["宁向直中取，不向曲中求。","生当作人杰，死亦为鬼雄。","何须浅碧深红色，自是花中第一流。"]},
-{id:"huamulan",icon:"🐎",name:"花木兰",epi:"北朝 · 代父从军 · 守护者",gender:"f",emoji:"🐎",
- tags:["担当","勇毅","深情"],
- profile:{jd:70,gq:78,kc:52,dc:54,bd:44,jy:50,dl:66,dd:95},
- voice:"该我扛的，我不会躲。",
- portrait:"你与花木兰相似的，是处理世界的方式。你把「该做的事」看得比「想说的话」重。为了保护认定的人和责任，你可以收起锋芒、隐入队伍，用行动代替宣言。",
- reality:"家里或团队有难处，你是第一个站出来说「我来」的人。",
- top3:{dd:"危难当前，你的第一反应是顶上，而不是计算得失。",gq:"你扛事的原因从来不是野心，而是你在乎的人。",jd:"该出手时你不迟疑，哪怕代价不小。"},
- blind:"报喜不报忧，撑太久才让人知道你已经很难了。",
- risk:"当「担当」被过度使用时，你可能用沉默消耗自己。记得检查自己是在坚强，还是在拒绝被照顾。",
- advice:"把难处说出来，让在乎你的人有机会站在你身边。",
- quotes:["该我扛的，我不会躲。","万里赴戎机，关山度若飞。","将军百战死，壮士十年归。"]},
-{id:"banzhao",icon:"📚",name:"班昭",epi:"东汉 · 续修汉书 · 著述者",gender:"f",emoji:"📚",
- tags:["学养","坚韧","传承"],
- profile:{jd:48,gq:58,kc:50,dc:88,bd:74,jy:82,dl:72,dd:70},
- voice:"接住前人的火，照亮后来的人。",
- portrait:"你与班昭相似的，是处理世界的方式。你不争一时锋芒，却能在长周期里做成大事。接手别人半途而废的事业、把琐碎的材料整理成传世的秩序，是你最擅长的事。",
- reality:"再枯燥的整理工作，你也能做得比别人更久、更好。",
- top3:{dc:"你能在散乱的材料里看出结构和脉络。",jy:"长期主义是你的底色，慢和枯燥吓不退你。",dd:"接下的担子，你从不中途撂挑子。"},
- blind:"太习惯幕后，容易让成果被记在别人账上。",
- risk:"当「传承」被过度使用时，你可能把本属于你的位置让得太彻底。记得检查自己是在谦退，还是在回避争取。",
- advice:"该署名时署名，该发声时发声——你的坚持值得被看见。",
- quotes:["接住前人的火，照亮后来的人。","续史不辍，方成信史。","慢工出细活，久坐见真章。"]},
-{id:"xianfuren",icon:"🛡",name:"冼夫人",epi:"南北朝 · 岭南圣母 · 安定者",gender:"f",emoji:"🛡",
- tags:["担当","信义","决断"],
- profile:{jd:86,gq:74,kc:58,dc:62,bd:50,jy:76,dl:60,dd:90},
- voice:"我先安定人心，再谈其他。",
- portrait:"你与冼夫人相似的，是处理世界的方式。你有很强的定盘星气质：局面越乱，你越稳。你讲信义、护一方，用公正而不是强力让人心归附，是那种「有你在，大家就不慌」的人。",
- reality:"朋友之间闹僵了，往往是你出面把话摆平。",
- top3:{dd:"你是身边人公认的「定海神针」。",jd:"乱局里你能很快判断什么是当下最该做的事。",gq:"你让人信服靠的是公正，不是嗓门。"},
- blind:"习惯照顾全局，自己的委屈常常最后一个被照顾。",
- risk:"当「安定」被过度使用时，你可能为了不伤和气拖延必要的决裂。记得检查自己守的是大局，还是面子。",
- advice:"别忘了给自己也留一份关照：稳定别人之前，先稳住自己。",
- quotes:["我先安定人心，再谈其他。","我事三代主，唯用一好心。","忠义所在，虽死不悖。"]}
+/* ---- 报告式排版所需的文案：人物心声 / 共同底色 / 现实中的你 / 金句 ---- */
+/* 身份类别 → 「他/她会怎么说」的第一人称独白 */
+const VOICE = {
+  Ruler:["我这辈子做的每一个决定，都有人在下面等着看结果。所以我不怕选错，我怕的是不选。","有人说我太急。可坐在这个位置上，慢一步，事情就不在我手里了。"],
+  General:["我不是不怕。我只是知道，我怕的那一步要是退了，后面的人就得替我面对。","赢了是应该的，输了是我的——干这一行，得先把这句话咽下去。"],
+  Minister:["我做的事，大多不会被写进故事里。可只要这台机器还在转，我的活就没白干。","我不争一时的对错。我要的是，十年之后这个摊子还在。"],
+  Strategist:["别人看到的是我算得准。他们没看到的是，我把每一种输的可能都想过了。","我从不指望事情按我设想的发展，我准备的是——万一不是，我怎么办。"],
+  Writer:["我把说不出口的话，写在了纸上。写完就觉得，这个世界还能待。","世道好的时候我写风月，世道不好我写人。反正手里这支笔，我不肯放下。"],
+  Thinker:["我这一生只干一件事：把别人习以为常的东西，重新问一遍为什么。","我不指望说服所有人。我只是不能明明看见不对，还跟着一起说对。"],
+  Science:["书上是这么写的，可我得自己算一遍。算完发现书上错了，这才有意思。","万物背后都有个条理。我这辈子，就是想把它找出来看看。"],
+  Artist:["他们说我疯。可我觉得，是这世上大部分人活得太省力了。","我画不出我脑子里的那个样子，所以我一直画。这就是我全部的活法。"],
+  Chivalrous:["这事跟我没关系。可我看见了，就不能当没看见——就这么简单。","我知道我打不过。可要是我退了，往后就没有人敢站出来了。"],
+  Merchant:["别人看见风险，我看见的是价差。这一行，胆子得比算盘大一点。","钱不是目的，是我把事做成的工具。真正让我上瘾的，是把不可能变成可交易。"],
+  Heroine:["他们说我该待在后面。可事情摆在那儿，总得有人往前走一步。","我不是不知道怕。我只是更怕——将来回头看，发现自己什么都没做。"],
+  Beauty:["人人都说我好看。可我这一生最要紧的，是学会了什么时候低头、什么时候不。","世人只记得我的脸。其实我靠的是把每一步都算清楚。"]
+};
+/* 主维度 → 「现实中的你」三段式描述 */
+const REAL_LIFE = {
+  A:["开会时你总是先开口的那个人，别人还在犹豫，你已经在分派任务了。",
+     "你不太能忍「没有结论的讨论」，宁可先定一个方向，边走边修。",
+     "你的成就感来自「事情推进了」，而不是「大家都满意了」。"],
+  B:["你听人说话时会自动拆结构：他真正的诉求是什么，这一步的筹码在哪。",
+     "做决定前你习惯把最坏情况推演一遍，推完才敢放松。",
+     "你的价值常常体现在「什么都没发生」——因为你提前把坑填了。"],
+  C:["你是那个会记得别人忌口、生日、最近状态的人，不用刻意，就是会注意。",
+     "别人找你倾诉，你会真的替他想办法，而不是敷衍一句「会好的」。",
+     "群体里有人被冷落，你会不舒服，并且会做点什么。"],
+  D:["你有几件事是绝对不肯做的，虽然你很少明说。",
+     "让你违心配合，比让你加班难受得多。",
+     "你不太解释自己，被误解时选择沉默，而不是澄清。"],
+  E:["你能很快判断出「这事该找谁说、怎么说」，这几乎是本能。",
+     "别人卡死的地方，你常能找到一个谁都不难看的方法绕过去。",
+     "你在陌生的场合里适应得很快，很少显得格格不入。"],
+  F:["你对光线、气味、一句好文案的敏感度，比大多数人都高。",
+     "独处对你是必需品，不是奢侈品。",
+     "你会在意「这个东西用起来顺不顺手」，哪怕没人会注意。"]
+};
+/* 主维度 → 一句可摘抄的金句 */
+const QUOTE = {
+  A:"方向对了，慢也是快；方向错了，快就是浪费。",
+  B:"真正的从容，来自你把坏结果提前想清楚了。",
+  C:"你替别人扛过的那一次，会成为别人记住你一生的理由。",
+  D:"守住一条线，比赢下一百场争论更难。",
+  E:"懂得绕路的人，往往比硬闯的人先到。",
+  F:"把日子过出滋味，本身就是一种抵抗。"
+};
+
+/* ================= 3. 24 道题目 ================= */
+const QS = [
+ {sc:"起点 · 自我认知", q:"如果给你一个完全自由的一年，你最想先做哪件事？", o:[
+   {t:"启动一件属于自己的事，哪怕只是个小摊子", w:{A:3}},
+   {t:"系统性地啃一门硬本事，把底子打扎实", w:{B:3}},
+   {t:"陪陪身边的人，把欠下的陪伴补回来", w:{C:3}},
+   {t:"去一个没人认识我的地方，过一段随心的日子", w:{F:3}}]},
+ {sc:"职场情境", q:"接手一个所有人都不看好的项目，你的第一反应是？", o:[
+   {t:"正合我意——做成了才显得厉害", w:{A:3}},
+   {t:"先花一周把问题拆开，看看有没有解", w:{B:3}},
+   {t:"先把关键的几个人拉进来，一起扛", w:{C:3}},
+   {t:"这摊子我不接，做事得有自己的标准", w:{D:3,E:1}}]},
+ {sc:"职场情境", q:"一场关键的会议，你通常会是什么角色？", o:[
+   {t:"主导讨论，最后由我拍板", w:{A:3}},
+   {t:"在关键处补一句，把方向拨正", w:{B:3}},
+   {t:"留意没说话的人，让每个人都讲完", w:{C:3}},
+   {t:"懂得看场合，谁的面子都照顾到，事情才推得动", w:{E:3}}]},
+ {sc:"职场情境", q:"你熬夜做出的成果，被同事在会上说成他的，你会？", o:[
+   {t:"记下这笔账，下次一定拿回来", w:{A:2,E:2}},
+   {t:"找机会用事实和时间线把来龙去脉摆清", w:{B:3}},
+   {t:"算了，和同事闹僵不值当", w:{C:3}},
+   {t:"当场说明，我不接受这种含糊", w:{D:3}}]},
+ {sc:"职场情境", q:"领导给了一个超出你能力范围的任务，你会？", o:[
+   {t:"先答应下来，边做边补，机会难得", w:{A:3}},
+   {t:"先评估缺口，列清楚需要什么资源再回复", w:{B:3}},
+   {t:"接，但先跟团队打招呼，请他们兜个底", w:{C:3}},
+   {t:"先看是谁派的、为什么派，再决定怎么接", w:{E:3}}]},
+ {sc:"职场情境", q:"部门里所有人都在用一套明显低效的流程，你？", o:[
+   {t:"直接把新方案做出来，用结果说话", w:{A:3}},
+   {t:"先小范围试跑，用数据说服大家", w:{B:3}},
+   {t:"先摸清每个人卡在哪，再一点点改", w:{E:3}},
+   {t:"不多说，按自己的方式把活干好就行", w:{D:3,E:1}}]},
+ {sc:"校园情境", q:"小组作业里最没人愿意干的那份活，你通常？", o:[
+   {t:"我来统筹分工，顺便盯进度", w:{A:3}},
+   {t:"挑最难的那块，正好练手", w:{B:3,D:1}},
+   {t:"我干吧，别让大家都为难", w:{C:3}},
+   {t:"挑我最擅长、做起来最有意思的那块", w:{F:3}}]},
+ {sc:"校园情境", q:"考试前一晚发现一道必考题完全没复习，你？", o:[
+   {t:"通宵也要啃下来，不能输在起跑线", w:{A:3}},
+   {t:"算一下这题值几分，再决定投入多少", w:{B:3,E:1}},
+   {t:"顺手把解题思路发给同样没复习的同学", w:{C:3}},
+   {t:"先睡，明早脑子清楚比多背两道有用", w:{E:2,F:1}}]},
+ {sc:"校园情境", q:"学校有一批活动，你最想参加哪个？", o:[
+   {t:"学生会主席竞选，我想说了算", w:{A:3}},
+   {t:"辩论赛，比脑子的时候到了", w:{B:3}},
+   {t:"支教或志愿活动，帮到人才有意义", w:{C:3}},
+   {t:"书画社、合唱团，纯粹因为喜欢", w:{F:3}}]},
+ {sc:"人际情境", q:"你和好朋友同时竞争一个名额，你？", o:[
+   {t:"名额我要，朋友照处，两件事分开算", w:{A:3}},
+   {t:"想办法找双赢方案，比如交换别的机会", w:{E:3}},
+   {t:"让给他，情谊比名额重", w:{C:3}},
+   {t:"摊开说清楚，我不喜欢含糊地让", w:{D:3}}]},
+ {sc:"人际情境", q:"朋友圈里，你更像哪种存在？", o:[
+   {t:"组局的主心骨，大家默认听你的", w:{A:3}},
+   {t:"军师型，专出主意那一个", w:{B:3}},
+   {t:"暖心担当，谁有事都先找你", w:{C:3}},
+   {t:"特立独行，来去自由但交情都真", w:{D:3}}]},
+ {sc:"人际情境", q:"有人在众人面前让你下不来台，你会？", o:[
+   {t:"当场不动声色，事后我一定扳回来", w:{A:2,B:1}},
+   {t:"先笑一下把气氛接住，回头再算", w:{E:3}},
+   {t:"先稳住场面，事后再想他是不是遇到难处", w:{C:3}},
+   {t:"直接回怼，凭什么受这个气", w:{D:3}}]},
+ {sc:"人际情境", q:"一个不太熟的人请你帮个你并不想帮的忙，你？", o:[
+   {t:"笑着答应，再找理由慢慢拖掉", w:{E:3}},
+   {t:"直接说不方便，省得彼此误会", w:{D:3}},
+   {t:"帮就帮吧，人家开口也不容易", w:{C:3}},
+   {t:"先问清楚是什么事，评估一下值不值得", w:{B:3,E:1}}]},
+ {sc:"应变情境", q:"计划好的行程突然被一场大雨打乱，你会？", o:[
+   {t:"立刻重新规划，绝不能白跑一趟", w:{A:2,B:1}},
+   {t:"找附近能去的地方，把路线整个换掉", w:{E:3}},
+   {t:"找个屋檐坐下，吃点东西，雨停了再说", w:{F:3}},
+   {t:"按原计划硬走，淋就淋，说好的事要做完", w:{D:3}}]},
+ {sc:"应变情境", q:"和长辈、上司意见明显不合，但你不想翻脸，你会？", o:[
+   {t:"先答应，回头按自己的方式做", w:{E:3}},
+   {t:"摆事实讲道理，把道理讲透", w:{B:3}},
+   {t:"先认同他担心的那部分，再说我的想法", w:{C:3}},
+   {t:"不解释，我按我的来", w:{D:3}}]},
+ {sc:"应变情境", q:"规则明显不合理，但所有人都照着做，你？", o:[
+   {t:"先照做，等我有位置了再改它", w:{A:3}},
+   {t:"找出规则的空子，用别的方式达到目的", w:{E:3}},
+   {t:"替受影响的人说句话，哪怕没什么用", w:{C:3}},
+   {t:"不照做，我有我的底线", w:{D:3}}]},
+ {sc:"应变情境", q:"临时被塞进来一件急事，打乱了你的安排，你？", o:[
+   {t:"插进来先做完，别耽误别人", w:{A:3}},
+   {t:"重排优先级，看哪件能往后挪", w:{B:3}},
+   {t:"问清楚它到底多急，很多急事其实不急", w:{E:3}},
+   {t:"硬扛，两边都不放，自己少睡点", w:{D:3}}]},
+ {sc:"生活选择", q:"一笔意外到账的奖金，你最想怎么用？", o:[
+   {t:"投进下一个更大的目标，钱要生钱", w:{A:3}},
+   {t:"花在提升自己上：课程、书、工具", w:{B:3}},
+   {t:"请家人朋友吃顿好的，一起开心才叫开心", w:{C:3}},
+   {t:"买那个好看很久、没什么用但很喜欢的东西", w:{F:3}}]},
+ {sc:"生活选择", q:"连续加班一个月，终于调休一天，你最想？", o:[
+   {t:"把落下的事一次处理完，清清爽爽", w:{B:3,E:1}},
+   {t:"约人吃饭逛街，热闹地过一天", w:{E:3}},
+   {t:"回家好好陪爸妈吃顿饭", w:{C:3}},
+   {t:"睡到自然醒，然后慢慢逛书店或菜市场", w:{F:3}}]},
+ {sc:"生活选择", q:"搬到一个新城市，你最先做的事是？", o:[
+   {t:"摸清机会在哪，先把立足点稳住", w:{A:3}},
+   {t:"研究城市结构：交通、资源、生活成本", w:{B:3,E:1}},
+   {t:"先联系上在这边的熟人，人比什么都重要", w:{C:3}},
+   {t:"随便走走，看看这个城市的气味和光", w:{F:3}}]},
+ {sc:"生活选择", q:"人生低谷期，你的状态更接近？", o:[
+   {t:"越挫越勇，低谷反而点燃我", w:{A:3}},
+   {t:"冷静复盘，把教训变成方法", w:{B:3}},
+   {t:"靠亲友的温暖一点点回血", w:{C:3}},
+   {t:"守着热爱的事，它是我唯一的锚", w:{F:3}}]},
+ {sc:"价值判断", q:"对你来说，「成功」最重要的是？", o:[
+   {t:"做出一番实实在在、能被人看见的事业", w:{A:3}},
+   {t:"活得明白，看得透事物的规律", w:{B:3,D:1}},
+   {t:"身边的人因为我而过得好一点", w:{C:3}},
+   {t:"活得有意思，有自己的一套活法", w:{F:3}}]},
+ {sc:"价值判断", q:"如果被人误解，你最在意的是？", o:[
+   {t:"会不会影响我的机会和位置", w:{A:3,E:1}},
+   {t:"误会能不能被清晰地解开", w:{B:3}},
+   {t:"对方是不是因此受了伤", w:{C:3}},
+   {t:"我有没有被迫违背自己的本意", w:{D:3}}]},
+ {sc:"价值判断", q:"你更愿意被人怎么评价？", o:[
+   {t:"「这人能成事」", w:{A:3}},
+   {t:"「这人想得深」", w:{B:3,F:1}},
+   {t:"「这人有手腕，但厚道」", w:{E:3}},
+   {t:"「这人活得有意思」", w:{F:3}}]}
 ];
 
-/* ============ 题库：12 题 ============ */
-const QUESTIONS = [
-{cat:"处境",q:"你加入的新项目同时出现三个问题：方向不清、人手不够、钱快烧完。你第一个反应是：",
- opts:[
-  {t:"先把三个问题排出优先级，定出哪个必须今天解决",s:{jd:14,dc:8}},
-  {t:"先稳住大家的情绪，让人觉得「还有救」",s:{gq:14,dd:8}},
-  {t:"盘点手里还剩什么资源，能撑多久、怎么省着用",s:{jy:14,dc:6}},
-  {t:"干脆换条路走：老方案救不了，就直接试新方案",s:{kc:14,dl:8}}]},
-{cat:"争议",q:"团队为一件你很懂的事争了半小时，没有结论。你会：",
- opts:[
-  {t:"把关键事实和依据摆出来，替大家把结论理清楚",s:{dc:12,bd:10}},
-  {t:"不想争，散会后自己按自己的判断干",s:{dl:14,jy:4}},
-  {t:"直接拍板：就这么办，出了问题我负责",s:{jd:14,dd:10}},
-  {t:"先不下结论，花一晚上把来龙去脉研究透",s:{dc:10,dl:8}}]},
-{cat:"承诺",q:"你答应帮朋友的事，突然发现自己低估了难度。此刻你会：",
- opts:[
-  {t:"硬着头皮也要办成，大不了自己多熬几个晚上",s:{dd:14,jy:6}},
-  {t:"立刻跟朋友说实话，重新商量一个双方都能接受的方案",s:{bd:12,gq:10}},
-  {t:"换个更巧的思路，用更少的力气把事情做成",s:{kc:12,dc:8}},
-  {t:"先按原计划做，走一步看一步",s:{jy:6,gq:4}}]},
-{cat:"委屈",q:"你认真做的工作被人当众否定，而且对方说得不太对。你会：",
- opts:[
-  {t:"当场把事实讲清楚，一句不虚的都不让",s:{bd:14,dl:8}},
-  {t:"压下情绪，事后找他单独把话说开",s:{gq:12,jy:8}},
-  {t:"不解释，把事情做得更漂亮，让结果说话",s:{dl:12,dd:8}},
-  {t:"心里记下这个人，以后跟他的合作会留一手",s:{jd:8,dc:6}}]},
-{cat:"诱惑",q:"有一个跳槽机会：平台更大，但你得放弃经营三年的东西。你会：",
- opts:[
-  {t:"算总账：两边各自的长期价值和风险，写下来再决定",s:{jy:12,dc:10}},
-  {t:"更大就是更大，机会不等人，去",s:{jd:14,kc:8}},
-  {t:"舍不得三年攒下的人和事，先不挪窝",s:{gq:10,dd:8}},
-  {t:"两边都要试试看，先谈着再说",s:{kc:10,dl:6}}]},
-{cat:"混乱",q:"你所在的地方突然出了大乱子，所有人都慌了。那一瞬间你：",
- opts:[
-  {t:"身体先动：先做最紧急的那件事，喊人也一起动",s:{jd:12,dd:12}},
-  {t:"先安抚身边的人，让大家别乱",s:{gq:14,dd:6}},
-  {t:"迅速判断：这是谁的局、该找谁能解决",s:{dc:12,dl:8}},
-  {t:"把自己手上的部分守住，别添乱",s:{dl:10,jy:8}}]},
-{cat:"表达",q:"你有一个跟大多数人不一样的判断，而且你很确定。你会：",
- opts:[
-  {t:"找个合适的方式大声说出来，哪怕只有你一个人这么想",s:{bd:14,dl:8}},
-  {t:"先做点小实验验证一下，有结果再说",s:{dc:12,dl:10}},
-  {t:"私下跟关键的人先通个气，减少阻力",s:{jy:12,gq:8}},
-  {t:"闷头按自己的判断做出来，用事实说话",s:{dl:14,kc:6}}]},
-{cat:"坚持",q:"一件事你已经坚持了很久，但迟迟看不到成果。你会：",
- opts:[
-  {t:"继续，我认定的事不轻易改",s:{dd:12,dl:10}},
-  {t:"复盘方法对不对，方法对就再等等，方法错就改",s:{dc:12,jy:10}},
-  {t:"换个赛道试试，也许这里本来就不适合我",s:{kc:12,dl:8}},
-  {t:"先停下来缓一缓，状态好了再说",s:{gq:10,dl:4}}]},
-{cat:"关系",q:"朋友遇到大难处，找你倾诉。你自然的反应是：",
- opts:[
-  {t:"先听他把话说完，让他把情绪倒干净",s:{gq:14,bd:4}},
-  {t:"边听边帮他理清问题，给出可行的下一步",s:{dc:12,jy:8}},
-  {t:"问他需要什么，能出钱出力就直接上",s:{dd:14,jy:6}},
-  {t:"分享一段自己类似的经历，让他知道他不是一个人",s:{bd:10,gq:10}}]},
-{cat:"资源",q:"你手上有一笔不算多的钱和时间，可以投一件事。你会投：",
- opts:[
-  {t:"最稳妥的那件，细水长流慢慢攒",s:{jy:14,dc:4}},
-  {t:"最新的那件，别人没做过才值得做",s:{kc:14,dl:6}},
-  {t:"最需要我的那件，有人等着才有意义",s:{gq:12,dd:10}},
-  {t:"最不确定但上限最高的那件",s:{kc:8,jd:12}}]},
-{cat:"独行",q:"一项很重要但没人看好的事，只有你相信。你会：",
- opts:[
-  {t:"一个人也做，做出来自然有人跟上来",s:{dl:14,kc:10}},
-  {t:"先花力气说服两三个同伴，一起做",s:{bd:10,gq:10,jy:4}},
-  {t:"重新评估：是不是真的只有我对？再确认一遍",s:{dc:14,dl:6}},
-  {t:"默默推进，时机到了再公开",s:{jy:10,dl:8}}]},
-{cat:"收官",q:"一场大仗打完，团队要复盘。你最想说的是：",
- opts:[
-  {t:"先肯定大家的付出，把情绪安顿好",s:{gq:14,dd:6}},
-  {t:"直说：问题就出在那三个环节，一条条改",s:{bd:12,dc:10}},
-  {t:"把这次的经验整理成文档，下次照着走",s:{jy:14,dc:8}},
-  {t:"赢家不恋战，赶紧看下一个机会在哪",s:{kc:12,jd:8}}]}
-];
+/* ================= 4. 状态 ================= */
+const S = { gender:null, ans:new Array(QS.length).fill(null), cur:0, result:null };
+let autoOn = true;   // 选完自动进入下一题（默认开）
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
 
-/* ============ 状态 ============ */
-const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
-let pref="a", answers=new Array(QUESTIONS.length).fill(null), cur=0;
+/* ================= 5. 原创插画（内联 SVG） ================= */
+function illusCompass(){
+  return `<svg viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5aa87e"/><stop offset="1" stop-color="#b7dcc6"/>
+      </linearGradient>
+      <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#2f7654"/><stop offset="1" stop-color="#67b189"/>
+      </linearGradient>
+    </defs>
+    <rect x="4" y="4" width="112" height="112" rx="32" fill="url(#g1)"/>
+    <circle cx="60" cy="62" r="34" fill="#fff" opacity=".16"/>
+    <circle cx="60" cy="62" r="26" fill="#fff" opacity=".92"/>
+    <circle cx="60" cy="62" r="26" fill="none" stroke="#d9f0df" stroke-width="1.5"/>
+    <g stroke="#d9f0df" stroke-width="2" stroke-linecap="round">
+      <path d="M60 40v4M60 80v4M38 62h4M78 62h4"/>
+    </g>
+    <path d="M60 44l7 18-7 18-7-18z" fill="url(#g2)"/>
+    <path d="M60 44l7 18h-14z" fill="#efd27a"/>
+    <circle cx="60" cy="62" r="3" fill="#2f7654"/>
+    <circle cx="34" cy="34" r="3.2" fill="#fff" opacity=".55"/>
+    <circle cx="88" cy="92" r="2.4" fill="#fff" opacity=".4"/>
+  </svg>`;
+}
+function illusScroll(){
+  return `<svg viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5aa87e"/><stop offset="1" stop-color="#b7dcc6"/>
+      </linearGradient>
+    </defs>
+    <rect x="4" y="4" width="112" height="112" rx="32" fill="url(#s1)"/>
+    <g transform="translate(0,2)">
+      <rect x="30" y="26" width="60" height="66" rx="6" fill="#fffaf0"/>
+      <rect x="30" y="26" width="60" height="66" rx="6" fill="none" stroke="#e6dcc2" stroke-width="1.4"/>
+      <rect x="26" y="20" width="68" height="9" rx="4.5" fill="#2f7654"/>
+      <rect x="26" y="88" width="68" height="9" rx="4.5" fill="#2f7654"/>
+      <g stroke="#a6c9b1" stroke-width="2.6" stroke-linecap="round">
+        <path d="M40 42h40M40 52h34M40 62h40M40 72h26"/>
+      </g>
+      <circle cx="82" cy="80" r="8" fill="#c96a4a" opacity=".85"/>
+      <path d="M79 80l2.4 2.6L86 77" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <circle cx="96" cy="24" r="2.6" fill="#fff" opacity=".5"/>
+  </svg>`;
+}
+function illusSeal(ch){
+  return `<svg viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <linearGradient id="r1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5aa87e"/><stop offset="1" stop-color="#b7dcc6"/>
+      </linearGradient>
+    </defs>
+    <rect x="4" y="4" width="112" height="112" rx="32" fill="url(#r1)"/>
+    <circle cx="60" cy="60" r="38" fill="#fff" opacity=".14"/>
+    <rect x="30" y="30" width="60" height="60" rx="10" fill="#fffaf0"/>
+    <rect x="36" y="36" width="48" height="48" rx="6" fill="none" stroke="#c96a4a" stroke-width="2.4" opacity=".8"/>
+    <text x="60" y="72" text-anchor="middle" font-size="34" font-weight="700"
+      font-family="Songti SC,STSong,SimSun,serif" fill="#c94b43">${ch}</text>
+    <circle cx="96" cy="96" r="3" fill="#fff" opacity=".45"/>
+  </svg>`;
+}
+$("#illus-home").innerHTML = illusCompass();
 
-function showPage(id){$$(".page").forEach(p=>p.classList.remove("active"));$("#page-"+id).classList.add("active");window.scrollTo(0,0);}
-let toastTimer;
-function toast(m){const el=$("#toast");el.textContent=m;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2200);}
+/* ================= 6. 首页 ================= */
+$("#home-total").textContent = FIGURES.length;
+$("#stat-total").textContent = FIGURES.length;
+$("#lib-n").textContent = FIGURES.length;
+const fCount = FIGURES.filter(f=>f.g==="f").length;
+$$("#chooses .choose").forEach(el=>{
+  const g = el.dataset.g;
+  const n = g==="f" ? fCount : g==="m" ? FIGURES.length-fCount : FIGURES.length;
+  el.querySelector("span").textContent = g==="a"
+    ? `打开完整 ${n} 位人物档案库，纯按性格坐标匹配`
+    : `从 ${n} 位${g==="f"?"女性":"男性"}人物档案中寻找最相似的你`;
+  const pick = ()=>{
+    $$("#chooses .choose").forEach(x=>x.classList.remove("on"));
+    el.classList.add("on"); S.gender = g;
+    const b = $("#btn-start"); b.disabled = false; b.textContent = "进入情境测试 →";
+  };
+  el.addEventListener("click", pick);
+  el.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(); }});
+});
+$("#btn-start").addEventListener("click", ()=>{
+  if(!S.gender) return;
+  go("quiz"); S.cur = 0; renderQ();
+});
+$("#btn-open-lib").addEventListener("click", ()=>{ go("lib"); renderLib(); });
 
-/* ============ 计分 ============ */
-function computeScores(ans){
-  const raw={};DKEYS.forEach(k=>raw[k]=50);
-  QUESTIONS.forEach((q,qi)=>{const o=q.opts[ans[qi]??-1];if(!o)return;DKEYS.forEach(k=>{if(o.s[k])raw[k]+=o.s[k];});});
-  const out={};DKEYS.forEach(k=>out[k]=Math.round(Math.max(6,Math.min(96,raw[k]))));
+function go(name){
+  ["home","quiz","result","lib"].forEach(n=>$("#pg-"+n).classList.toggle("hide", n!==name));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ================= 7. 答题页 ================= */
+const KEY = "ABCD";
+let autoTimer = null;          // 自动跳题的定时器
+let autoLock  = false;         // 刚自动跳过时短暂锁住，避免连点误选
+function autoNext(){
+  autoTimer = null;
+  if(!autoOn) return;                       // 期间被关掉就不再跳
+  if(S.ans[S.cur]===null) return;
+  if(S.cur < QS.length-1){
+    S.cur++; renderQ(); window.scrollTo({top:0, behavior:"smooth"});
+  }else{
+    // 最后一题：若前面还有空题，跳去补；否则直接出结果
+    const miss = S.ans.map((a,i)=>a===null?i+1:null).filter(x=>x);
+    if(miss.length){
+      S.cur = miss[0]-1; renderQ();
+      const w = $("#warn");
+      w.textContent = `还有第 ${miss.join("、")} 题没有作答，已为你跳转过去。`;
+      w.classList.add("show");
+      window.scrollTo({top:0, behavior:"smooth"});
+      return;
+    }
+    showResult();
+  }
+}
+function renderQ(){
+  const q = QS[S.cur], sel = S.ans[S.cur];
+  const done = S.ans.filter(a=>a!==null).length;
+  $("#cur-n").textContent = S.cur+1;
+  $("#bar").style.width = (done/QS.length*100).toFixed(1)+"%";
+  $("#meta-answered").textContent = `已完成 ${done} 题`;
+  $("#meta-left").textContent = done===QS.length ? "全部完成，可以查看结果" : `还剩 ${QS.length-done} 题`;
+
+  let html = `<div class="chip">${q.sc}</div><div class="qtext">${q.q}</div><div class="opts">`;
+  q.o.forEach((o,i)=>{
+    html += `<div class="opt${sel===i?" on":""}" data-i="${i}" role="button" tabindex="0">
+      <span class="k">${KEY[i]}</span><span>${o.t}</span></div>`;
+  });
+  html += `</div>`;
+  $("#q-body").innerHTML = html;
+  $$("#q-body .opt").forEach(el=>{
+    const choose = ()=>{
+      autoTimer && clearTimeout(autoTimer);
+      S.ans[S.cur] = +el.dataset.i;
+      $$("#q-body .opt").forEach(x=>x.classList.remove("on"));
+      el.classList.add("on");
+      $("#warn").classList.remove("show");
+      updateMeta();
+      // 选完停留一小会儿让人看清反馈，再自动进入下一题
+      autoTimer = setTimeout(autoNext, 430);
+    };
+    el.addEventListener("click", choose);
+    el.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); choose(); }});
+  });
+  $("#btn-next").textContent = S.cur===QS.length-1 ? "查看匹配结果 →" : "下一题";
+  $("#btn-prev").textContent = S.cur===0 ? "‹ 返回首页" : "‹ 上一题";
+  updateAutoBtn();
+  renderDots(); updateMeta();
+}
+function updateMeta(){
+  const done = S.ans.filter(a=>a!==null).length;
+  $("#bar").style.width = (done/QS.length*100).toFixed(1)+"%";
+  $("#meta-answered").textContent = `已完成 ${done} 题`;
+  $("#meta-left").textContent = done===QS.length ? "全部完成，可以查看结果" : `还剩 ${QS.length-done} 题`;
+  const b = $("#dots").querySelector(`[data-q="${S.cur}"]`);
+  if(b) b.classList.add("done");
+}
+function renderDots(){
+  $("#dots").innerHTML = QS.map((_,i)=>
+    `<button data-q="${i}" class="${S.ans[i]!==null?"done":""}${i===S.cur?" now":""}" aria-label="第${i+1}题">${i+1}</button>`
+  ).join("");
+  $$("#dots button").forEach(b=>b.addEventListener("click", ()=>{
+    S.cur = +b.dataset.q; $("#warn").classList.remove("show"); renderQ();
+  }));
+}
+$("#btn-next").addEventListener("click", ()=>{
+  autoTimer && clearTimeout(autoTimer); autoTimer = null;
+  if(S.ans[S.cur]===null){
+    const w = $("#warn");
+    w.textContent = "这道题还没有选择，先选出最接近你的那一项再继续～";
+    w.classList.add("show");
+    const body = $("#q-body");
+    if(typeof body.scrollIntoView === "function") body.scrollIntoView({behavior:"smooth", block:"center"});
+    else window.scrollTo(0, body.offsetTop - 40);
+    return;
+  }
+  if(S.cur < QS.length-1){ S.cur++; renderQ(); window.scrollTo({top:0,behavior:"smooth"}); }
+  else autoNext();
+});
+$("#btn-auto").addEventListener("click", ()=>{
+  autoOn = !autoOn;
+  autoTimer && clearTimeout(autoTimer); autoTimer = null;
+  updateAutoBtn();
+  if(autoOn && S.ans[S.cur]!==null && S.cur<QS.length-1) autoTimer = setTimeout(autoNext, 200);
+});
+$("#btn-prev").addEventListener("click", ()=>{
+  autoTimer && clearTimeout(autoTimer); autoTimer = null;
+  if(S.cur===0){ go("home"); return; }
+  S.cur--; $("#warn").classList.remove("show"); renderQ();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+function updateAutoBtn(){
+  const b = $("#btn-auto"); if(!b) return;
+  b.classList.toggle("on", autoOn);
+  b.textContent = autoOn ? "⚡ 自动跳题：开" : "⚡ 自动跳题：关";
+  b.title = autoOn ? "选完一题自动进入下一题，点击关闭" : "点击开启：选完自动进入下一题";
+}
+
+/* ================= 8. 计分与匹配 =================
+   思路：题库每题每个选项都按 3 分权重分配到 A~F 六维。
+   1) 你的得分 = 24 题累计的六维原始分；
+   2) 人物坐标 = 同一套坐标体系下该人物的六维画像（脚本预先算好，存在 f.d 中）；
+   3) 两者做欧氏距离比较，距离最近者即匹配结果——完全由答案决定，不存在随机。 */
+function calcRaw(){
+  const raw = {};
+  DKEYS.forEach(k=> raw[k]=0);
+  QS.forEach((q,i)=>{
+    const a = S.ans[i]; if(a===null) return;
+    const w = q.o[a].w;
+    for(const k in w) raw[k] += w[k];
+  });
+  return raw;
+}
+/* 展示用：0~100 的相对强度（按本人六项中的最高分归一） */
+function toPct(raw){
+  const mx = Math.max(...DKEYS.map(k=>raw[k])) || 1;
+  const out = {};
+  for(const k in raw) out[k] = Math.round(34 + (raw[k]/mx)*62); // 34~96
   return out;
 }
-function matchFigures(ans,scores,pool){
-  const list=FIGURES.filter(f=>pool.includes(f.id)).map(f=>{
-    const dir={};DIMS.forEach(d=>dir[d.k]=Math.max(-1,Math.min(1,(f.profile[d.k]-50)/45)));
-    let pat=0,nq=0;
-    QUESTIONS.forEach((q,qi)=>{
-      const ai=ans[qi];if(ai===null||ai===undefined)return;
-      const ws=q.opts.map(o=>{let w=0;DKEYS.forEach(k=>{w+=(o.s[k]||0)*dir[k];});return w;});
-      const mx=Math.max(...ws),mn=Math.min(...ws);
-      if(mx-mn>1e-6){pat+=(ws[ai]-mn)/(mx-mn);nq++;}
-    });
-    const patN=nq?pat/nq:0.5;
-    let diff=0;DKEYS.forEach(k=>{diff+=Math.abs(scores[k]-f.profile[k])/100;});diff/=DKEYS.length;
-    const dimSim=Math.max(0,1-diff*1.85);
-    return {f,sim:patN*0.85+dimSim*0.15,diff};
-  });
-  list.sort((a,b)=>b.sim-a.sim||a.diff-b.diff);
-  return list;
+/* 距离 → 契合度：按六维归一化后的实测分位校准（p5≈7.8 / p50≈10.6 / p95≈15.1） */
+function toMatch(d){
+  if(d <= 4.0) return Math.round(97 - d*0.6);
+  if(d <= 7.0) return Math.round(94.6 - (d-4.0)/3.0*3.6);
+  if(d <= 8.5) return Math.round(91.0 - (d-7.0)/1.5*4.0);
+  if(d <= 10.6) return Math.round(87.0 - (d-8.5)/2.1*7.0);
+  if(d <= 12.5) return Math.round(80.0 - (d-10.6)/1.9*6.0);
+  if(d <= 15.1) return Math.round(74.0 - (d-12.5)/2.6*10.0);
+  if(d <= 22.0) return Math.round(64.0 - (d-15.1)/6.9*14.0);
+  return Math.max(34, Math.round(50 - (d-22.0)*1.0));
 }
-function idealAns(f){
-  const dir={};DKEYS.forEach(d=>dir[d.k]=Math.max(-1,Math.min(1,(f.profile[d.k]-50)/45)));
-  return QUESTIONS.map(q=>{
-    let bi=0,bs=-1e9;
-    q.opts.forEach((o,i)=>{let s=0;DKEYS.forEach(d=>{s+=(o.s[d.k]||0)*dir[d.k];});if(s>bs){bs=s;bi=i;}});
-    return bi;
-  });
+/* 各维度在题库中的可得上限不同（A/B 选项更密集），先归一化再比距离 */
+const DIM_SCALE = {A:60, B:62, C:60, D:38, E:43, F:34};
+/* 匹配平局微扰：距离差在 0.35 以内视为「同一档贴近」，
+   在这些人里按姓名做确定性伪随机挑选——同一个人每次作答结果仍然唯一且可复现，
+   但不会让某一两位坐标居中的人物长期垄断「最相似」。 */
+function tieJitter(name, ansSig){
+  let hsh = 2166136261;
+  const src = name + "|" + ansSig;
+  for(let i=0;i<src.length;i++){ hsh ^= src.charCodeAt(i); hsh = Math.imul(hsh, 16777619); }
+  return ((hsh >>> 0) % 10000) / 10000 * 0.34;
 }
+function showResult(){
+  const raw = calcRaw();
+  const norm = toPct(raw);
+  const vec = DKEYS.map(k=> raw[k] / DIM_SCALE[k] * 40);   // 统一缩放到 0~40 量级
+  const order = DKEYS.slice().sort((x,y)=> norm[y]-norm[x] || raw[y]-raw[x]);
+  const pool = FIGURES.filter(f=> S.gender==="a" ? true : f.g===S.gender);
 
-/* ============ 图鉴 ============ */
-$("#roster-grid").innerHTML=FIGURES.map(f=>`
-  <div class="beast"><div class="av">${f.icon}</div><b>${f.name}</b><div class="dy">${f.epi.split(" · ")[0]}</div><p>${f.tags.join(" · ")}</p></div>`).join("");
+  // 作答指纹：同一次作答 → 同一个指纹 → 同一结果；改了答案 → 结果随之变化
+  const ansSig = S.ans.map(a=> a===null ? "x" : a).join("");
+  const scored = pool
+    .map(f=>{
+      const d = Math.sqrt(f.d.reduce((s,v,i)=> s + (v-vec[i])*(v-vec[i]), 0));
+      return {f, d};
+    })
+    .sort((a,b)=> a.d-b.d || a.f.n.localeCompare(b.f.n,"zh"));
 
-/* ============ 偏好页 ============ */
-let prefSel=null;
-$("#dir-list").addEventListener("click",e=>{
-  const b=e.target.closest(".dir");if(!b)return;
-  prefSel=b.dataset.g;
-  $$("#dir-list .dir").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
-  $("#btn-pref-go").disabled=false;
-});
-$("#btn-pref-back").addEventListener("click",()=>showPage("home"));
-$("#btn-pref-go").addEventListener("click",()=>{
-  pref=prefSel||"a";
-  if(answers.some(a=>a!==null)){
-    const u=answers.findIndex(a=>a===null);
-    renderQ(u===-1?0:u);
-  }else renderQ(0);
-  showPage("quiz");
-});
+  // 取「最近一档」（距离差 ≤ 0.35）的候选，再按姓名指纹打破平局
+  const bestD = scored[0].d;
+  const near = scored.filter(x=> x.d - bestD <= 0.35);
+  const best = near.length > 1
+    ? near.reduce((p,c)=> tieJitter(p.f.n, ansSig) <= tieJitter(c.f.n, ansSig) ? p : c)
+    : scored[0];
+  const pct = toMatch(best.d);
+  const alts = scored.filter(x=> x.f.n !== best.f.n).slice(0,2).map(x=>({f:x.f, p:toMatch(x.d)}));
 
-/* ============ 首页 ============ */
-$("#btn-start").addEventListener("click",()=>{prefSel=null;$$("#dir-list .dir").forEach(x=>x.setAttribute("aria-pressed","false"));$("#btn-pref-go").disabled=true;showPage("pref");});
-$("#btn-roster").addEventListener("click",()=>showPage("roster"));
-$("#btn-roster-back").addEventListener("click",()=>showPage("home"));
+  // 极端作答检测：某一维度得分占总量 55% 以上
+  const total = DKEYS.reduce((s,k)=>s+raw[k],0) || 1;
+  const skew = Math.round(raw[order[0]] / total * 100);
 
-/* ============ 答题 ============ */
-let advTimer=null;
-function renderQ(i){
-  i=Math.max(0,Math.min(QUESTIONS.length-1,i));
-  if(advTimer){clearTimeout(advTimer);advTimer=null;}
-  cur=i;
-  const q=QUESTIONS[i];
-  $("#q-cat").textContent=q.cat;
-  $("#q-text").textContent=q.q;
-  $("#q-now").textContent=i+1;$("#q-total").textContent=QUESTIONS.length;
-  const done=answers.filter(a=>a!==null).length,pct=Math.round(done/QUESTIONS.length*100);
-  $("#q-pct").textContent="已完成 "+pct+"%";
-  $("#bar-fill").style.width=pct+"%";
-  $("#opts").innerHTML=q.opts.map((o,j)=>`
-    <button class="opt" data-i="${j}" aria-pressed="${answers[i]===j}">
-      <span class="key">${"ABCD"[j]}</span><span style="flex:1">${o.t}</span>
-      <span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4.5 4.5L19 7" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </button>`).join("");
-  $("#q-alert").classList.remove("show");
-  $("#btn-next").textContent=i===QUESTIONS.length-1?"生成匹配报告":"下一题";
-  $("#dots").innerHTML=QUESTIONS.map((_,j)=>`<button data-i="${j}" class="${j===cur?"cur":""} ${answers[j]!==null?"done":""}" aria-label="第${j+1}题">${j+1}</button>`).join("");
-  $("#sheet-label").textContent=done===QUESTIONS.length?"全部答完，可以生成报告了":`还有 ${QUESTIONS.length-done} 题未作答 · 点击数字可跳转`;
+  S.result = {fig:best.f, pct, norm, raw, order, skew, dist:best.d};
+  renderResult(best.f, pct, norm, raw, order, alts, skew, best.d);
 }
-$("#opts").addEventListener("click",e=>{
-  const b=e.target.closest(".opt");if(!b)return;
-  const i=+b.dataset.i;answers[cur]=i;
-  $$("#opts .opt").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
-  $("#q-alert").classList.remove("show");
-  const done=answers.filter(a=>a!==null).length,pct=Math.round(done/QUESTIONS.length*100);
-  $("#q-pct").textContent="已完成 "+pct+"%";$("#bar-fill").style.width=pct+"%";
-  const c=cur;
-  $("#dots").innerHTML=QUESTIONS.map((_,j)=>`<button data-i="${j}" class="${j===c?"cur":""} ${answers[j]!==null?"done":""}">${j+1}</button>`).join("");
-  $("#sheet-label").textContent=done===QUESTIONS.length?"全部答完，可以生成报告了":`还有 ${QUESTIONS.length-done} 题未作答 · 点击数字可跳转`;
-  if(c<QUESTIONS.length-1){
-    advTimer=setTimeout(()=>{advTimer=null;if(cur===c&&answers[c]!==null)renderQ(c+1);},260);
-  }
-});
-$("#btn-next").addEventListener("click",()=>{
-  if(answers[cur]===null){$("#q-alert").classList.add("show");const c=$(".qcard");c.style.animation="none";void c.offsetWidth;c.style.animation="shake .45s";return;}
-  if(cur<QUESTIONS.length-1){renderQ(cur+1);return;}
-  const miss=answers.map((a,i)=>({a,i})).filter(x=>x.a===null);
-  if(miss.length){toast(`还有 ${miss.length} 题没答，已跳到第 ${miss[0].i+1} 题`);renderQ(miss[0].i);return;}
-  renderResult();
-});
-$("#btn-prev").addEventListener("click",()=>{if(cur===0){showPage("pref");return;}renderQ(cur-1);});
-$("#btn-back").addEventListener("click",()=>{if(cur===0){showPage("pref");return;}renderQ(cur-1);});
-$("#btn-exit").addEventListener("click",()=>{showPage("home");toast("进度已保留，随时可以继续");});
-$("#dots").addEventListener("click",e=>{const b=e.target.closest("button");if(b)renderQ(+b.dataset.i);});
+function renderResult(fig, pct, norm, raw, order, alts, skew, dist){
+  const dom = order[0], sec = order[1];
+  const typeName = TYPE_NAME[`${dom}-${fig.c}`] || "多面型探索者";
+  const bestDim = DIMS.find(d=>d.k===dom);
+  const lowDim  = DIMS.find(d=>d.k===order[5]);
+  const voice   = VOICE[fig.c] || VOICE.Thinker;
+  const voiceLine = voice[(fig.n.length + fig.e.length) % voice.length];
+  const real    = REAL_LIFE[dom];
 
-/* ============ 结果 ============ */
-function dimBar(d,v){
-  return `<div class="brow"><div class="bt"><b>${d.n}</b><span>${v}</span></div><div class="btrack"><i data-w="${v}"></i></div></div>`;
-}
-function renderResult(){
-  const scores=computeScores(answers);
-  const pool=pref==="f"?FIGURES.filter(f=>f.gender==="f").map(f=>f.id):pref==="m"?FIGURES.filter(f=>f.gender==="m").map(f=>f.id):FIGURES.map(f=>f.id);
-  const ranked=matchFigures(answers,scores,pool);
-  const top=ranked[0].f;
-  const pct=Math.round(46+ranked[0].sim*50);
-  const mainDim=DIMS.slice().sort((a,b)=>scores[b.k]-scores[a.k])[0];
-
-  $("#r-icon").textContent=top.icon;
-  $("#r-pct").textContent=pct+"%";
-  $("#r-name").textContent=top.name;
-  $("#r-epi").textContent=top.epi;
-  $("#r-tags").innerHTML=top.tags.map(t=>`<span>${t}</span>`).join("");
-  $("#r-maindim").textContent="主导维度："+mainDim.n;
-  $("#r-voice").textContent="「"+top.voice+"」";
-
-  // 共同底色：取用户与该人物都高的前三维
-  const dimOrder=DKEYS.slice().sort((a,b)=>(scores[a]+top.profile[a])<(scores[b]+top.profile[b])?1:-1);
-  const t3=dimOrder.slice(0,3);
-  const labels=["第一底色","隐藏天赋","长期优势"];
-  const t3html=t3.map((k,i)=>{
-    const d=DIMS.find(x=>x.k===k);
-    const line=top.top3[k]||"";
-    return `<div class="mini"><b><span class="tag-no">${i+1}</span>${labels[i]} · ${d.n}<span class="pct">${top.profile[k]}</span></b><p>${line}</p></div>`;
+  /* 六维横条（按得分从高到低） */
+  const dimRows = order.map((k,idx)=>{
+    const d = DIMS.find(x=>x.k===k);
+    const tag = idx===0 ? `<b class="tg tag-1">主导</b>` : idx===1 ? `<b class="tg tag-2">次之</b>` : idx===5 ? `<b class="tg tag-3">最弱</b>` : `<b class="tg"></b>`;
+    return `<div class="mrow">
+      <span class="mname">${d.name}${tag}</span>
+      <span class="mtrack"><i data-w="${norm[k]}%"></i></span>
+      <span class="mval">${norm[k]}</span>
+    </div>`;
   }).join("");
 
-  const others=ranked.slice(1,3).map(r=>`
-    <div class="other"><span class="g-ic">${r.f.icon}</span><span><b>${r.f.name}</b><span>${r.f.epi}</span></span><span class="pct">${Math.round(46+r.sim*50)}%</span></div>`).join("");
+  const altHtml = alts.map(a=>
+    `<div class="alt"><b>${a.f.n}</b><span>${a.f.e} · ${a.f.l}</span><em>契合 ${a.p}%</em></div>`
+  ).join("");
 
-  $("#res-body").innerHTML=`
-    <div class="panel">
-      <h3><span class="no">01</span>人物自画像</h3>
-      <p class="lead">${top.portrait}</p>
+  $("#pg-result").innerHTML = `
+    <div class="res-hero">
+      <div class="illus res-illus">${illusSeal(fig.n.slice(0,1))}</div>
+      <div class="res-tag">时 空 档 案 · 匹 配 结 果</div>
+      <div class="res-name">${fig.n}</div>
+      <div class="res-era">${fig.e} · ${fig.l}</div>
+      <div class="res-type">${typeName}</div>
+      <div class="score-wrap">
+        <div class="score-top"><span>与你的性格坐标契合度</span><b>${pct}%</b></div>
+        <div class="score-bar"><i data-w="${pct}%"></i></div>
+      </div>
+      <div class="score-hint">在 ${FIGURES.length} 位人物中，与你六维坐标最接近（由你的答案算出，非随机）</div>
     </div>
-    <div class="panel">
-      <h3><span class="no">02</span>八维能力结构</h3>
-      <p class="lead" style="font-size:13px;color:var(--muted);margin-top:6px;">这是你本次作答呈现的向量（满分 100，50 为中间值），人物匹配基于同一套坐标。</p>
-      ${DIMS.map(d=>dimBar(d,scores[d.k])).join("")}
-    </div>
-    <div class="panel">
-      <h3><span class="no">03</span>你与 TA 的共同底色</h3>
-      ${t3html}
-    </div>
-    <div class="panel">
-      <h3><span class="no">04</span>现实中的你</h3>
-      <div class="blk"><div class="bt-h"><span class="bic" style="background:var(--brand)">实</span>现实互动方式</div><p>${top.reality}</p></div>
-    </div>
-    <div class="panel">
-      <h3><span class="no">05</span>性格盲点与风险提醒</h3>
-      <div class="blk"><div class="bt-h"><span class="bic" style="background:var(--gold)">盲</span>可能的盲点</div><p>${top.blind}</p></div>
-      <div class="blk"><div class="bt-h"><span class="bic" style="background:var(--seal)">险</span>风险提醒</div><p>${top.risk}</p></div>
-      <div class="blk"><div class="bt-h"><span class="bic" style="background:#1a7f37">策</span>给你的建议</div><p>${top.advice}</p></div>
-    </div>
-    <div class="panel">
-      <h3><span class="no">06</span>你的三句人物台词</h3>
-      <div class="quotes">${top.quotes.map(q=>`<p>「${q}」</p>`).join("")}</div>
-    </div>
-    <div class="panel">
-      <h3><span class="no">07</span>其他相似人物</h3>
-      <div class="others">${others}</div>
-      <p style="font-size:12px;color:var(--muted);margin-top:10px;">换一个人物方向（女性 / 男性 / 不限），候选库不同，结果可能变化。</p>
-    </div>
-    <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:18px;letter-spacing:.14em;">REPORT · 本测试为趣味自评，不构成心理测评或历史评价</p>`;
 
-  showPage("result");
-  setTimeout(()=>{ $$("#res-body .btrack > i").forEach(el=>{el.style.width=el.dataset.w+"%";}); },120);
+    <div class="pt">
+      <div class="pt-h">📜 如果 ${fig.n} 坐在你对面</div>
+      <blockquote class="voice">「${voiceLine}」</blockquote>
+    </div>
+
+    ${skew>=55?`<div class="pt warn-pt">
+      <div class="pt-h">🌡️ 先说一句：你的作答很集中</div>
+      <p>「${bestDim.name}」一项占了你总分的 ${skew}%，倾向非常鲜明。这通常说明你认得很清楚，也可能说明有些题目你选的是「理想中的自己」而不是「平时的自己」。想要更立体的结果，可以返回改几道题再算一次。</p>
+    </div>`:""}
+
+    <div class="pt">
+      <div class="pt-h">📊 你的能力结构</div>
+      <p class="pt-lead">六项得分已换算成 0–100 的相对强度，排名从高到低。主导<b>「${bestDim.name}」</b>，${DIMS.find(d=>d.k===sec).name}次之，最不突出的是<b>「${lowDim.name}」</b>。</p>
+      <div class="mbars">${dimRows}</div>
+      <p class="pt-f">原始分：${DKEYS.map(k=>`${DIMS.find(d=>d.k===k).name} ${raw[k]}`).join(" · ")}（${QS.length} 题，每题 3 分）</p>
+    </div>
+
+    <div class="pt">
+      <div class="pt-h">🧬 你们的共同底色</div>
+      <p>${matchWhy(fig, norm, raw, order)}</p>
+    </div>
+
+    <div class="pt">
+      <div class="pt-h">🪞 现实中的你，大概是这样</div>
+      <ul class="plain">${real.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <p>${typeDesc(dom, fig)}</p>
+    </div>
+
+    <div class="pt">
+      <div class="pt-h">⚠️ 盲点与风险</div>
+      <ul>${blindSpots(dom, lowDim.k).map(x=>`<li>${x}</li>`).join("")}</ul>
+    </div>
+
+    <div class="pt">
+      <div class="pt-h">🫱 关系里的你</div>
+      <p>${RELATE[dom]}</p>
+    </div>
+
+    <div class="pt">
+      <div class="pt-h">💡 接下来可以试试</div>
+      <ul>${ADVICE[dom].map(x=>`<li>${x}</li>`).join("")}</ul>
+    </div>
+
+    <div class="pt">
+      <div class="pt-h">🎭 气质相近的其他人物</div>
+      <div class="alts">${altHtml}</div>
+    </div>
+
+    <div class="quote-card">
+      <div class="qc-title">✦ ${fig.n} 的座右铭 ✦</div>
+      <p>${QUOTE[dom]}</p>
+    </div>
+
+    <div class="res-btns">
+      <button class="btn btn-ghost btn-sm" id="btn-review">返回修改答案</button>
+      <button class="btn btn-ghost btn-sm" id="btn-lib2">看看全部 ${FIGURES.length} 位</button>
+    </div>
+    <button class="btn btn-main" id="btn-retry" style="width:100%;margin-top:9px">重新测试</button>
+    <p class="disc">本结果完全由你的 ${QS.length} 道作答计算得出，不随机抽取。<br>
+      原创趣味自评，不构成专业心理诊断；人物坐标与独白为主观化的创意设定，不代表史学研究结论。</p>
+  `;
+  go("result");
+  requestAnimationFrame(()=>{
+    $$("#pg-result .mtrack i, #pg-result .score-bar i").forEach(el=>{
+      el.style.width = el.dataset.w;
+    });
+  });
+  $("#btn-review").addEventListener("click", ()=>{
+    S.cur = QS.length-1; go("quiz"); renderQ();
+  });
+  $("#btn-retry").addEventListener("click", ()=>{
+    S.ans = new Array(QS.length).fill(null); S.cur = 0; S.gender = null; S.result = null;
+    $$("#chooses .choose").forEach(x=>x.classList.remove("on"));
+    $("#btn-start").disabled = true; $("#btn-start").textContent = "请先选择候选范围";
+    go("home");
+  });
+  $("#btn-lib2").addEventListener("click", ()=>{ go("lib"); renderLib(); });
+}
+function matchWhy(fig, norm, raw, order){
+  const dom = order[0], sec = order[1];
+  const dn = DIMS.find(d=>d.k===dom).name;
+  const sn = DIMS.find(d=>d.k===sec).name;
+  const cat = CAT_META[fig.c];
+  const diff = DKEYS.reduce((s,k,i)=>s+Math.abs(raw[k]-fig.d[i]),0)/DKEYS.length;
+  const close = diff < 4 ? "极高" : diff < 6.5 ? "很高" : diff < 9 ? "较高" : "中等";
+  const catDimIdx = fig.d.indexOf(Math.max(...fig.d));
+  const catDimName = DIMS.find(d=>d.k===DKEYS[catDimIdx]).name;
+  const mineDimIdx = DKEYS.indexOf(dom);
+  const gap = Math.abs(fig.d[mineDimIdx] - raw[dom]);
+  const scoreLine = DKEYS.map(k=>`${DIMS.find(d=>d.k===k).name} ${raw[k]}`).join(" / ");
+  const totalMax = (QS.length/2)*3; // 平均每题两个维度 → 每个维度期望满分约一半
+  return `你的六项原始分为 ${scoreLine}（共 ${QS.length} 题，每题 3 分）。
+  把这组分数放进 ${FIGURES.length} 位人物的六维坐标里比对，${fig.n}离你最近，六维平均差值仅 ${diff.toFixed(1)} 分，相似度${close}。
+  ${fig.n}在档案中被归为「${fig.l}」，自身最突出的维度是「${catDimName}」；在你主导的「${dn}」这一项上，${fig.n}为 ${fig.d[mineDimIdx].toFixed(1)} 分、你为 ${raw[dom]} 分，相差 ${gap.toFixed(1)} 分${gap<3?"——几乎重合":"——方向一致"}。
+  ${cat.desc} 换句话说：你身上那股「${dn}」加「${sn}」的组合，与${fig.n}当年被人记住的方式，几乎是同一种。`;
+}
+function typeDesc(dom, fig){
+  const map = {
+    A:`你是一个目标驱动的人。别人还在讨论要不要做，你已经在想第一步怎么迈。这种推进力让你在需要有人拍板、有人先站出来的场合天然占优——但也容易把「慢」误读成「不行」，把犹豫的人当成阻力。${fig.n}的一生同样带着强烈的方向感，值得借鉴的是：真正的野心需要底盘，而底盘往往来自别人的支持。`,
+    B:`你习惯先在脑中走完一遍再进场。分析、拆解、找关键变量是你的本能，因此你出的招通常质量不低。风险在于「想太多导致不动」，以及把生活也当成一道需要最优解的题。${fig.n}的厉害处不只是算得准，更在于敢在信息不全时下手。`,
+    C:`你的驱动力来自关系与责任。你在意的不是「我赢没赢」，而是「大家还好不好」。这让你成为很多人心里可以托付的人，也让你容易把别人的情绪背在自己身上。${fig.n}被人记住，往往不是因为功业最大，而是因为在关键时刻，他/她选择了别人。`,
+    D:`你的核心是「不肯敷衍」。你有自己认定的一套标准，宁可吃亏也不愿违心。这让你身上有一种稀缺的干净感，也让你在需要弯腰的场合显得格格不入。${fig.n}的锋芒之所以被后人记住，是因为他/她守住了那条线——但守住不等于硬碰，学会转圜，风骨才走得更远。`,
+    E:`你是那种「不硬碰也能到终点」的人。规则、人情、时机，你都能读得很准，别人卡死的地方你常常能绕过去。这让你在复杂环境里活得很舒展，但也要注意：太会变通会让人觉得你没有立场，关键时刻的「确定」比「聪明」更值钱。${fig.n}身上同样有这种顺势而为的从容。`,
+    F:`你活得有自己的调子。你不太争，却对「好看、好听、有意思」极其认真，一顿饭、一本书、一段路上的光影，都能让你重新充上电。${fig.n}留下的不只是功业，更是一种生活方式的范本：到哪儿都能把日子过出滋味。要注意的是，雅趣是充电桩，别让它变成避难所。`,
+    Heroine:`你身上最难得的是「不肯等」。别人的规矩不一定合理，你会先看事实，再决定要不要照做。这让你在关键时刻顶得住，也让你常被说成「太硬」。${fig.n}被记住的不是她多能打，而是她在别人都退的时候没有退——但真正的强，也包括知道什么时候该借力。`,
+    Beauty:`你清楚自己的优势在哪，也早就明白「被喜欢」不等于「被尊重」。所以你在意分寸、在意场合、在意什么时候该说话。${fig.n}的故事里最动人的从来不是容貌，而是她在毫无筹码时，仍然想办法为自己争到一点主动。`
+  };
+  return map[dom];
+}
+function blindSpots(dom, lowK){
+  const lowName = DIMS.find(d=>d.k===lowK).name;
+  const base = {
+    A:["容易把「效率」当成唯一尺度，忽略人的感受与节奏。","目标落空时，会先怪外部环境，而不是先检查自己的假设。"],
+    B:["过度准备：方案改了七版，机会已经过去。","对亲近的人也开着「评估模式」，显得不够松弛。"],
+    C:["不好意思拒绝，最后把自己耗空。","把「被需要」当成价值来源，容易在关系里失衡。"],
+    D:["用「我就是这样」当护盾，回避必要的沟通。","不合就散，错过了本来可以磨合出默契的关系。"],
+    E:["太会看场面，反而让人抓不住你真正的态度。","习惯绕路，久了会失去正面解决问题的能力。"],
+    F:["用「我只关心喜欢的事」回避该处理的现实问题。","审美标准太高，容易对人对事都变得挑剔而疏离。"]
+  }[dom];
+  return [...base, `你相对不突出的是「${lowName}」，这未必是短板，但在需要它的时候，要有意识地借用别人的力量。`];
 }
 
-$("#btn-retest").addEventListener("click",()=>{
-  answers=new Array(QUESTIONS.length).fill(null);prefSel=null;
-  $$("#dir-list .dir").forEach(x=>x.setAttribute("aria-pressed","false"));$("#btn-pref-go").disabled=true;
-  showPage("pref");toast("已清空答案，重新开始");
-});
-$("#btn-review").addEventListener("click",()=>{renderQ(0);showPage("quiz");toast("点答题卡数字可跳到要改的题，改完结果自动重算");});
+/* ================= 9. 档案库 ================= */
+let libFilter = "all", libQuery = "";
+const ERA_ORDER = ["上古","夏","商","西周","春秋","战国","秦","西汉","新莽","东汉","三国","西晋","东晋","南北朝","隋","唐","五代十国","北宋","南宋","辽","金","元","明","清","清代小说"];
+function renderLib(){
+  $("#lib-total").textContent = `共 ${FIGURES.length} 位`;
+  const cats = ["all", ...Object.keys(CAT_META)];
+  $("#lib-filters").innerHTML = cats.map(c=>{
+    const label = c==="all" ? "全部" : `${CAT_META[c].ico} ${FIGS_LABEL[c]}`;
+    return `<button data-c="${c}" class="${libFilter===c?"on":""}">${label}</button>`;
+  }).join("");
+  $$("#lib-filters button").forEach(b=>b.addEventListener("click", ()=>{
+    libFilter = b.dataset.c; renderLib();
+  }));
+  drawList();
+}
+const FIGS_LABEL = {Ruler:"帝王",General:"名将",Minister:"名臣",Strategist:"谋士",Writer:"文人",
+  Thinker:"思想家",Science:"科技",Artist:"艺术家",Chivalrous:"侠士",Merchant:"商贾",
+  Heroine:"巾帼",Beauty:"美人"};
+function drawList(){
+  const q = libQuery.trim();
+  let list = FIGURES.filter(f=>
+    (libFilter==="all" || f.c===libFilter) &&
+    (!q || f.n.includes(q) || f.e.includes(q) || f.l.includes(q))
+  );
+  list = list.slice().sort((a,b)=>{
+    const ea = ERA_ORDER.indexOf(a.e), eb = ERA_ORDER.indexOf(b.e);
+    return (ea<0?99:ea)-(eb<0?99:eb) || a.n.localeCompare(b.n,"zh");
+  });
+  $("#lib-count").textContent = q ? `找到 ${list.length} 位` : `按时代排列 · ${list.length} 位`;
+  const me = S.result ? S.result.fig.n : null;
+  $("#lib-list").innerHTML = list.length ? list.map((f,i)=>
+    `<div class="fig-row${f.n===me?" me":""}">
+      <span class="idx">${String(i+1).padStart(3,"0")}</span>
+      <span class="nm">${f.n}<i>${f.e}</i></span>
+      <span class="tg">${f.l}</span>
+    </div>`).join("") : `<div class="empty">没有找到匹配的人物，换个关键词试试</div>`;
+}
+$("#lib-search").addEventListener("input", e=>{ libQuery = e.target.value; drawList(); });
+$("#lib-back").addEventListener("click", ()=>go("home"));
 
-/* 键盘 */
-document.addEventListener("keydown",e=>{
-  if(!$("#page-quiz").classList.contains("active"))return;
-  if(e.key==="ArrowLeft"&&cur>0)renderQ(cur-1);
-  if(e.key==="ArrowRight"&&answers[cur]!==null)$("#btn-next").click();
-  if(["1","2","3","4"].includes(e.key)){const b=document.querySelector(`#opts .opt[data-i="${+e.key-1}"]`);if(b)b.click();}
+/* 防止误触离开时丢答案 */
+window.addEventListener("beforeunload", e=>{
+  if(S.ans.some(a=>a!==null) && !S.result){ e.preventDefault(); e.returnValue = ""; }
 });
-
-renderQ(0);
-})();
 </script>
 </body>
 </html>
