@@ -341,80 +341,9 @@ footer{
   .near-card h4{font-size:.9rem;}
   .mirror-chips .chip{font-size:.8rem;}
 }
-/* ===== 授权码门 ===== */
-body.locked{overflow:hidden;}
-.gate{
-  position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle at 50% 32%, #fdf8ee 0%, #f6eddc 45%, #efe2c9 100%);
-  transition:opacity .5s ease, visibility .5s;
-}
-.gate::before{
-  content:"";position:absolute;inset:14px;border:1px solid rgba(176,138,62,.35);
-  border-radius:3px;pointer-events:none;
-}
-.gate.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-.gate-card{
-  position:relative;text-align:center;max-width:400px;padding:2.4rem 2rem;
-  background:rgba(255,252,244,.9);border:1px solid var(--line);border-radius:4px;
-  box-shadow:0 10px 40px rgba(90,60,20,.14);
-}
-.gate-emblem{width:78px;height:78px;display:block;margin:0 auto 1rem;}
-.gate-overline{color:var(--ink2);letter-spacing:6px;font-size:.78rem;margin-bottom:.7rem;}
-.gate-title{
-  font-size:1.75rem;letter-spacing:10px;font-weight:700;margin-bottom:.5rem;color:var(--ink);
-  text-indent:10px;
-}
-.gate-sub{color:var(--ink2);font-size:.86rem;letter-spacing:1px;line-height:1.9;margin-bottom:1.5rem;}
-.gate-row{display:flex;gap:.5rem;justify-content:center;}
-#gate-input{
-  flex:1;min-width:0;font-family:inherit;font-size:1rem;letter-spacing:3px;text-align:center;
-  padding:.68em .8em;border:1px solid var(--line);border-radius:3px;background:#fffdf7;color:var(--ink);
-  outline:none;transition:border-color .2s, box-shadow .2s;
-}
-#gate-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,138,62,.14);}
-.gate-row .btn{flex:none;letter-spacing:4px;padding-left:1.4em;padding-right:1.4em;}
-.gate-err{min-height:1.3em;color:#a63a2e;font-size:.82rem;letter-spacing:1px;margin-top:.7rem;}
-.gate-tip{color:#9a8a72;font-size:.72rem;letter-spacing:1px;margin-top:.4rem;}
-.gate.shake{animation:gateShake .42s;}
-@keyframes gateShake{
-  0%,100%{transform:translateX(0);}
-  20%{transform:translateX(-7px);}
-  40%{transform:translateX(6px);}
-  60%{transform:translateX(-4px);}
-  80%{transform:translateX(3px);}
-}
 </style>
 </head>
 <body>
-<!-- ===== 授权码门 ===== -->
-<div id="gate" class="gate">
-  <div class="gate-card">
-    <svg class="gate-emblem" viewBox="0 0 100 100" aria-hidden="true">
-      <defs>
-        <radialGradient id="gt-jade" cx="40%" cy="34%" r="78%">
-          <stop offset="0%" stop-color="#b3d2c1"/><stop offset="60%" stop-color="#82a894"/><stop offset="100%" stop-color="#5d8570"/>
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="46" fill="none" stroke="#b08a3e" stroke-width="1.6"/>
-      <circle cx="50" cy="50" r="41" fill="none" stroke="#b08a3e" stroke-width=".7" stroke-dasharray="2 4" opacity=".6"/>
-      <circle cx="50" cy="50" r="34" fill="url(#gt-jade)" stroke="#5f8a76" stroke-width="2"/>
-      <circle cx="50" cy="50" r="21" fill="none" stroke="#f8f2e5" stroke-width="7" opacity=".92"/>
-      <circle cx="50" cy="50" r="4" fill="#f8f2e5"/>
-      <circle cx="50" cy="16" r="1.5" fill="#e6c66e"/><circle cx="50" cy="84" r="1.5" fill="#e6c66e"/>
-      <circle cx="16" cy="50" r="1.5" fill="#e6c66e"/><circle cx="84" cy="50" r="1.5" fill="#e6c66e"/>
-    </svg>
-    <div class="gate-overline">红 楼 一 梦 · 凭 码 入 内</div>
-    <h2 class="gate-title">此间有梦</h2>
-    <p class="gate-sub">本页为私享测试，请输入授权码开启</p>
-    <div class="gate-row">
-      <input id="gate-input" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="12" placeholder="请输入授权码" aria-label="授权码">
-      <button id="gate-btn" class="btn btn-primary" type="button">入 内</button>
-    </div>
-    <p class="gate-err" id="gate-err"></p>
-    <p class="gate-tip">授权码请向分享者索取 · 验证一次后本机长期有效</p>
-  </div>
-</div>
-
 <div class="meander"></div>
 <div class="side-poem">红楼一梦 · 觅知音</div>
 <div class="side-poem r">性格镜像 · 四轴八极</div>
@@ -1081,45 +1010,6 @@ function refreshHome(){
 renderDots();
 refreshHome();
 
-/* ===== 授权码门 ===== */
-var ACCESS_CODE = "HLM2026";        /* ★ 授权码（可自行修改，不区分大小写） */
-var GATE_KEY = "hlm_gate_v1";
-(function(){
-  var gate = document.getElementById("gate");
-  var input = document.getElementById("gate-input");
-  var err = document.getElementById("gate-err");
-  if(!gate || !input) return;
-
-  function isUnlocked(){
-    try{ return localStorage.getItem(GATE_KEY) === ACCESS_CODE; }catch(e){ return false; }
-  }
-  function closeGate(){
-    gate.classList.add("hidden");
-    document.body.classList.remove("locked");
-    setTimeout(function(){ if(gate.parentNode) gate.parentNode.removeChild(gate); }, 600);
-  }
-  if(isUnlocked()){ closeGate(); return; }
-
-  document.body.classList.add("locked");
-  setTimeout(function(){ try{ input.focus({preventScroll:true}); }catch(e){} }, 120);
-
-  function check(){
-    var v = (input.value || "").trim();
-    if(!v){ err.textContent = "请输入授权码"; return; }
-    if(v.toUpperCase() === String(ACCESS_CODE).toUpperCase()){
-      try{ localStorage.setItem(GATE_KEY, ACCESS_CODE); }catch(e){}
-      err.textContent = "";
-      closeGate();
-    }else{
-      err.textContent = "授权码不正确，请向分享者确认";
-      gate.classList.add("shake");
-      setTimeout(function(){ gate.classList.remove("shake"); }, 440);
-      try{ input.select(); }catch(e){}
-    }
-  }
-  document.getElementById("gate-btn").addEventListener("click", check);
-  input.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); check(); } });
-})();
 </script>
 </body>
 </html>
