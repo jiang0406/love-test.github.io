@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>红楼一梦 · 性格镜像 —— 你是《红楼梦》里的哪位女子？</title>
+<style>
+:root{
+  --paper:#f8f2e5;
+  --paper2:#f1e7d0;
+  --card:#fdf9f0;
+  --ink:#3b2f24;
+  --ink2:#8a7a62;
+  --red:#a63a2e;
+  --red-d:#7e2a21;
+  --red-l:#f5e3da;
+  --gold:#b08a3e;
+  --gold-l:#e6d5ae;
+  --line:#ddccab;
+  --shadow:0 6px 24px rgba(80,55,25,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  font-family:"Kaiti SC","STKaiti","KaiTi","楷体","BiauKai","Songti SC","STSong","SimSun","Noto Serif SC",serif;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.8;
+  background-image:
+    radial-gradient(ellipse at 12% 6%, rgba(176,138,62,.07), transparent 45%),
+    radial-gradient(ellipse at 88% 94%, rgba(166,58,46,.06), transparent 45%);
+}
+.meander{
+  height:10px;width:100%;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--red) 0 14px, var(--paper) 14px 18px,
+      var(--gold) 18px 22px, var(--paper) 22px 26px);
+  border-bottom:2px solid var(--gold);
+  opacity:.9;
+}
+.page{display:none;}
+.page.active{display:block;animation:fadeIn .45s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px;position:relative;z-index:1;}
+
+/* ===== 通用 ===== */
+.seal{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;background:var(--red);color:#f8ecd8;
+  border-radius:6px;font-size:14px;line-height:1.2;letter-spacing:1px;
+  writing-mode:vertical-rl;box-shadow:2px 2px 0 rgba(126,42,33,.35);flex:none;
+}
+.btn{
+  display:block;width:100%;border:none;cursor:pointer;font-family:inherit;
+  font-size:1.05rem;padding:.75em 1.5em;border-radius:6px;letter-spacing:4px;
+  transition:transform .15s,box-shadow .15s;margin-bottom:.8rem;text-align:center;
+}
+.btn:active{transform:scale(.985);}
+.btn-primary{
+  background:linear-gradient(160deg,#b8453a,var(--red) 55%,var(--red-d));
+  color:#f8ecd8;box-shadow:0 4px 14px rgba(126,42,33,.3), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.btn-ghost{background:transparent;color:var(--red);border:1.5px solid var(--red);}
+.btn-ghost:hover{background:var(--red-l);}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none;}
+.chip{
+  display:inline-block;padding:.12em .9em;border:1px solid var(--line);
+  border-radius:999px;color:var(--red);font-size:.85rem;background:#fbf3e4;
+  margin:0 .3rem .4rem;letter-spacing:2px;
+}
+.sec-title{
+  display:flex;align-items:center;justify-content:center;gap:.7rem;
+  margin:2.4rem 0 1.2rem;letter-spacing:5px;color:var(--ink);
+  font-size:1.25rem;font-weight:700;
+}
+.sec-title .orn{color:var(--gold);font-size:.85rem;letter-spacing:0;}
+
+/* ===== 首页 ===== */
+#page-home .wrap{padding-top:3rem;padding-bottom:2.6rem;text-align:center;}
+.side-poem{
+  position:fixed;top:5.5rem;writing-mode:vertical-rl;
+  color:var(--gold);font-size:.9rem;letter-spacing:9px;opacity:.7;
+  user-select:none;z-index:0;pointer-events:none;
+}
+.side-poem.r{right:.9rem;color:var(--red);opacity:.55;}
+.hero-emblem{width:120px;height:120px;margin:0 auto .4rem;display:block;
+  filter:drop-shadow(0 8px 14px rgba(80,55,25,.22));}
+.stars{color:var(--gold);letter-spacing:14px;font-size:.9rem;margin-bottom:.2rem;}
+.overline{color:var(--red);letter-spacing:6px;font-size:.9rem;margin-bottom:.3rem;}
+h1.title{font-size:clamp(1.8rem,5.2vw,2.5rem);letter-spacing:8px;font-weight:700;}
+h1.title em{font-style:normal;color:var(--red);}
+.subtitle{margin-top:.5rem;color:var(--ink2);letter-spacing:5px;font-size:clamp(.9rem,2.8vw,1.05rem);}
+.intro{
+  max-width:560px;margin:1.6rem auto 1.2rem;text-align:justify;
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:1.3rem 1.5rem;color:var(--ink2);box-shadow:var(--shadow);
+  position:relative;
+}
+.bracket{position:relative;}
+.bracket::before,.bracket::after{
+  content:"";position:absolute;width:26px;height:26px;pointer-events:none;
+}
+.bracket::before{top:-4px;left:-4px;border-top:3px solid var(--gold);border-left:3px solid var(--gold);}
+.bracket::after{bottom:-4px;right:-4px;border-bottom:3px solid var(--gold);border-right:3px solid var(--gold);}
+.intro b{color:var(--red);font-weight:700;}
+.notice{
+  margin:1.3rem auto 0;max-width:560px;font-size:.82rem;color:var(--ink2);
+  border-top:1px dashed var(--line);padding-top:.9rem;text-align:justify;
+}
+.notice b{color:var(--red);}
+.home-btns{margin-top:2rem;}
+.home-btns .btn{max-width:320px;margin-left:auto;margin-right:auto;}
+
+/* ===== 答题页 ===== */
+#quiz-bg{
+  position:fixed;left:0;right:0;bottom:0;height:34vh;z-index:0;pointer-events:none;
+  opacity:.5;
+}
+.quiz-top{padding:1.4rem 0 .3rem;}
+.q-counter{
+  color:var(--red);font-weight:700;font-size:1.05rem;letter-spacing:2px;
+}
+.q-dim{color:var(--ink2);font-size:.85rem;letter-spacing:2px;margin-top:.1rem;}
+.progress-track{
+  height:6px;background:var(--paper2);border-radius:99px;overflow:hidden;
+  border:1px solid var(--line);margin:.9rem 0 .4rem;
+}
+.progress-fill{
+  height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--gold),var(--red));
+  transition:width .35s ease;
+}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin:.5rem 0 .6rem;justify-content:center;}
+.dot{
+  width:11px;height:11px;border-radius:3px;border:1px solid var(--line);
+  background:var(--card);cursor:pointer;padding:0;transition:all .2s;
+}
+.dot.answered{background:var(--gold);border-color:var(--gold);}
+.dot.current{background:var(--red);border-color:var(--red-d);transform:scale(1.3);}
+.q-card{
+  background:transparent;padding:.4rem 0 0;position:relative;z-index:1;
+}
+.q-text{
+  font-size:clamp(1.15rem,3.6vw,1.4rem);margin:.4rem 0 1.4rem;
+  letter-spacing:1px;line-height:1.9;
+}
+.q-card.shake{animation:shake .4s;}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-8px);}40%{transform:translateX(8px);}
+  60%{transform:translateX(-5px);}80%{transform:translateX(5px);}
+}
+.opt{
+  display:block;width:100%;text-align:left;
+  background:var(--card);border:1.5px solid var(--line);border-radius:4px;
+  padding:.85rem 1.2rem;margin-bottom:.85rem;cursor:pointer;
+  font-family:inherit;font-size:1.02rem;color:var(--ink);
+  transition:all .18s;letter-spacing:1px;
+  box-shadow:0 2px 8px rgba(80,55,25,.05);
+}
+.opt:hover{border-color:var(--gold);background:#f6edd8;}
+.opt.sel{
+  border-color:var(--red);background:var(--red-l);
+  box-shadow:0 2px 10px rgba(166,58,46,.18);
+}
+.quiz-nav{display:flex;gap:.9rem;padding:.6rem 0 2.6rem;max-width:420px;}
+.quiz-nav .btn{margin-bottom:0;font-size:.95rem;padding:.6em 1.2em;}
+#toast{
+  position:fixed;left:50%;bottom:12%;transform:translateX(-50%) translateY(20px);
+  background:rgba(59,47,36,.92);color:#f6efe1;padding:.6em 1.6em;border-radius:99px;
+  font-size:.95rem;letter-spacing:2px;opacity:0;pointer-events:none;
+  transition:all .3s;z-index:99;max-width:86vw;text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ===== 结果页 ===== */
+#page-result .wrap{padding-top:2rem;padding-bottom:2.5rem;max-width:680px;}
+.res-head{text-align:center;margin-bottom:1.4rem;}
+.res-head .overline{margin-bottom:.2rem;}
+.res-head h2{letter-spacing:6px;font-size:clamp(1.5rem,4.4vw,1.9rem);}
+.mirror-card{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:2rem 1.5rem;text-align:center;position:relative;
+}
+.bracket-corner::before,.bracket-corner::after{
+  content:"";position:absolute;width:30px;height:30px;pointer-events:none;
+}
+.bracket-corner::before{top:8px;left:8px;border-top:3px solid var(--gold);border-left:3px solid var(--gold);}
+.bracket-corner::after{bottom:8px;right:8px;border-bottom:3px solid var(--gold);border-right:3px solid var(--gold);}
+.role-chip{
+  display:inline-block;border:1px solid var(--red);color:var(--red);
+  border-radius:4px;padding:.15em 1.2em;font-size:.85rem;letter-spacing:3px;
+  margin-bottom:1rem;background:#fdf6ec;
+}
+.avatar-ring{width:130px;height:130px;margin:0 auto .4rem;display:block;}
+.mirror-tag{color:var(--ink2);letter-spacing:3px;font-size:1rem;margin-top:.4rem;}
+.mirror-name{
+  font-size:clamp(2rem,7vw,2.6rem);letter-spacing:12px;font-weight:700;margin:.2rem 0 .6rem;
+}
+.mirror-chips .chip{font-size:.9rem;}
+.fit-label{color:var(--ink2);letter-spacing:3px;font-size:.9rem;margin-top:1rem;}
+.fit-num{color:var(--red);font-weight:700;font-size:1.3rem;}
+.fit-track{
+  height:12px;background:var(--paper2);border-radius:99px;overflow:hidden;
+  margin-top:.4rem;border:1px solid var(--line);
+}
+.fit-fill{
+  height:100%;border-radius:99px;width:0;
+  background:linear-gradient(90deg,var(--gold),var(--red));
+  transition:width .8s ease;
+}
+/* 雷达 */
+.radar-box{background:var(--card);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:1.2rem .8rem .8rem;position:relative;}
+.radar-box svg{width:100%;height:auto;display:block;}
+.legend{
+  display:flex;justify-content:center;gap:1.6rem;font-size:.85rem;color:var(--ink2);
+  padding:.4rem 0 .2rem;
+}
+.legend i{display:inline-block;width:26px;height:0;vertical-align:middle;margin-right:6px;}
+.legend .l1 i{border-top:2.5px solid var(--red);}
+.legend .l2 i{border-top:2.5px dashed var(--gold);}
+.pair-rows{padding:.6rem .4rem .2rem;}
+.pair-row{
+  display:flex;align-items:center;gap:.7rem;padding:.35rem .2rem;
+  border-bottom:1px dashed var(--line);font-size:.95rem;
+}
+.pair-row:last-child{border-bottom:none;}
+.pair-row .pl{color:var(--ink2);letter-spacing:1px;flex:1;}
+.pair-chip{
+  background:var(--red);color:#f8ecd8;border-radius:999px;
+  padding:.1em 1em;font-size:.85rem;letter-spacing:2px;flex:none;
+}
+/* 维度详解 */
+.axis-block{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:1.3rem 1.4rem;margin-bottom:1.1rem;
+}
+.axis-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
+.axis-head h3{color:var(--red);letter-spacing:3px;font-size:1.2rem;}
+.axis-chip{
+  background:var(--red-l);color:var(--red);border-radius:999px;
+  padding:.1em 1.1em;font-size:.85rem;letter-spacing:2px;
+}
+.axis-sub{color:var(--gold);font-size:.85rem;letter-spacing:2px;margin-top:.1rem;}
+.slider-row{margin:1rem 0 .7rem;}
+.slider-labels{display:flex;justify-content:space-between;font-size:.9rem;color:var(--ink2);letter-spacing:2px;}
+.slider-track{
+  height:8px;margin-top:.4rem;border-radius:99px;position:relative;
+  background:linear-gradient(90deg,var(--paper2),var(--gold-l),var(--paper2));
+  border:1px solid var(--line);
+}
+.slider-marker{
+  position:absolute;top:50%;width:16px;height:16px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#c9534a,var(--red-d));
+  border:2px solid #fdf9f0;box-shadow:0 2px 6px rgba(126,42,33,.5);
+  transform:translate(-50%,-50%);transition:left .6s ease;
+}
+.axis-text{color:var(--ink);text-align:justify;font-size:.98rem;}
+/* 相近人物 */
+.near-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;
+}
+.near-card{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:1rem .5rem;text-align:center;
+}
+.near-card .avatar-ring{width:76px;height:76px;margin:0 auto .3rem;}
+.near-card h4{letter-spacing:2px;font-size:1.02rem;}
+.near-card p{color:var(--red);font-size:.85rem;letter-spacing:1px;margin-top:.15rem;}
+/* 详说 */
+.detail-box{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:1.6rem 1.5rem;
+}
+.detail-quote{
+  text-align:center;color:var(--red);letter-spacing:2px;font-size:1.08rem;
+  border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:1.1rem;
+}
+.detail-box p{margin-bottom:1rem;text-align:justify;color:var(--ink);font-size:1rem;}
+.detail-box p b{color:var(--red);}
+/* 结尾 */
+.res-btns{margin-top:2rem;max-width:420px;margin-left:auto;margin-right:auto;}
+.epilogue{
+  margin-top:2.2rem;background:var(--paper2);border-radius:4px;
+  padding:1.4rem 1.5rem;color:var(--ink2);font-size:.92rem;text-align:justify;
+}
+.epilogue p{margin-bottom:.8rem;}
+.epilogue p:last-child{margin-bottom:0;}
+.disclaimer{
+  margin-top:1.4rem;font-size:.8rem;color:var(--ink2);text-align:justify;
+  border-top:1px dashed var(--line);padding-top:1rem;line-height:1.9;
+}
+.disclaimer b{color:var(--red);}
+footer{
+  text-align:center;color:var(--ink2);font-size:.8rem;letter-spacing:3px;
+  padding:1.2rem 0 1.6rem;opacity:.8;
+}
+@media (max-width:640px){
+  .side-poem{display:none;}
+  .near-grid{gap:.6rem;}
+  .quiz-nav .btn{flex:1;}
+  .detail-box{padding:1.2rem 1.1rem;}
+}
+@media (max-width:420px){
+  .near-card h4{font-size:.9rem;}
+  .mirror-chips .chip{font-size:.8rem;}
+}
+</style>
+</head>
+<body>
+<div class="meander"></div>
+<div class="side-poem">红楼一梦 · 觅知音</div>
+<div class="side-poem r">性格镜像 · 四轴八极</div>
+
+<!-- ============ 首页 ============ -->
+<section id="page-home" class="page active">
+  <div class="wrap">
+    <svg class="hero-emblem" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="#b08a3e" stroke-width="1.5" opacity=".6"/>
+      <circle cx="60" cy="60" r="46" fill="none" stroke="#b08a3e" stroke-width=".8" opacity=".4" stroke-dasharray="3 4"/>
+      <circle cx="60" cy="58" r="30" fill="#8fb5a3" stroke="#5f8a76" stroke-width="3"/>
+      <circle cx="60" cy="58" r="15" fill="none" stroke="#f8f2e5" stroke-width="6"/>
+      <circle cx="60" cy="58" r="5" fill="#f8f2e5"/>
+      <path d="M52 92 Q60 86 68 92 L66 112 Q60 116 54 112 Z" fill="#a63a2e"/>
+      <path d="M88 34 q6-8 14-6 q-4 8-14 6z" fill="#c9899a"/>
+      <circle cx="88" cy="32" r="2.4" fill="#7e2a21"/>
+    </svg>
+    <div class="stars">✦ ✦ ✦</div>
+    <div class="overline">大荒山 · 离恨天</div>
+    <h1 class="title">红楼梦<em>性格镜像</em>测试</h1>
+    <p class="subtitle">—— 你是《红楼梦》里的哪位女子？——</p>
+
+    <div class="intro bracket">
+      本测试以 <b>四轴八极人格画像</b> 观照红楼女儿：<b>入世/出世</b>、<b>理性/感性</b>、<b>主体/客体</b>、<b>锋芒/温润</b>。
+      共 <b>28 道</b>自述题，请凭直觉判断每句话与你是否符合。答完一题将<b>自动跳转下一题</b>，
+      全部答完后，从 <b>50 位</b>《红楼梦》知名女性人物中，匹配与你性格底色最相近的「镜像角色」。
+      结果由你的作答实时计算生成，<b>绝不随机</b>。
+    </div>
+    <div>
+      <span class="chip">28 道自述题</span><span class="chip">四轴八极画像</span>
+      <span class="chip">50 位红楼女性</span><span class="chip">自动跳题</span><span class="chip">进度自动保存</span>
+    </div>
+
+    <div class="home-btns">
+      <button class="btn btn-primary" id="btn-start">开 始 测 试</button>
+      <button class="btn btn-ghost" id="btn-resume" style="display:none;">继续上次进度</button>
+    </div>
+
+    <p class="notice"><b>郑重说明：</b>本测试为原创趣味自评，人物画像取材于《红楼梦》的艺术形象，仅供娱乐与自我探索，
+    <b>不构成任何专业心理测评或诊断</b>。测试不收集、不上传任何个人信息，作答数据仅保存在您自己的设备浏览器中。</p>
+  </div>
+</section>
+
+<!-- ============ 答题页 ============ -->
+<section id="page-quiz" class="page">
+  <svg id="quiz-bg" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <ellipse cx="140" cy="240" rx="220" ry="70" fill="#e9debe" opacity=".8"/>
+    <ellipse cx="680" cy="250" rx="260" ry="80" fill="#e5d8b5" opacity=".8"/>
+    <path d="M60 240 Q180 130 320 235 Z" fill="#ded0a8" opacity=".7"/>
+    <path d="M480 245 Q620 140 780 240 Z" fill="#ded0a8" opacity=".6"/>
+    <path d="M300 236 h96 M316 236 v-44 M380 236 v-44 M308 196 h80 M352 192 Q388 176 388 196" stroke="#c4b287" stroke-width="2.5" fill="none" opacity=".8"/>
+    <path d="M348 192 L348 152 M348 152 L338 146 M348 152 L360 146" stroke="#c4b287" stroke-width="2.5" opacity=".8"/>
+    <path d="M120 250 q-4-60 6-96 q4 40 -2 96 M126 158 q18-24 44-28 M126 172 q26-16 52-14" stroke="#cbbd95" stroke-width="2.5" fill="none" opacity=".8"/>
+    <path d="M660 252 q-2-50 8-80 q2 34 0 80 M668 176 q16-20 38-24" stroke="#cbbd95" stroke-width="2.5" fill="none" opacity=".7"/>
+    <path d="M0 258 Q200 246 400 256 T800 254" stroke="#d3c49c" stroke-width="2" fill="none" opacity=".7"/>
+  </svg>
+  <div class="wrap">
+    <div class="quiz-top">
+      <div class="q-counter" id="q-counter">第 1 / 28 题</div>
+      <div class="q-dim" id="q-dim">维度：入世 / 出世</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="dots" id="dots"></div>
+    <div class="q-card" id="q-card">
+      <div class="q-text" id="q-text"></div>
+      <div id="opts"></div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn btn-ghost" id="btn-prev">上一题</button>
+      <button class="btn btn-ghost" id="btn-next">下一题</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 结果页 ============ -->
+<section id="page-result" class="page">
+  <div class="wrap" id="result-wrap"></div>
+</section>
+
+<div id="toast"></div>
+<footer>红楼一梦 · 性格镜像 | 原创趣味测试 · 仅供娱乐</footer>
+
+<script>
+"use strict";
+/* =====================================================
+   四轴八极：R 入世(+)/出世(-)  S 理性(+)/感性(-)
+             F 自我/立身(+)/从人(-)  E 锋芒/有棱(+)/温润(-)
+   每轴 7 题，Likert 五档，值域 ±2/题，轴满分 ±14
+===================================================== */
+var AXES = [
+ {k:"R", title:"入世/出世", sub:"生命能量的投注方向", plus:"入世", minus:"出世"},
+ {k:"S", title:"理性/感性", sub:"认知的底层方式", plus:"理性", minus:"感性"},
+ {k:"F", title:"主体/客体", sub:"自我边界的定义", plus:"自我", minus:"从人"},
+ {k:"E", title:"锋芒/温润", sub:"对外表达的温度", plus:"锋芒", minus:"温润"}
+];
+var LIKERT = ["完全符合。","比较符合。","两者皆有。","与之较为相反。","与之完全相反。"];
+var LIKVAL = [2,1,0,-1,-2];
+
+var QUESTIONS = [
+ {s:"比起独处读书、静坐发呆的时光，我更愿意把精力花在实际做事上——组织、协调、把一件事情办成。", a:"R", d:1},
+ {s:"朋友评价我「想得开、放得下」，不太纠结世俗的得失与输赢。", a:"R", d:-1},
+ {s:"我常常是那个站出来张罗事情的人，哪怕没有人要求我这么做。", a:"R", d:1},
+ {s:"比起热闹的聚会和应酬，我更享受一个人或三五知己的清静。", a:"R", d:-1},
+ {s:"我很在意自己在现实中的位置：工作、收入、别人怎么看我。", a:"R", d:1},
+ {s:"对名利得失，我大多一笑置之，很少真正放在心上。", a:"R", d:-1},
+ {s:"与其谈论风花雪月，我更愿意聊怎么把日子和事情实际经营好。", a:"R", d:1},
+ {s:"比起夸赞我的审美、创造力和艺术气质，我周围的人（或者我自己）更常夸赞我的理性、逻辑和分析能力。", a:"S", d:1},
+ {s:"看影视剧或小说时，我常常比身边人更先掉眼泪。", a:"S", d:-1},
+ {s:"做重要决定时，我习惯列清单、权衡利弊，而不是跟着感觉走。", a:"S", d:1},
+ {s:"一段旋律、一句诗、一片落叶，都很容易让我心里起波澜。", a:"S", d:-1},
+ {s:"朋友都说我是「讲道理」的人，很少看到我情绪失控。", a:"S", d:1},
+ {s:"我常常因为别人的遭遇而难过很久，哪怕那件事与我无关。", a:"S", d:-1},
+ {s:"我更相信数据和过往经验，而不是直觉和第一印象。", a:"S", d:1},
+ {s:"无论多数人怎么选，我都习惯先问自己：我真的想要吗？", a:"F", d:1},
+ {s:"为了让气氛融洽，我常常把自己的偏好放在最后。", a:"F", d:-1},
+ {s:"别人很难说服我改变一个已经想清楚的决定。", a:"F", d:1},
+ {s:"我很容易被周围人的情绪和期待影响自己的判断。", a:"F", d:-1},
+ {s:"在集体里，我更愿意当「出主意的人」，而不是「随大流的人」。", a:"F", d:1},
+ {s:"我几乎不懂得拒绝，答应别人之后才想起自己也有事。", a:"F", d:-1},
+ {s:"我的人生规划由我自己书写，长辈的建议只是参考。", a:"F", d:1},
+ {s:"看不惯的事我往往当场说出来，哪怕气氛会因此尴尬。", a:"E", d:1},
+ {s:"说话之前我总会先想想对方的感受，把话尽量说得妥帖。", a:"E", d:-1},
+ {s:"争论时我寸步不让，一定要辩出个是非曲直。", a:"E", d:1},
+ {s:"身边的人都说我是「好脾气」，几乎没见我跟人红过脸。", a:"E", d:-1},
+ {s:"我宁愿得罪人，也不愿违背自己认定的原则。", a:"E", d:1},
+ {s:"即使不同意，我也很少当面反驳，总想着「何必呢」。", a:"E", d:-1},
+ {s:"我的表达直接有棱角，第一次见我的人常说我「厉害」。", a:"E", d:1}
+];
+
+/* ===== 50 位红楼女性人物 =====
+   v:[R,S,F,E] ∈ [-2,2]；s:{h发型 1双髻少女 2闺秀单髻 3少妇高髻 4妇人圆髻 5尼姑 6老妪 7小丫头,
+   c发色, r衣色, f头饰 flower/pin/none} */
+var CHARS = [
+ {n:"林黛玉", t:"潇湘妃子 · 诗魂", q:"质本洁来还洁去。", v:[-1.5,-2,1.5,1.5], s:{h:2,c:"#3b2f24",r:"#7a5a66",f:"flower"},
+  b:"寄居贾府的孤女，诗社里的魁首。她以全部的敏感与才情去爱，也以全部的真挚去伤。焚稿断痴情的结局，是诗人对浊世最决绝的告别。"},
+ {n:"薛宝钗", t:"蘅芜君 · 藏愚守拙", q:"好风凭借力，送我上青云。", v:[2,2,-1,-1], s:{h:3,c:"#3b2f24",r:"#c9a227",f:"pin"},
+  b:"蘅芜苑里端方持重的宝姑娘。她博学、周全、克己，把所有的锋芒都收进温厚的礼数里，是人人放心的存在，也是把心事藏得最深的人。"},
+ {n:"贾元春", t:"贤德妃 · 雍容", q:"当日既送我到那不得见人的去处。", v:[2,1,-1,0.5], s:{h:3,c:"#3b2f24",r:"#c9b04a",f:"pin"},
+  b:"贾府的大小姐，贤德妃。她在最深的位置上享尽尊荣，也说尽不得见人的苦楚。烈火烹油之下，她是最早听见大厦将倾的人。"},
+ {n:"贾探春", t:"玫瑰花 · 敏毅", q:"才自精明志自高。", v:[2,1.5,1.5,1], s:{h:2,c:"#3b2f24",r:"#5b7fa6",f:"pin"},
+  b:"秋爽斋里的玫瑰花儿，又红又香，只是有刺。她精明志高，兴利除弊代理家事，是女儿身里最想「出去立一番事业」的人。"},
+ {n:"史湘云", t:"枕霞旧友 · 英豪阔大", q:"是真名士自风流。", v:[1,-0.5,0,1], s:{h:1,c:"#3b2f24",r:"#d98f9a",f:"flower"},
+  b:"醉眠芍药裀的枕霞旧友。她英豪阔大、从不把儿女私情略萦心上，是贾府里最像太阳的存在。"},
+ {n:"妙玉", t:"槛外人 · 孤洁", q:"纵有千年铁门槛，终须一个土馒头。", v:[-2,0.5,2,1], s:{h:5,c:"#3b2f24",r:"#6b705c",f:"none"},
+  b:"栊翠庵里的槛外人。她带发修行，品位极高，把自己活成了一套不容侵犯的秩序，也把孤独活成了常态。"},
+ {n:"贾迎春", t:"二木头 · 守拙怯懦", q:"宁可没有了，又少什么。", v:[-1,0,-2,-1.5], s:{h:4,c:"#3b2f24",r:"#8a9a7b",f:"none"},
+  b:"贾府二小姐，人称「二木头」。她温顺退让，连累丝金凤被下人偷去典当也不过问。懦弱没有换来太平，只换来误嫁中山狼的悲剧。"},
+ {n:"贾惜春", t:"冷佳人 · 孤介", q:"不作狠心人，难得自了汉。", v:[-2,1,1.5,1], s:{h:1,c:"#3b2f24",r:"#7c8fa0",f:"none"},
+  b:"贾府四姑娘，善画而性冷。眼见三位姐姐的婚姻各自凋零，她斩断尘缘、落发为尼——不作狠心人，难得自了汉。"},
+ {n:"王熙凤", t:"凤辣子 · 机心威重", q:"我从来不信什么阴司地狱报应。", v:[2,2,2,2], s:{h:3,c:"#3b2f24",r:"#a63a2e",f:"pin"},
+  b:"琏二奶奶，荣国府的实际操盘手。她杀伐决断、口才威重，十个男人也不及她。机关算尽太聪明，是她一生最好的注脚。"},
+ {n:"贾巧姐", t:"巧姐儿 · 归真", q:"偶因济刘氏，巧得遇恩人。", v:[0,0,-0.5,-1], s:{h:7,c:"#3b2f24",r:"#e6b8b0",f:"flower"},
+  b:"凤姐之女。生于锦绣丛中，长于家道败落之际，因母亲当年接济过刘姥姥而获救，最终在乡野纺绩过上了平静的日子。"},
+ {n:"李纨", t:"稻香老农 · 守节", q:"竹篱茅舍自甘心。", v:[0.5,1,0,-1], s:{h:4,c:"#3b2f24",r:"#9a8f5f",f:"none"},
+  b:"稻香村里的孀居人。青年守寡，心如槁木死灰，唯把全部心力放在儿子贾兰身上，也是大观园诗社最稳的社长。"},
+ {n:"秦可卿", t:"兼美 · 婉转", q:"月满则亏，水满则溢。", v:[1,0,-1.5,-0.5], s:{h:3,c:"#3b2f24",r:"#c9899a",f:"pin"},
+  b:"鲜艳妩媚似宝钗，袅娜风流如黛玉。她最先托梦警醒凤姐「月满则亏」，也最早把性命留在了盛世的阴影里。"},
+ {n:"晴雯", t:"风流灵巧 · 刚烈", q:"风流灵巧招人怨。", v:[0,-0.5,2,2], s:{h:2,c:"#3b2f24",r:"#7a966f",f:"flower"},
+  b:"怡红院里针线第一的丫头。她嫉恶如仇，撕扇、病补雀金裘、抄检时倒箧相抗。担了虚名被撵，屈死于灯节之后。"},
+ {n:"袭人", t:"贤袭卿 · 温柔和顺", q:"枉自温柔和顺。", v:[1.5,1,-1,-1.5], s:{h:4,c:"#3b2f24",r:"#c9b28a",f:"flower"},
+  b:"怡红院首席大丫鬟，温柔和顺、恪尽职守。她把自己的一生细细缝进宝玉的前程里，却终究没能缝住聚散。"},
+ {n:"香菱", t:"苦莲 · 痴憨", q:"根并荷花一茎香。", v:[-0.5,-1.5,-1,-2], s:{h:1,c:"#3b2f24",r:"#d98f9a",f:"flower"},
+  b:"甄英莲，幼年被拐，成为薛蟠之妾。命运百般蹂躏，她却痴憨不改，梦中得句学诗成痴——平生遭际实堪伤。"},
+ {n:"平儿", t:"俏平儿 · 周全", q:"得放手时须放手。", v:[1.5,1,-2,-1.5], s:{h:4,c:"#3b2f24",r:"#b76e85",f:"pin"},
+  b:"凤姐的心腹、贾琏的通房。她在威与私之间周旋，却始终待人以宽——软语救贾琏、行权济二姐，是烂局里最干净的体面。"},
+ {n:"鸳鸯", t:"鸳鸯女 · 誓绝刚绝", q:"我是横了心的。", v:[0.5,1,2,2], s:{h:4,c:"#3b2f24",r:"#5a6b8a",f:"pin"},
+  b:"贾母身边的第一大丫鬟。大老爷讨她做妾，她当着满堂主子剪发明志、誓绝鸳鸯偶——宁折不弯的骨气，丫鬟里无人能及。"},
+ {n:"紫鹃", t:"慧紫鹃 · 情慧", q:"万两黄金容易得，知心一个也难求。", v:[0,0.5,-1.5,-0.5], s:{h:4,c:"#3b2f24",r:"#7a966f",f:"none"},
+  b:"黛玉的贴身丫鬟，情辞试莽玉、苦口劝保媒，把小姐的终身当作自己的终身来操心。黛玉去后，她守完了一场知己。"},
+ {n:"金钏儿", t:"灵巧丫头 · 刚烈性儿", q:"金簪子掉在井里头，有你的只是有你的。", v:[0.5,-1,1,1], s:{h:1,c:"#3b2f24",r:"#d9a455",f:"flower"},
+  b:"王夫人房中的大丫鬟，生得灵巧，性子活泼刚烈。一句玩笑被撵、被辱，她投井明志——金簪子掉在井里头，是宁为玉碎的注解。"},
+ {n:"司棋", t:"刚烈婢 · 敢作敢当", q:"抄检大观园，昂然不惧。", v:[0,0,1.5,2], s:{h:4,c:"#3b2f24",r:"#8a5a5a",f:"none"},
+  b:"迎春的大丫鬟，性情刚烈。抄检大观园时她昂然不惧，被撵后撞墙殉情——敢爱敢当，宁为玉碎。"},
+ {n:"麝月", t:"荼蘼花 · 安稳", q:"开到荼蘼花事了。", v:[1,1,-1.5,-1], s:{h:4,c:"#3b2f24",r:"#a08a6f",f:"flower"},
+  b:"怡红院里「公然又一个袭人」。她嘴上利害、心里安稳，是繁华散场时最后一个还留在原地的人。"},
+ {n:"小红", t:"林红玉 · 伶俐", q:"千里搭长棚，没有不散的筵席。", v:[2,2,1,0.5], s:{h:1,c:"#3b2f24",r:"#c98a3d",f:"pin"},
+  b:"林之孝之女，在怡红院被压制，却凭一段干净的利落口才被凤姐一眼看中。那句「没有不散的筵席」，是丫鬟里最清醒的话。"},
+ {n:"莺儿", t:"黄金莺 · 巧手", q:"黄金莺巧结梅花络。", v:[0.5,0,-1.5,0], s:{h:1,c:"#3b2f24",r:"#e0c06a",f:"flower"},
+  b:"宝钗的贴身丫鬟，巧手能结梅花络。她娇憨可爱，为主子的金锁奔走引线，「黄金莺」名下无虚。"},
+ {n:"芳官", t:"小戏子 · 率真", q:"寿怡红群芳开夜宴。", v:[0,-1,0.5,1], s:{h:1,c:"#3b2f24",r:"#b5658a",f:"flower"},
+  b:"戏班出身的小戏子，分入怡红院。她天真烂漫、任情任性，为朋友敢与大丫鬟翻脸，是规矩缝里开出的野花。"},
+ {n:"龄官", t:"痴伶人 · 傲骨", q:"画蔷深自痴。", v:[-1,-1.5,1.5,1.5], s:{h:1,c:"#3b2f24",r:"#8a9ab0",f:"none"},
+  b:"戏班里唱得最好的小旦。她痴恋贾蔷，在蔷薇架下一笔一画写了几十个「蔷」字；拒为贵人献唱，是她的傲骨。"},
+ {n:"尤二姐", t:"花雪之质 · 柔顺", q:"花为肠肚，雪作肌肤。", v:[1,-1,-2,-2], s:{h:3,c:"#3b2f24",r:"#d9b8c0",f:"flower"},
+  b:"尤氏继母带来的女儿，生得花为肠肚、雪作肌肤。她柔顺怯懦，被赚入大观园后吞金自逝，是善良在算计面前的代价。"},
+ {n:"尤三姐", t:"刚烈姝 · 拂剑", q:"揉碎桃花红满地，玉山倾倒再难扶。", v:[0,0.5,2,2], s:{h:2,c:"#3b2f24",r:"#a63a2e",f:"pin"},
+  b:"尤二姐之妹，眼明如炬、性情刚烈。她自择柳湘莲为婿，因对方悔婚而当场拂剑自刎——碎的是桃花，立的是脊梁。"},
+ {n:"王夫人", t:"当家主母 · 端肃", q:"吃斋念佛的人。", v:[1.5,0.5,0,0], s:{h:4,c:"#4a3b30",r:"#7a5a66",f:"pin"},
+  b:"宝玉之母，吃斋念佛的当家主母。她疼爱宝玉，却也一手造成金钏儿与晴雯的悲剧——慈悲与残酷，在她身上只隔着一句「仔细」。"},
+ {n:"邢夫人", t:"愚犟夫人 · 自私", q:"禀性愚犟，只知承顺贾赦。", v:[1.5,1,1,0.5], s:{h:4,c:"#4a3b30",r:"#8a7a5f",f:"none"},
+  b:"贾赦之妻，禀性愚犟，只知奉承丈夫、聚敛自肥。她为鸳鸯之事碰了钉子，也亲手把冷与偏写进了迎春的婚姻。"},
+ {n:"赵姨娘", t:"怨愤妾室 · 夹缝", q:"阴微鄙贱的见识。", v:[2,0,1.5,1.5], s:{h:4,c:"#4a3b30",r:"#6f5a4a",f:"none"},
+  b:"贾政之妾，探春生母。她一辈子在嫡庶的夹缝里挣扎怨恨，闹得鸡飞狗跳，是全书里最不体面也最可悲的角色之一。"},
+ {n:"薛姨妈", t:"慈姨妈 · 慈和", q:"慈姨妈慰痴颦。", v:[1.5,0.5,-1,-1], s:{h:4,c:"#4a3b30",r:"#b08a6f",f:"pin"},
+  b:"宝钗之母，王夫人之妹。她慈眉善目、惯会安抚人心，一句句「我的儿」背后，也有商贾人家的精明盘算。"},
+ {n:"夏金桂", t:"桂花夏家 · 泼悍", q:"在家里，谁不是我让着他。", v:[2,0,2,2], s:{h:3,c:"#3b2f24",r:"#a65a2e",f:"flower"},
+  b:"薛蟠之妻，桂花夏家的独女。她自幼娇养、才干锋利，出阁后搅得薛家鸡犬不宁，是宝钗之外另一朵「有刺的花」。"},
+ {n:"薛宝琴", t:"白雪红梅 · 明丽", q:"琉璃世界白雪红梅。", v:[1.5,-0.5,0.5,0.5], s:{h:1,c:"#3b2f24",r:"#a63a2e",f:"flower"},
+  b:"宝钗堂妹，自幼随父走遍四山五岳。她见多识广、才貌双全，踏雪立梅那一幕，是大观园女儿们最明亮的剪影。"},
+ {n:"邢岫烟", t:"静竹 · 淡雅", q:"超然如野鹤闲云。", v:[-0.5,0.5,0.5,-1.5], s:{h:2,c:"#3b2f24",r:"#9a9a8a",f:"none"},
+  b:"邢夫人侄女，家贫寄居贾府。她不卑不亢、淡雅自持，棉衣当了也不声张，是寒门里长出的一竿静竹。"},
+ {n:"刘姥姥", t:"积古的老人家 · 豁达", q:"守多大碗儿吃多大碗的饭。", v:[1.5,0,-1.5,-2], s:{h:6,c:"#9a938a",r:"#8a6f4f",f:"none"},
+  b:"王家远亲，七十五岁进荣国府。她装憨逗趣换得全家过冬，却在贾府败落时挺身救下巧姐——大智若愚，义薄云天。"},
+ {n:"尤氏", t:"宁府奶奶 · 隐忍", q:"没法子的宽柔。", v:[1,1,-0.5,-1.5], s:{h:4,c:"#4a3b30",r:"#9a8a7a",f:"none"},
+  b:"贾珍之妻，宁国府当家奶奶。她才干不缺，只因出身继室、性子宽柔，处处隐忍，是大家庭里「没法子」的注脚。"},
+ {n:"贾母", t:"史太君 · 慈享", q:"也不枉我一生疼这些孩子。", v:[2,0,-0.5,0.5], s:{h:6,c:"#8a837a",r:"#6b5a8a",f:"pin"},
+  b:"史太君，贾府的最高长辈。她享尽富贵繁华，护着孙子孙女们过了几十年好日子——她散场时的沉默，是最深的苍凉。"},
+ {n:"智能儿", t:"小尼姑 · 情动", q:"出世之地，开了入世的花。", v:[-0.5,-1,0.5,0.5], s:{h:5,c:"#3b2f24",r:"#8a8a7a",f:"none"},
+  b:"水月庵小尼姑。馒头庵里长大，却动了凡心，与秦钟私会——出世之地，偏偏开了最入世的花。"},
+ {n:"柳五儿", t:"柔怯女 · 盼", q:"一心想进怡红院。", v:[0,0,0.5,0], s:{h:7,c:"#3b2f24",r:"#bfa8a0",f:"none"},
+  b:"灶上柳嫂之女，生得袅娜。一心想进怡红院当差，几番波折终未如愿，是小人物之「盼」最真实的写照。"},
+ {n:"傻大姐", t:"憨丫头 · 憨直", q:"两个妖精打架。", v:[1,-2,-2,-2], s:{h:7,c:"#3b2f24",r:"#8a9a6f",f:"flower"},
+  b:"贾母房里粗使丫头，生得肥头大耳、憨直可爱。她无意间拾到绣春囊，一句「两个妖精打架」掀翻了整个大观园。"},
+ {n:"翠缕", t:"憨丫头 · 问阴阳", q:"阴阳可有什么样子？", v:[0.5,-1,-1.5,0], s:{h:1,c:"#3b2f24",r:"#9ab07a",f:"none"},
+  b:"湘云的贴身丫鬟。一段「阴阳论」问得主人无言以对，憨态可掬，是湘云身边的一朵小太阳。"},
+ {n:"雪雁", t:"南边小妹 · 静顺", q:"焚稿断痴情的见证人。", v:[0,0,-1.5,-0.5], s:{h:7,c:"#3b2f24",r:"#9aa8c0",f:"none"},
+  b:"黛玉自苏州带来的小丫鬟。她安静顺从，看着小姐焚稿断痴情，是那场爱情最沉默的见证人。"},
+ {n:"秋纹", t:"爽利婢 · 知足", q:"赏两件衣裳也能念叨一路。", v:[1,0.5,-0.5,0.5], s:{h:4,c:"#3b2f24",r:"#a08a9a",f:"none"},
+  b:"宝玉房里的丫鬟，性情爽利。王夫人赏了两件旧衣裳，她能高兴地念叨一路，是小人物的知足与欢喜。"},
+ {n:"入画", t:"惜春婢 · 温怯", q:"心冷的主人，最先冷的是身边人。", v:[0,0,-1,-1], s:{h:7,c:"#3b2f24",r:"#8a9a8a",f:"none"},
+  b:"惜春的丫鬟。抄检时替哥哥收着东西被搜出，主人狠心赶她出园——「心冷嘴冷」的惜春，最先冷的是身边人。"},
+ {n:"素云", t:"稻香村婢 · 端谨", q:"诗社里张罗器物的人。", v:[0.5,0.5,-1.5,-1], s:{h:4,c:"#3b2f24",r:"#a8a08a",f:"none"},
+  b:"李纨的丫鬟，端谨本分。诗社里她替主子张罗器物笔墨，是稻香村里一道安静的影子。"},
+ {n:"彩云", t:"痴心婢 · 错付", q:"偷来玫瑰露，错付了凉薄。", v:[1.5,0,0.5,0.5], s:{h:1,c:"#3b2f24",r:"#c08a9a",f:"none"},
+  b:"王夫人房里的丫鬟。她痴心于贾环，为他偷了玫瑰露，却被赵姨娘母子的凉薄辜负——痴心错付，古今同叹。"},
+ {n:"王善保家的", t:"陪房 · 搬石砸脚", q:"撺掇抄检，自取其辱。", v:[2,1,1,1.5], s:{h:4,c:"#4a3b30",r:"#7a6a5a",f:"none"},
+  b:"邢夫人的陪房，搬弄是非的急先锋。她撺掇抄检大观园，却在自家外孙女司棋处搜出私情之物——搬石砸脚，自取其辱。"},
+ {n:"多姑娘", t:"灯姑娘 · 放浪公道", q:"全书里最公道的一句话，出在她嘴里。", v:[1.5,-1,1,1], s:{h:3,c:"#3b2f24",r:"#a65a6a",f:"flower"},
+  b:"多浑虫之妻，放浪形骸于贾府下人之间。却在晴雯被撵、众叛亲离之时，说出了全书里丫鬟们最公道的一句话。"},
+ {n:"李纹", t:"李家女 · 温婉", q:"芦雪庵联诗，句句妥帖。", v:[0,-0.5,-0.5,-1.5], s:{h:1,c:"#3b2f24",r:"#8aa0a8",f:"flower"},
+  b:"李纨寡婶之女，随家寄居贾府。她温婉安静，芦雪庵联诗时不声不响，却句句妥帖。"},
+ {n:"李绮", t:"李家女 · 清雅", q:"清淡岁月的一抹底色。", v:[0.5,0.5,-0.5,-1], s:{h:1,c:"#3b2f24",r:"#98a8b8",f:"flower"},
+  b:"李纹之妹，清秀可人。她与姐姐一同入社观诗，是大观园里安静的过客，也是清淡岁月的一抹底色。"}
+];
+
+/* ===== 极名与文案 ===== */
+var POLE = {
+ R:{p:{s:"入世",m:"趋世"}, m:{s:"出世",m:"慕隐"}},
+ S:{p:{s:"理性",m:"理性"}, m:{s:"感性",m:"感性"}},
+ F:{p:{s:"立身",m:"立身"}, m:{s:"从人",m:"随和"}},
+ E:{p:{s:"锋芒",m:"有棱"}, m:{s:"温润",m:"温润"}}
+};
+var AXIS_TEXT = {
+ R:{
+  ps:"你偏向入世。你愿意在世俗的秩序里经营、参与、承担，把热情投注在真实发生的事情上。你在乎结果，也在乎身边人的处境，愿意为一屋一院的安稳付出实在的努力。",
+  pm:"你倾向入世，但程度温和。你愿意在世俗秩序中找到自己的位置，也乐于把事情推进、让局面变好，只是不会像极端的入世者那样时刻冲在最前面。你懂得何时发力，何时收劲，是一份恰到好处的进取心。",
+  mid:"你在入世与出世之间几乎不偏不倚。该做事时你认真做事，需要抽身时你也能放得下。这种弹性让你进可担当、退可自处。",
+  mm:"你倾向出世。比起在人群中争一个位置，你更珍惜属于自己的精神角落。但这不是逃避——你只是把能量省下来，花在真正让你安宁的事物上。",
+  ms:"你明显偏出世。喧嚣让你疲惫，热闹里的计较让你疏离。你向往干净、安静、自足的世界，宁可清冷，也不肯把心典当给浮华。"},
+ S:{
+  ps:"你的天赋落在逻辑与分析上。你习惯拆解问题、权衡利弊，凡事讲证据与章法。这份冷静是可靠与效率的来源，只是偶尔，也请允许自己不讲道理地动一次情。",
+  pm:"你偏理性。遇到事情你习惯先理清事实、再作判断，情绪很少替你做决定。你并非冷漠——你只是相信，想明白了才配得上动心。",
+  mid:"你在理性与感性之间切换自如。分析问题时你冷静清楚，面对美与情感时你又能全然投入。感性与理性互为表里，是你难得的平衡。",
+  mm:"你偏感性。你的判断常常先经过心，再经过脑：氛围、语气、美感，这些「说不清」的东西对你格外真实。你并非没有逻辑，只是不肯让逻辑盖过心里的声音。",
+  ms:"你的天赋落在感受与共情上。你能沉浸于美、文字、音乐和情绪之中，捕捉到别人忽略的细节。这份感性让你拥有丰富的内心世界和深度共情的能力，是审美力、创造力和理解他人的根基。"},
+ F:{
+  ps:"你有非常清晰的立场和边界。你清楚自己想要什么，也愿意为此承担代价，不轻易被环境和他人带偏。这份立身让你有主见、有骨架，只是要留意，别让坚持变成固执。",
+  pm:"你有清晰的立场和边界。你清楚自己想要什么，也愿意在必要时考虑他人和环境的因素。这份立身让你既能坚持自我，又不至于刚愎自用。",
+  mid:"你在自我与从人之间伸缩自如。独处时你有主张，人群里你也能随和。你不是没有立场，只是懂得立场不必时刻挂在脸上。",
+  mm:"你倾向体恤与配合。你习惯先看别人的需要，再放自己的偏好，是大家眼里「好相处」的人。只是记得：自己的需求，也值得被你认真对待。",
+  ms:"你总是先看见别人。委屈自己成全局面，对你来说几乎是本能。这份柔软成全了许多人和事，但从今天起，请也练习把自己放进「需要被照顾的人」的名单里。"},
+ E:{
+  ps:"你的表达自带锋芒。有话直说，态度鲜明，不藏着掖着。这份锐利让你有威信、有效率，但也容易在无意间划伤亲近的人。",
+  pm:"你的表达有锋芒，但不极端。你有自己的态度和边界，偶尔也会稍作收敛。这份「有棱」让你既不被轻易拿捏，也不会让人觉得难以接近。你有自己的形状，同时也知道什么时候该收起棱角。",
+  mid:"你的表达刚柔并济。该坚定时寸步不让，该圆润时如沐春风。你懂得语言是工具也是艺术，分寸感是你的天赋。",
+  mm:"你的表达温润。你习惯把话说到妥帖，把情绪收进体面里，是让人如沐春风的存在。只是偶尔，也别忘了直接说出真实的需求。",
+  ms:"你的表达极其温和。你几乎不忍心让任何人为难，宁可自己绕远路也不愿起冲突。这份涵养令人敬重，但请记得：温柔的拒绝，也是被允许的。"}
+};
+var STANCE = {
+ R:{p:{s:"把整个生命的热忱都押在了人间的经营与担当上", m:"对世间事务始终保有一份温和的投入"},
+    m:{s:"把心交给了尘世之外，宁可清冷，不肯将就", m:"对浮世繁华抱着一种淡然而有保留的亲近"}},
+ S:{p:{s:"遇事冷静权衡，情感受理性管辖，几乎不动声色", m:"心是热的，脑是清楚的，感性常常让位于讲道理"},
+    m:{s:"感受力远超常人，一花一叶都能在心里掀起波澜", m:"直觉与情绪往往先于逻辑抵达"}},
+ F:{p:{s:"边界分明，宁折不弯，从不肯把自己交给别人安排", m:"有主见，也懂得体谅，立身而不僵立"},
+    m:{s:"习惯把别人放在自己前面，柔软得近乎没有防备", m:"随和顺从，愿意为周全大局而收起自己的偏好"}},
+ E:{p:{s:"言语行事锋芒毕露，从不肯藏起自己的形状", m:"有棱有角，但懂得收敛，锐气里存着分寸"},
+    m:{s:"温润如水，几乎不忍心让任何人难堪", m:"温和妥帖，锋芒只在必要时才偶尔显露"}}
+};
+
+/* ===== 简笔人像（参数化）===== */
+var AV_UID = 0;
+function avatarSVG(c, cls){
+  var s = c.s, skin = "#f4dfc8", hc = s.c;
+  AV_UID++;
+  var uid = "av" + AV_UID;
+  var hair = "", acc = "";
+  if(s.h === 5){
+    hair = '<path d="M39 56 Q38 24 60 24 Q82 24 81 56 Q78 40 60 40 Q42 40 39 56 Z" fill="'+hc+'"/>';
+  }else{
+    hair = '<path d="M41 54 Q39 27 60 27 Q81 27 79 54 Q76 43 60 43 Q44 43 41 54 Z" fill="'+hc+'"/>';
+    if(s.h===1){
+      hair += '<circle cx="41" cy="33" r="7.5" fill="'+hc+'"/><circle cx="79" cy="33" r="7.5" fill="'+hc+'"/>'+
+              '<circle cx="41" cy="27" r="2" fill="#a63a2e"/><circle cx="79" cy="27" r="2" fill="#a63a2e"/>';
+    }else if(s.h===2){
+      hair += '<ellipse cx="60" cy="23" rx="9" ry="7.5" fill="'+hc+'"/>';
+    }else if(s.h===3){
+      hair += '<ellipse cx="60" cy="18" rx="9.5" ry="8.5" fill="'+hc+'"/>';
+    }else if(s.h===4){
+      hair += '<ellipse cx="60" cy="26" rx="9" ry="7" fill="'+hc+'"/>';
+    }else if(s.h===6){
+      hair += '<ellipse cx="60" cy="25" rx="8.5" ry="7" fill="'+hc+'"/>';
+    }else if(s.h===7){
+      hair += '<circle cx="44" cy="27" r="6" fill="'+hc+'"/><circle cx="76" cy="27" r="6" fill="'+hc+'"/>';
+    }
+  }
+  if(s.f === "flower"){
+    acc = '<g transform="translate(' + (s.h===1?74:68) + ',17)"><circle r="2.2" fill="#e6c66e"/><circle cx="3.4" r="2.4" fill="#c9899a"/><circle cx="-3.4" r="2.4" fill="#c9899a"/><circle cy="3.4" r="2.4" fill="#d98f9a"/><circle cy="-3.4" r="2.4" fill="#d98f9a"/></g>';
+  }else if(s.f === "pin"){
+    acc = '<line x1="46" y1="'+(s.h===3?14:20)+'" x2="76" y2="'+(s.h===3?22:27)+'" stroke="#c9a227" stroke-width="2"/><circle cx="76" cy="'+(s.h===3?22:27)+'" r="2.4" fill="#e6c66e"/>';
+  }
+  return '<svg class="'+cls+'" viewBox="0 0 120 120" aria-hidden="true">'+
+    '<defs><clipPath id="'+uid+'"><circle cx="60" cy="60" r="55"/></clipPath></defs>'+
+    '<circle cx="60" cy="60" r="55" fill="#f4ead2"/>'+
+    '<circle cx="60" cy="60" r="55" fill="none" stroke="#c9a86a" stroke-width="2"/>'+
+    '<g clip-path="url(#'+uid+')">'+
+    '<path d="M20 122 Q24 92 44 85 L52 98 L60 88 L68 98 L76 85 Q96 92 100 122 Z" fill="'+s.r+'"/>'+
+    '<path d="M52 98 L60 110 L68 98" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="1.6"/>'+
+    '<rect x="54" y="68" width="12" height="14" rx="3" fill="#e9cdab"/>'+
+    '<ellipse cx="60" cy="54" rx="17.5" ry="20.5" fill="'+skin+'"/>'+
+    '<ellipse cx="42.5" cy="56" rx="2.4" ry="3.6" fill="'+skin+'"/>'+
+    '<ellipse cx="77.5" cy="56" rx="2.4" ry="3.6" fill="'+skin+'"/>'+
+    '<path d="M49 49 q4-3 8-1 M63 48 q4-2 8 1" stroke="#5a4634" stroke-width="1.5" fill="none" stroke-linecap="round"/>'+
+    '<ellipse cx="53" cy="56" rx="2" ry="2.6" fill="#3b2f24"/><ellipse cx="67" cy="56" rx="2" ry="2.6" fill="#3b2f24"/>'+
+    '<circle cx="47" cy="62" r="3" fill="rgba(232,138,120,.4)"/><circle cx="73" cy="62" r="3" fill="rgba(232,138,120,.4)"/>'+
+    '<path d="M56 66 q4 2.6 8 0" stroke="#b3654e" stroke-width="1.6" fill="none" stroke-linecap="round"/>'+
+    hair + acc +
+    '</g></svg>';
+}
+
+/* ===== 状态 ===== */
+var S = {answers:new Array(QUESTIONS.length).fill(null), idx:0, maxIdx:0};
+var LS_KEY = "hlm_mirror_v2";
+var navTimer = null;
+
+function saveState(){ try{ localStorage.setItem(LS_KEY, JSON.stringify({a:S.answers,i:S.idx,m:S.maxIdx})); }catch(e){} }
+function loadState(){
+  try{
+    var raw = localStorage.getItem(LS_KEY); if(!raw) return false;
+    var d = JSON.parse(raw);
+    if(!d || !Array.isArray(d.a) || d.a.length !== QUESTIONS.length) return false;
+    S.answers = d.a.map(function(x){ return (typeof x==="number" && x>=0 && x<LIKERT.length)?x:null; });
+    S.idx = Math.min(Math.max(0, d.i|0), QUESTIONS.length-1);
+    S.maxIdx = Math.min(Math.max(0, d.m|0), QUESTIONS.length-1);
+    return S.answers.some(function(x){return x!==null;});
+  }catch(e){ return false; }
+}
+function clearState(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(function(p){ p.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+  try{ window.scrollTo({top:0, behavior:"smooth"}); }catch(e){ window.scrollTo(0,0); }
+}
+var toastTimer = null;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2000);
+}
+
+/* ===== 答题页渲染 ===== */
+function renderQuiz(){
+  var i = S.idx, q = QUESTIONS[i];
+  document.getElementById("q-counter").textContent = "第 " + (i+1) + " / " + QUESTIONS.length + " 题";
+  var ax = null;
+  AXES.forEach(function(a){ if(a.k===q.a) ax = a; });
+  document.getElementById("q-dim").textContent = "维度：" + ax.title;
+  document.getElementById("progress-fill").style.width = ((i+1)/QUESTIONS.length*100) + "%";
+  document.getElementById("q-text").textContent = q.s;
+  var box = document.getElementById("opts");
+  box.innerHTML = "";
+  LIKERT.forEach(function(txt, oi){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt" + (S.answers[i]===oi ? " sel" : "");
+    b.textContent = txt;
+    b.addEventListener("click", function(){
+      S.answers[i] = oi; saveState(); renderQuiz(); renderDots();
+      if(navTimer) clearTimeout(navTimer);
+      navTimer = setTimeout(function(){ advance(true); }, 520);
+    });
+    box.appendChild(b);
+  });
+  document.getElementById("btn-prev").disabled = (i===0);
+  document.getElementById("btn-next").textContent = (i===QUESTIONS.length-1) ? "查看结果" : "下一题";
+  renderDots();
+}
+function renderDots(){
+  var d = document.getElementById("dots");
+  if(d.children.length !== QUESTIONS.length){
+    d.innerHTML = "";
+    for(var k=0;k<QUESTIONS.length;k++){
+      (function(k){
+        var btn = document.createElement("button");
+        btn.className = "dot"; btn.title = "第"+(k+1)+"题";
+        btn.addEventListener("click", function(){
+          if(k <= S.maxIdx){ S.idx = k; renderQuiz(); }
+          else{ toast("请先按顺序作答到该题"); }
+        });
+        d.appendChild(btn);
+      })(k);
+    }
+  }
+  for(var k=0;k<QUESTIONS.length;k++){
+    d.children[k].classList.toggle("answered", S.answers[k]!==null);
+    d.children[k].classList.toggle("current", k===S.idx);
+  }
+}
+function advance(auto){
+  if(navTimer){ clearTimeout(navTimer); navTimer = null; }
+  var i = S.idx;
+  if(S.answers[i] === null){
+    var card = document.getElementById("q-card");
+    card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+    toast("请先选择一个答案");
+    return;
+  }
+  if(i < QUESTIONS.length-1){
+    S.idx++;
+    if(S.idx > S.maxIdx) S.maxIdx = S.idx;
+    saveState(); renderQuiz();
+  }else{
+    tryFinish();
+  }
+}
+function tryFinish(){
+  var un = -1;
+  for(var i=0;i<S.answers.length;i++){ if(S.answers[i]===null){ un=i; break; } }
+  if(un >= 0){
+    var cnt = S.answers.filter(function(x){return x===null;}).length;
+    S.idx = un; saveState(); renderQuiz();
+    toast("还有 " + cnt + " 题未作答，已为你定位");
+  }else{
+    S.maxIdx = QUESTIONS.length-1; saveState();
+    renderResult();
+  }
+}
+
+/* ===== 镜像匹配计分（确定性，无随机）===== */
+function computeMirror(){
+  var sums = {R:0,S:0,F:0,E:0};
+  S.answers.forEach(function(a, i){
+    if(a===null) return;
+    var q = QUESTIONS[i];
+    sums[q.a] += q.d * LIKVAL[a];
+  });
+  var u = {};
+  AXES.forEach(function(ax){ u[ax.k] = Math.max(-1, Math.min(1, sums[ax.k] / 14)); });
+  var axIdx = {R:0,S:1,F:2,E:3};
+  var scored = CHARS.map(function(c, ci){
+    var dist = 0;
+    AXES.forEach(function(ax){ dist += Math.abs(u[ax.k] - c.v[axIdx[ax.k]]/2); });
+    dist /= AXES.length;
+    return {c:c, ci:ci, sim: Math.max(0, 1 - dist/2)};
+  });
+  scored.sort(function(a,b){ return b.sim - a.sim || a.ci - b.ci; });
+  return {u:u, sums:sums, sorted:scored};
+}
+function poleChip(k, v){
+  var strong = Math.abs(v) > 0.55;
+  var side = v > 0.08 ? "p" : (v < -0.08 ? "m" : null);
+  if(!side) return null;
+  return POLE[k][side][strong ? "s" : "m"];
+}
+function axisTextFor(k, v){
+  var t = AXIS_TEXT[k];
+  if(v > 0.55) return t.ps;
+  if(v > 0.18) return t.pm;
+  if(v < -0.55) return t.ms;
+  if(v < -0.18) return t.mm;
+  return t.mid;
+}
+
+/* ===== 结果页渲染 ===== */
+function renderResult(){
+  var r = computeMirror();
+  var top = r.sorted[0], u = r.u;
+
+  var chipsHtml = "";
+  AXES.forEach(function(ax){
+    var pc = poleChip(ax.k, u[ax.k]);
+    if(pc) chipsHtml += '<span class="chip">'+pc+'</span>';
+  });
+
+  var h = '';
+  h += '<div class="res-head"><div class="stars">✦ ✦ ✦</div><div class="overline">大荒山 · 离恨天</div>';
+  h += '<h2>红楼梦性格镜像报告</h2></div>';
+
+  h += '<div class="mirror-card bracket-corner">';
+  h += '<div><span class="role-chip">红楼镜像角色</span></div>';
+  h += avatarSVG(top.c, "avatar-ring");
+  h += '<div class="mirror-tag">'+top.c.t+'</div>';
+  h += '<div class="mirror-name">'+top.c.n+'</div>';
+  h += '<div class="mirror-chips">'+chipsHtml+'</div>';
+  h += '<div class="fit-label">镜像契合度 <span class="fit-num" id="fit-num">0%</span></div>';
+  h += '<div class="fit-track"><div class="fit-fill" id="fit-fill"></div></div>';
+  h += '</div>';
+
+  /* 雷达 */
+  h += '<div class="sec-title"><span class="orn">✦</span> 你的八维人格画像 <span class="orn">✦</span></div>';
+  h += '<div class="radar-box">'+radarSVG(u, top.c.v)+'</div>';
+
+  /* 维度详解 */
+  h += '<div class="sec-title" id="dim-detail-anchor"><span class="orn">✦</span> 维度深度解读 <span class="orn">✦</span></div>';
+  AXES.forEach(function(ax){
+    var v = u[ax.k];
+    var pct = Math.max(8, Math.min(92, 50 - (v/2)*50));
+    var pc = poleChip(ax.k, v) || "居中";
+    h += '<div class="axis-block"><div class="axis-head"><div><h3>'+ax.title+'</h3><div class="axis-sub">'+ax.sub+'</div></div>';
+    h += '<span class="axis-chip">'+pc+'</span></div>';
+    h += '<div class="slider-row"><div class="slider-labels"><span>'+ax.plus+'</span><span>'+ax.minus+'</span></div>';
+    h += '<div class="slider-track"><div class="slider-marker" style="left:'+pct+'%;"></div></div></div>';
+    h += '<p class="axis-text">'+axisTextFor(ax.k, v)+'</p></div>';
+  });
+
+  /* 相近人物 */
+  h += '<div class="sec-title"><span class="orn">✦</span> 与你性格相近的人物 <span class="orn">✦</span></div>';
+  h += '<div class="near-grid">';
+  r.sorted.slice(1,4).forEach(function(it){
+    var pct2 = Math.round(it.sim / top.sim * 100);
+    h += '<div class="near-card">'+avatarSVG(it.c, "avatar-ring")+'<h4>'+it.c.n+'</h4><p>契合 '+pct2+'%</p></div>';
+  });
+  h += '</div>';
+
+  /* 镜中人物详说 */
+  h += '<div class="sec-title"><span class="orn">✦</span> 镜中人物详说 <span class="orn">✦</span></div>';
+  h += '<div class="detail-box">';
+  h += '<div class="detail-quote">「'+top.c.q+'」</div>';
+  h += '<p>在《红楼梦》中，你是<b>'+top.c.n+'</b>——'+top.c.t.split(" · ")[0]+'，'+top.c.t.split(" · ")[1]+'。'+top.c.b+'</p>';
+  AXES.forEach(function(ax){
+    var cv = top.c.v[{R:0,S:1,F:2,E:3}[ax.k]]/2;
+    var side = cv > 0.08 ? "p" : (cv < -0.08 ? "m" : null);
+    if(!side) return;
+    var strong = Math.abs(cv) > 0.55;
+    var poleName = side==="p" ? ax.plus : ax.minus;
+    h += '<p><b>在「'+ax.title+'」上，你们同属'+poleName+'。</b>她'+STANCE[ax.k][side][strong?"s":"m"]+'；而你在这一轴上的落点，与她几乎如出一辙。这条轴是你们底色相通的地方，也是这份镜像的来处。</p>';
+  });
+  h += '</div>';
+
+  /* 按钮 */
+  h += '<div class="res-btns">';
+  h += '<button class="btn btn-primary" id="btn-share">分享我的性格镜像</button>';
+  h += '<button class="btn btn-ghost" id="btn-godim">查看维度深度解读</button>';
+  h += '<button class="btn btn-ghost" id="btn-retest">重新测试</button>';
+  h += '</div>';
+
+  h += '<div class="epilogue">';
+  h += '<p>这部书问世两百余年，有人看见闺阁琐事，有人看见盛衰无常，也有人看见万千人性况味。</p>';
+  h += '<p>做这个小测试的初衷，是想为尚未翻开《红楼梦》的朋友推开一条门缝——若你因某一个结果生出好奇，去读读原著里关于这个人物的章节，那便是这个测试最大的功德。</p>';
+  h += '<p>书中人物面目复杂，曹雪芹笔下从无绝对的善人与恶人。区区二十八题，不过是在斑斓的织锦上抽出的一缕丝线，搏君一笑，万勿当真。</p>';
+  h += '<p>若你对某个人物有不同见解，或觉得题目设计有失偏颇，欢迎同样指正。</p>';
+  h += '</div>';
+  h += '<p class="disclaimer"><b>说明：</b>本测试为原创趣味自评，镜像角色从 50 位《红楼梦》知名女性人物中，按你四轴人格画像的相近程度匹配而来；'
+    +'契合度为相对值。所有结果由本次作答实时计算生成，修改任意答案后重新进入结果页即自动更新。<b>不构成任何专业心理测评或诊断。</b></p>';
+
+  var wrap = document.getElementById("result-wrap");
+  wrap.innerHTML = h;
+  showPage("page-result");
+  setTimeout(function(){
+    var n1 = document.getElementById("fit-num");
+    var f1 = document.getElementById("fit-fill");
+    if(n1) n1.textContent = "100%";
+    if(f1) f1.style.width = "100%";
+  }, 80);
+
+  document.getElementById("btn-share").addEventListener("click", function(){
+    var near = r.sorted.slice(1,4).map(function(x){return x.c.n;}).join("、");
+    var txt = "【红楼梦性格镜像】我是——" + top.c.n + "（" + top.c.t + "），镜像契合度100%。"
+      + "「" + top.c.q + "」与你性格相近的人物：" + near + "。（原创趣味测试，非专业心理测评）";
+    function done(){ toast("已复制结果文本"); }
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      try{document.execCommand("copy"); done();}catch(e){toast("复制失败，请手动截图分享");}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(fallback);
+    }else{ fallback(); }
+  });
+  document.getElementById("btn-godim").addEventListener("click", function(){
+    var el = document.getElementById("dim-detail-anchor");
+    if(el && el.scrollIntoView) el.scrollIntoView({behavior:"smooth"});
+  });
+  document.getElementById("btn-retest").addEventListener("click", function(){
+    if(confirm("确定要重新测试吗？当前作答将被清空。")){
+      S.answers = new Array(QUESTIONS.length).fill(null);
+      S.idx = 0; S.maxIdx = 0; clearState();
+      renderQuiz(); showPage("page-quiz");
+    }
+  });
+}
+
+/* ===== 雷达图 ===== */
+function radarSVG(u, cv){
+  var CX=170, CY=165, R=105;
+  var spokes = [
+    {lab:"入世", ax:"R", sg:1, ang:90},
+    {lab:"理性", ax:"S", sg:1, ang:45},
+    {lab:"自我", ax:"F", sg:1, ang:0},
+    {lab:"锋锐", ax:"E", sg:1, ang:-45},
+    {lab:"出世", ax:"R", sg:-1, ang:-90},
+    {lab:"感性", ax:"S", sg:-1, ang:-135},
+    {lab:"从人", ax:"F", sg:-1, ang:180},
+    {lab:"温润", ax:"E", sg:-1, ang:135}
+  ];
+  var axIdx = {R:0,S:1,F:2,E:3};
+  function rad(ang){ return ang*Math.PI/180; }
+  function pt(ang, r){ return (CX + Math.cos(rad(ang))*r).toFixed(1) + "," + (CY - Math.sin(rad(ang))*r).toFixed(1); }
+  function poly(vals){
+    return spokes.map(function(sp, i){
+      var val = Math.max(-1, Math.min(1, vals[i]));
+      return pt(sp.ang, R*(0.16 + 0.74*(val+1)/2));
+    }).join(" ");
+  }
+  var userVals = spokes.map(function(sp){ return sp.sg===1 ? u[sp.ax] : -u[sp.ax]; });
+  var charVals = spokes.map(function(sp){ var c2 = cv[axIdx[sp.ax]]/2; return sp.sg===1 ? c2 : -c2; });
+
+  var rings = [0.25,0.5,0.75,1].map(function(f){
+    return '<circle cx="'+CX+'" cy="'+CY+'" r="'+(R*f)+'" fill="none" stroke="#dccfa8" stroke-width="1" stroke-dasharray="2 4"/>';
+  }).join("");
+  var lines = spokes.map(function(sp){
+    return '<line x1="'+CX+'" y1="'+CY+'" x2="'+(CX+Math.cos(rad(sp.ang))*R).toFixed(1)+'" y2="'+(CY-Math.sin(rad(sp.ang))*R).toFixed(1)+'" stroke="#dccfa8" stroke-width="1"/>';
+  }).join("");
+
+  var labels = "";
+  spokes.forEach(function(sp){
+    var x = CX + Math.cos(rad(sp.ang))*(R+20);
+    var y = CY - Math.sin(rad(sp.ang))*(R+20);
+    var dom = (u[sp.ax] >= 0) === (sp.sg===1);
+    if(dom && Math.abs(u[sp.ax]) > 0.18){
+      labels += '<g><rect x="'+(x-17).toFixed(1)+'" y="'+(y-10).toFixed(1)+'" width="34" height="20" rx="10" fill="#a63a2e"/>'+
+        '<text x="'+x.toFixed(1)+'" y="'+(y+4.5).toFixed(1)+'" text-anchor="middle" font-size="12" fill="#f8ecd8">'+sp.lab+'</text></g>';
+    }else{
+      labels += '<text x="'+x.toFixed(1)+'" y="'+(y+4.5).toFixed(1)+'" text-anchor="middle" font-size="12.5" fill="#8a7a62">'+sp.lab+'</text>';
+    }
+  });
+
+  var dots = userVals.map(function(val, i){
+    var rr = R*(0.16 + 0.74*(Math.max(-1,Math.min(1,val))+1)/2);
+    return '<circle cx="'+(CX+Math.cos(rad(spokes[i].ang))*rr).toFixed(1)+'" cy="'+(CY-Math.sin(rad(spokes[i].ang))*rr).toFixed(1)+'" r="3" fill="#a63a2e"/>';
+  }).join("");
+
+  return '<svg viewBox="0 0 340 330" role="img" aria-label="八维人格雷达图">'+rings+lines+
+    '<polygon points="'+poly(charVals)+'" fill="rgba(176,138,62,.10)" stroke="#b08a3e" stroke-width="2" stroke-dasharray="6 4"/>'+
+    '<polygon points="'+poly(userVals)+'" fill="rgba(166,58,46,.22)" stroke="#a63a2e" stroke-width="2.5" stroke-linejoin="round"/>'+
+    dots + labels +
+    '</svg>'+
+    '<div class="legend"><span class="l1"><i></i>你的画像</span><span class="l2"><i></i>镜像角色</span></div>'+
+    '<div class="pair-rows">' + AXES.map(function(ax){
+      var pc = poleChip(ax.k, u[ax.k]);
+      return '<div class="pair-row"><span class="pl">'+ax.plus+' / '+ax.minus+'</span><span class="pair-chip">'+(pc||"居中")+'</span></div>';
+    }).join("") + '</div>';
+}
+
+/* ===== 事件 ===== */
+document.getElementById("btn-start").addEventListener("click", function(){
+  S.answers = new Array(QUESTIONS.length).fill(null);
+  S.idx = 0; S.maxIdx = 0; clearState();
+  renderQuiz(); showPage("page-quiz");
+});
+document.getElementById("btn-resume").addEventListener("click", function(){
+  renderQuiz(); showPage("page-quiz");
+  toast("已恢复到第 " + (S.idx+1) + " 题");
+});
+document.getElementById("btn-prev").addEventListener("click", function(){
+  if(navTimer){ clearTimeout(navTimer); navTimer = null; }
+  if(S.idx > 0){ S.idx--; saveState(); renderQuiz(); }
+});
+document.getElementById("btn-next").addEventListener("click", function(){ advance(false); });
+
+function refreshHome(){
+  var has = loadState();
+  document.getElementById("btn-resume").style.display = has ? "block" : "none";
+}
+renderDots();
+refreshHome();
+</script>
+</body>
+</html>
