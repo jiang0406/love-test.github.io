@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>相亲市场定位测试 · 你到底值几分？</title>
+<style>
+:root{
+  --bg:#faf5ec; --bg2:#f3ead9; --card:#fffdf8; --line:#e4d6bd;
+  --ink:#33291f; --ink2:#7a6c58; --red:#c2455a; --red2:#a33348;
+  --gold:#c9963c; --teal:#4a7a6a; --shadow:0 4px 18px rgba(120,80,40,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+  font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.75;min-height:100vh;
+}
+.toplace{height:10px;background:repeating-linear-gradient(90deg,var(--red) 0 14px,#fff 14px 20px,#e8b64c 20px 34px,#fff 34px 40px);opacity:.85;}
+.page{display:none;animation:fadeIn .45s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.wrap{max-width:640px;margin:0 auto;padding:1.6rem 1.1rem 3rem;}
+h1,h2,h3,.serif{font-family:"Kaiti SC","STKaiti","KaiTi","FZKai-Z03S",serif;}
+.overline{color:var(--gold);letter-spacing:5px;font-size:.82rem;}
+.title{font-size:clamp(1.9rem,6.4vw,2.5rem);letter-spacing:4px;font-weight:700;margin:.35rem 0 .2rem;}
+.title em{font-style:normal;color:var(--red);}
+.subtitle{color:var(--ink2);letter-spacing:2px;font-size:.95rem;margin-bottom:1.4rem;}
+.stars{color:var(--gold);letter-spacing:8px;font-size:.9rem;margin-bottom:.35rem;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);}
+.intro{padding:1.1rem 1.2rem;font-size:.94rem;margin-bottom:1rem;text-align:justify;}
+.intro b{color:var(--red2);}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:1.2rem;}
+.chip{border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:99px;padding:.22em 1em;font-size:.8rem;letter-spacing:1px;}
+.btn{display:inline-block;border:none;cursor:pointer;font-family:inherit;font-size:1.05rem;border-radius:6px;padding:.78em 2.4em;letter-spacing:5px;text-indent:5px;transition:transform .15s,opacity .15s;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,#d05568,var(--red2));color:#fff;box-shadow:0 6px 16px rgba(194,69,90,.35);}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink2);}
+.center{text-align:center;}
+.privacy{background:#eef3ee;border:1px solid #cfdcce;border-radius:8px;padding:.85rem 1.1rem;font-size:.8rem;color:#3d5a4c;margin-top:1.2rem;text-align:justify;}
+.disclaimer{font-size:.72rem;color:#a3947d;letter-spacing:.5px;margin-top:1.2rem;text-align:center;line-height:1.9;}
+/* 性别 */
+.gender-card{padding:1.1rem 1.2rem;margin-bottom:1rem;}
+.gender-row{display:flex;gap:.8rem;margin-top:.5rem;}
+.gbtn{flex:1;padding:.85em 0;border-radius:6px;border:1.5px solid var(--line);background:#fdf9f0;font-family:inherit;font-size:1rem;letter-spacing:2px;cursor:pointer;transition:all .18s;color:var(--ink);}
+.gbtn.sel{border-color:var(--red);background:#fdf0f0;font-weight:700;color:var(--red2);}
+/* ===== 答题页 ===== */
+.quiz-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;}
+.q-counter{font-family:"Kaiti SC","KaiTi",serif;font-size:1.05rem;color:var(--red2);letter-spacing:2px;}
+.q-total{color:var(--ink2);font-size:.85rem;letter-spacing:1px;}
+.pbar{height:8px;background:var(--bg2);border-radius:99px;overflow:hidden;margin-bottom:.4rem;border:1px solid var(--line);}
+.pbar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:99px;transition:width .35s ease;}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin:.6rem 0 1.2rem;}
+.dot{width:11px;height:11px;border-radius:50%;background:#e8dcc4;border:1px solid #d8c8a8;cursor:pointer;transition:all .2s;}
+.dot.answered{background:var(--gold);border-color:var(--gold);}
+.dot.cur{background:var(--red);border-color:var(--red);transform:scale(1.25);}
+.q-card{padding:1.5rem 1.3rem;}
+.q-dim{display:inline-block;font-size:.75rem;letter-spacing:2px;color:#fff;background:var(--red);border-radius:3px;padding:.12em .9em;margin-bottom:.7rem;}
+.q-text{font-family:"Kaiti SC","KaiTi",serif;font-size:1.22rem;letter-spacing:1px;line-height:1.8;margin-bottom:1.1rem;}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:.95rem;color:var(--ink);background:#fdf9f0;border:1.5px solid var(--line);border-radius:6px;padding:.8em 1em .8em 2.6em;margin-bottom:.55rem;cursor:pointer;position:relative;transition:all .18s;}
+.opt::before{content:"";position:absolute;left:.9em;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;border:1.5px solid #d0bfa0;background:#fff;transition:all .18s;}
+.opt:hover{border-color:var(--gold);}
+.opt.sel{border-color:var(--red);background:#fdf0f0;font-weight:600;}
+.opt.sel::before{border-color:var(--red);background:radial-gradient(circle,#fff 28%,var(--red) 30%);}
+/* 滑杆 */
+.slider-box{text-align:center;padding:.4rem 0 .2rem;}
+.slider-val{font-family:Georgia,"Kaiti SC",serif;font-size:2.1rem;font-weight:700;color:var(--red);margin-bottom:.3rem;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;outline:none;background:linear-gradient(90deg,#d05568,#7a6fd0);cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid #d05568;box-shadow:0 2px 8px rgba(120,40,60,.3);}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #d05568;}
+.slider-ends{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink2);margin-top:.35rem;}
+.auto-hint{font-size:.72rem;color:#b3a489;letter-spacing:1px;text-align:center;margin-top:.9rem;}
+.quiz-nav{display:flex;gap:.7rem;margin-top:1.1rem;}
+.quiz-nav .btn{flex:1;font-size:.98rem;padding:.7em 0;letter-spacing:3px;text-indent:3px;}
+.toast{position:fixed;left:50%;bottom:12%;transform:translateX(-50%) translateY(20px);background:rgba(47,41,31,.92);color:#fff;font-size:.85rem;letter-spacing:1px;padding:.6em 1.4em;border-radius:99px;opacity:0;pointer-events:none;transition:all .3s;z-index:99;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* ===== 结果页 ===== */
+.res-head{text-align:center;margin-bottom:1.3rem;}
+.res-head h2{font-size:clamp(1.5rem,4.6vw,1.9rem);letter-spacing:6px;}
+.tier-card{padding:1.8rem 1.3rem 1.6rem;text-align:center;position:relative;overflow:hidden;}
+.tier-card::before{content:"";position:absolute;inset:9px;border:1px solid rgba(201,150,60,.5);border-radius:5px;pointer-events:none;}
+.tier-tag{display:inline-block;font-size:.85rem;letter-spacing:2px;border:1px solid var(--gold);color:var(--gold);background:#fdf6e8;border-radius:99px;padding:.18em 1.3em;margin-bottom:.9rem;}
+.tier-name{font-family:"Kaiti SC","KaiTi",serif;font-size:clamp(1.8rem,6.4vw,2.3rem);letter-spacing:6px;font-weight:700;color:var(--red2);}
+.tier-slogan{color:var(--ink2);letter-spacing:2px;font-size:.9rem;margin:.35rem auto 1.1rem;max-width:30em;}
+.ring-wrap{position:relative;width:170px;height:170px;margin:0 auto .4rem;}
+.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:#efe5d2;stroke-width:11;}
+.ring-fg{fill:none;stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.7,.3,1);}
+.ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-num b{font-family:Georgia,"Kaiti SC",serif;font-size:2.9rem;line-height:1;color:var(--ink);}
+.ring-num span{font-size:.8rem;color:var(--ink2);letter-spacing:3px;margin-top:.2rem;}
+.beat-line{font-size:.85rem;color:var(--ink2);letter-spacing:1px;}
+.beat-line b{color:var(--red2);font-size:1.05rem;}
+.segs{display:flex;gap:6px;max-width:320px;margin:.7rem auto .4rem;}
+.seg{flex:1;height:9px;border-radius:99px;background:#eee3cd;}
+.seg.on{background:var(--gold);}
+.seg-label{font-family:"Kaiti SC","KaiTi",serif;font-size:.92rem;letter-spacing:2px;color:var(--ink);}
+.seg-next{font-size:.75rem;color:#a3947d;letter-spacing:1px;}
+.tier-note{font-size:.72rem;color:#a3947d;margin-top:.7rem;letter-spacing:.5px;}
+/* 九维卡 */
+.dims-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;}
+.dcard{padding:.8rem .85rem .7rem;}
+.dcard-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.35rem;}
+.dcard-name{font-weight:700;letter-spacing:1px;font-size:.9rem;}
+.dcard-val{font-family:Georgia,serif;font-weight:700;font-size:1rem;}
+.dcard-track{height:7px;background:var(--bg2);border-radius:99px;overflow:hidden;}
+.dcard-fill{height:100%;width:0;border-radius:99px;transition:width 1s cubic-bezier(.2,.7,.3,1);}
+/* 风险 */
+.risk{border-left:4px solid #e0a23c;background:#fdf6e4;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;margin-bottom:.6rem;text-align:justify;color:#6b5320;}
+/* 期待对比 */
+.delta-row{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:.3rem;}
+.delta-num{font-family:Georgia,serif;font-size:2.5rem;font-weight:700;}
+.delta-chip{font-size:.85rem;letter-spacing:1px;border-radius:99px;padding:.25em 1.1em;font-weight:700;}
+.vs-slider{margin-bottom:.85rem;}
+.vs-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.2rem;}
+.vs-name{font-weight:700;font-size:.9rem;letter-spacing:1px;}
+.vs-chip{font-size:.72rem;border-radius:99px;padding:.1em .8em;font-weight:700;}
+.vs-track{position:relative;height:8px;background:var(--bg2);border-radius:99px;margin:.5rem 0 .2rem;}
+.vs-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.25);}
+.vs-dot.me{background:#7a6c58;z-index:1;}
+.vs-dot.ex{background:#c2455a;width:14px;height:14px;z-index:2;}
+.vs-ends{display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink2);}
+.vs-ends b{color:var(--ink);}
+.vs-note{font-size:.72rem;color:#a3947d;margin-top:.5rem;text-align:center;letter-spacing:.5px;}
+/* 双画像 */
+.portrait-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+.pcard{padding:0;overflow:hidden;}
+.pcard-head{padding:.7rem .8rem;text-align:center;}
+.pcard-head .ptag{display:inline-block;font-size:.75rem;letter-spacing:2px;border-radius:99px;padding:.1em 1em;color:#fff;}
+.pcard-head h3{font-size:1rem;letter-spacing:2px;margin-top:.2rem;}
+.prow{padding:.55rem .8rem;border-top:1px dashed var(--line);}
+.prow .pk{font-size:.72rem;color:var(--ink2);letter-spacing:1px;}
+.prow .pv{font-size:.83rem;font-weight:600;line-height:1.6;}
+/* 解读 */
+.read-box{padding:1.3rem 1.35rem;margin-top:1rem;}
+.read-box h3{font-size:1.05rem;letter-spacing:3px;margin-bottom:.55rem;display:flex;align-items:center;gap:.5em;}
+.read-box h3 .dotc{width:10px;height:10px;border-radius:2px;flex:none;}
+.read-box p{font-size:.92rem;text-align:justify;margin-bottom:.5rem;}
+.read-box ul{margin:.2rem 0 0 1.2em;}
+.read-box li{font-size:.92rem;margin-bottom:.45em;text-align:justify;}
+.tier-read{padding:1.3rem 1.35rem;margin-top:1rem;}
+.tier-read p{font-size:.92rem;text-align:justify;}
+.sec-title{text-align:center;font-family:"Kaiti SC","KaiTi",serif;font-size:1.12rem;letter-spacing:4px;margin-bottom:1rem;}
+.sec-title .orn{color:var(--gold);margin:0 .6em;font-size:.8rem;}
+.res-btns{display:flex;flex-direction:column;gap:.7rem;margin:1.6rem 0 .4rem;}
+.res-btns .btn{width:100%;}
+@media (max-width:420px){
+  .title{letter-spacing:2px;}
+  .portrait-grid{grid-template-columns:1fr;}
+  .dims-grid{gap:.5rem;}
+}
+</style>
+</head>
+<body>
+<div class="toplace"></div>
+
+<!-- ============ 首页 ============ -->
+<section id="page-home" class="page active">
+  <div class="wrap">
+    <div class="center">
+      <div class="stars">✦ ✦ ✦</div>
+      <div class="overline">人民公园 · 相亲角</div>
+      <h1 class="title">你在相亲市场<em>到底值几分</em>？</h1>
+      <p class="subtitle">—— 15 道题 · 3 分钟 · 九维定位 · 双画像匹配 ——</p>
+    </div>
+
+    <svg viewBox="0 0 640 150" style="width:100%;display:block;margin-bottom:1rem;" aria-hidden="true">
+      <line x1="60" y1="18" x2="60" y2="122" stroke="#b8a888" stroke-width="3"/>
+      <line x1="580" y1="18" x2="580" y2="122" stroke="#b8a888" stroke-width="3"/>
+      <line x1="60" y1="18" x2="580" y2="18" stroke="#b8a888" stroke-width="3"/>
+      <g transform="translate(130,52)">
+        <path d="M-46 8 Q-46 -34 0 -34 Q46 -34 46 8 Q30 0 23 8 Q12 0 0 8 Q-12 0 -23 8 Q-30 0 -46 8 Z" fill="#c2455a"/>
+        <path d="M-46 8 Q-30 0 -23 8 M0 8 Q-12 0 -23 8 M0 8 Q12 0 23 8 M23 8 Q30 0 46 8" stroke="#8f2536" stroke-width="1.4" fill="none"/>
+        <line x1="0" y1="8" x2="0" y2="66" stroke="#8f2536" stroke-width="3"/>
+        <path d="M-4 66 L4 66 L2.5 74 L-2.5 74 Z" fill="#c9963c"/>
+      </g>
+      <g transform="translate(250,34)">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="#b8a888" stroke-width="2"/>
+        <rect x="-34" y="8" width="68" height="88" rx="4" fill="#fffdf8" stroke="#c2455a" stroke-width="2"/>
+        <rect x="-26" y="18" width="52" height="7" rx="3" fill="#e8b6bd"/>
+        <rect x="-26" y="32" width="40" height="6" rx="3" fill="#e4d6bd"/>
+        <rect x="-26" y="44" width="48" height="6" rx="3" fill="#e4d6bd"/>
+        <rect x="-26" y="56" width="34" height="6" rx="3" fill="#e4d6bd"/>
+        <rect x="-26" y="72" width="30" height="14" rx="3" fill="#c9963c" opacity=".85"/>
+        <circle cx="22" cy="79" r="9" fill="#c2455a"/>
+      </g>
+      <g transform="translate(360,34)">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="#b8a888" stroke-width="2"/>
+        <rect x="-30" y="8" width="60" height="76" rx="4" fill="#fffdf8" stroke="#4a7a6a" stroke-width="2"/>
+        <rect x="-22" y="18" width="44" height="7" rx="3" fill="#b9d2c6"/>
+        <rect x="-22" y="32" width="34" height="6" rx="3" fill="#dbe6dc"/>
+        <rect x="-22" y="44" width="42" height="6" rx="3" fill="#dbe6dc"/>
+        <rect x="-22" y="58" width="24" height="12" rx="3" fill="#4a7a6a" opacity=".8"/>
+      </g>
+      <g transform="translate(500,40)">
+        <line x1="0" y1="-6" x2="0" y2="14" stroke="#8a6a35" stroke-width="3"/>
+        <line x1="-52" y1="20" x2="52" y2="20" stroke="#8a6a35" stroke-width="3"/>
+        <line x1="-52" y1="20" x2="-52" y2="38" stroke="#8a6a35" stroke-width="1.6"/>
+        <line x1="52" y1="20" x2="52" y2="38" stroke="#8a6a35" stroke-width="1.6"/>
+        <path d="M-66 38 L-38 38 L-52 54 Z" fill="#c9963c"/>
+        <path d="M38 38 L66 38 L52 54 Z" fill="#c2455a"/>
+        <circle cx="0" cy="14" r="4" fill="#c9963c"/>
+      </g>
+      <text x="320" y="146" text-anchor="middle" font-size="13" fill="#a3947d" letter-spacing="6">条件明码 · 行情有价 · 估值有据</text>
+    </svg>
+
+    <div class="intro card">
+      相亲市场从不缺报价，缺的是<b>一张清醒的体检单</b>。本测试把你的行情拆成 <b>9 大维度</b>：
+      年龄、城市、学历职业、个人经济、家庭资产、家庭结构、外貌形象、性格特质、情感态度。
+      答完 15 道题（选完自动跳下一题），你会得到<b>综合得分</b>、<b>五档段位</b>、九维细分卡、
+      你的<b>「理想型 × 底线型」双画像</b>，以及<b>我的期待 vs 我的位置</b>对比。
+      段位线经 <b>4 万次模拟校准</b>——乐观自评的人里，也只有约 9% 摸得到 S 档。稀缺，才有得晒。
+    </div>
+
+    <div class="gender-card card">
+      <b style="letter-spacing:2px;">你的性别</b>
+      <span style="font-size:.75rem;color:var(--ink2);">（用于生成专属双画像的称呼）</span>
+      <div class="gender-row">
+        <button class="gbtn" id="g-f" type="button">👧 女生</button>
+        <button class="gbtn" id="g-m" type="button">👦 男生</button>
+      </div>
+    </div>
+
+    <div class="chips">
+      <span class="chip">15 道自述题</span><span class="chip">9 维细分</span><span class="chip">双画像匹配</span>
+      <span class="chip">答完自动跳题</span><span class="chip">本地计算 · 不上传</span>
+    </div>
+
+    <div class="center">
+      <button class="btn btn-primary" id="btn-start">开始估值</button>
+      <button class="btn btn-ghost" id="btn-resume" style="display:none;margin-left:.6rem;">继续上次进度</button>
+    </div>
+
+    <div class="privacy">
+      <b>🔒 隐私说明：</b>你填写的所有信息<b>仅在本地计算使用，不上传任何服务器，不存储任何个人数据</b>；进度仅保存在你自己的浏览器里，断网也能完整使用。
+    </div>
+    <p class="disclaimer">本测试为原创趣味自评，仅供娱乐与自我观察，不构成任何专业婚恋咨询、心理测评或价值判断。<br>人的价值从不需要市场来定价——这张「体检单」只是帮你把自我认知摆上桌面。</p>
+  </div>
+</section>
+
+<!-- ============ 答题页 ============ -->
+<section id="page-quiz" class="page">
+  <div class="wrap">
+    <div class="quiz-head">
+      <span class="q-counter" id="q-counter">第 1 / 15 题</span>
+      <span class="q-total" id="q-dim">维度：年龄</span>
+    </div>
+    <div class="pbar"><div class="pbar-fill" id="pbar-fill"></div></div>
+    <div class="dots" id="dots"></div>
+    <div class="q-card card">
+      <span class="q-dim" id="q-dim-tag">年龄</span>
+      <div class="q-text" id="q-text"></div>
+      <div id="opts"></div>
+    </div>
+    <div class="auto-hint">答完一题将自动跳转下一题</div>
+    <div class="quiz-nav">
+      <button class="btn btn-ghost" id="btn-prev">上一题</button>
+      <button class="btn btn-primary" id="btn-next">下一题</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 结果页 ============ -->
+<section id="page-result" class="page">
+  <div class="wrap" id="result-wrap"></div>
+</section>
+
+<div class="toast" id="toast"></div>
+<div class="toplace" style="margin-top:2rem;"></div>
+
+<script>
+/* ================= 数据 ================= */
+var DIMS = [
+  {name:"年龄",    w:0.09, color:"#d0556b"},
+  {name:"城市",    w:0.12, color:"#7a6fd0"},
+  {name:"学历职业", w:0.16, color:"#3a9e7c"},
+  {name:"个人经济", w:0.14, color:"#c9963c"},
+  {name:"家庭资产", w:0.13, color:"#2fa38a"},
+  {name:"家庭结构", w:0.08, color:"#d0723c"},
+  {name:"外貌形象", w:0.12, color:"#c25438"},
+  {name:"性格特质", w:0.08, color:"#6a5ad0"},
+  {name:"情感态度", w:0.08, color:"#b08a2e"}
+];
+/* 每维包含的题号（1-based；题15为期待题，不计入九维） */
+var DIMQ = [[1],[2],[3,4],[8],[5],[6,7],[9,10],[11,12],[13,14]];
+
+/* 15 题：type "s"=滑杆(年龄) / "o"=选项；p 为分值(1-10制) */
+var QUESTIONS = [
+ {type:"s", d:0, q:"你现在多大？（滑动选择）", min:20, max:45, unit:"岁",
+  hint:"25-30 岁是市场活跃区，得分最高；越偏离分数越低，仅供娱乐参考"},
+ {type:"o", d:1, q:"你长期生活的城市是？", opts:[
+   {t:"一线城市，且已站住脚", p:10},{t:"新一线 / 强二线城市", p:7},
+   {t:"普通二线城市", p:4},{t:"三线及以下 / 县城", p:1}]},
+ {type:"o", d:2, q:"你的最高学历是？", opts:[
+   {t:"硕士及以上", p:10},{t:"985 / 211 本科", p:8},{t:"普通本科", p:6},
+   {t:"大专", p:3},{t:"高中及以下", p:1}]},
+ {type:"o", d:2, q:"你的职业方向最接近？", opts:[
+   {t:"体制内（公务员 / 事业单位 / 国央企）", p:10},{t:"金融 / 互联网 / 技术等高薪行业", p:8},
+   {t:"普通企业 / 医疗教育等稳定职业", p:5},{t:"自由职业或收入不稳定", p:1}]},
+ {type:"o", d:4, q:"你的住房 / 家庭资产情况是？", opts:[
+   {t:"工作城市有房且基本无贷", p:10},{t:"有房在还贷，压力可控", p:7},
+   {t:"家庭有房有积蓄，自己暂无", p:4},{t:"租房且存款较少", p:1}]},
+ {type:"o", d:5, q:"你的家庭支持度（经济与精力上的后方）如何？", opts:[
+   {t:"父母自足有余力，还能帮衬小家", p:10},{t:"父母自给自足，无需我操心", p:7},
+   {t:"家庭普通，偶尔需要我出力", p:4},{t:"家庭负担较重，需要长期反哺", p:1}]},
+ {type:"o", d:5, q:"你父母对你婚恋的干涉程度？", opts:[
+   {t:"基本不干涉，我自己做主", p:10},{t:"会提建议，但尊重我的决定", p:7},
+   {t:"比较热衷，经常安排与催促", p:4},{t:"强力介入，几乎全包", p:1}]},
+ {type:"o", d:3, q:"你的个人经济结余状况是？", opts:[
+   {t:"每年有可观结余，有储蓄习惯", p:10},{t:"略有结余，细水长流", p:7},
+   {t:"收支基本打平", p:4},{t:"月光甚至有负债", p:1}]},
+ {type:"o", d:6, q:"颜值自评（市场真实反馈版）", opts:[
+   {t:"经常被夸，陌生人会主动搭讪 / 回头看", p:10},{t:"颜值不错，异性缘明显好", p:8},
+   {t:"耐看型，第一眼一般，熟了才好看", p:6},{t:"普通大众脸，不出挑也不难看", p:3},
+   {t:"外貌偏低，自己也清楚", p:1}]},
+ {type:"o", d:6, q:"整体形象管理（穿搭 / 发型 / 体态）", opts:[
+   {t:"精致打理，很在意且持续投入", p:10},{t:"整洁得体，适度管理", p:7},
+   {t:"随意为主", p:4},{t:"不太注重", p:1}]},
+ {type:"o", d:7, q:"你的性格特质更接近？", opts:[
+   {t:"情绪稳定，好相处，自带幽默感", p:10},{t:"性格温和，偶尔有小情绪", p:7},
+   {t:"慢性子 / 低耗能，平淡型", p:4},{t:"敏感内耗，情绪起伏大", p:1}]},
+ {type:"o", d:7, q:"你的社交圈能带来什么？", opts:[
+   {t:"朋友多且活跃，常主动帮你引荐", p:10},{t:"圈子不大但质量高", p:7},
+   {t:"只有几个深交好友，帮不上忙", p:4},{t:"社交很少，基本靠偶遇", p:1}]},
+ {type:"o", d:8, q:"被拒绝或冷处理之后，你通常？", opts:[
+   {t:"复盘哪里可以改进，下回调整", p:10},{t:"低落一两天，能自己缓过来", p:7},
+   {t:"影响挺久，一段时间不想接触", p:4},{t:"开始怀疑自己，越想越退缩", p:1}]},
+ {type:"o", d:8, q:"约会 / 相亲场合，你的表达与推进能力？", opts:[
+   {t:"能自然聊起来，还会主动推进关系", p:10},{t:"开头略紧张，聊开后正常", p:7},
+   {t:"容易冷场，靠对方带节奏", p:4},{t:"一对一就紧张语塞", p:1}]},
+ {type:"o", d:-1, q:"你对理想对象的综合要求？", opts:[
+   {t:"很高，宁缺毋滥，各项都要过关", p:10},{t:"比较高，核心项硬、次要项可让", p:7},
+   {t:"和自己的条件基本匹配就好", p:4},{t:"随缘，人好最重要，条件好商量", p:1}]}
+];
+
+/* 段位线经 4 万次乐观自评模拟校准：S 档实测 8.90%（随机作答仅 0.78%） */
+var TIERS = [
+ {id:"S", name:"天选局", tag:"👑 金字塔尖候选", line:76.3, color:"#c2455a",
+  slogan:"不是你找市场，是市场找你",
+  desc:"你处在估值分布的最顶端——九个维度几乎无短板。对你的建议从来不是「如何被选中」，而是「如何筛选」：把主动权用在甄别诚意上，别被高曝光反噬。金字塔尖风大，站稳比攀高更要紧。"},
+ {id:"A", name:"主动权在你", tag:"⭐ 高性价比候选", line:67, color:"#d05568",
+  slogan:"你挑得起，也等得起",
+  desc:"综合条件与能力都在线，市场对你有明确需求，只是还没到「被追着走」的程度。你的胜负手在节奏：不必海投，把精力集中在少量高匹配目标上，用议价权换筛选权。A 到 S 的差距，往往只差一个爆款短板。"},
+ {id:"B", name:"大盘主流", tag:"💪 市场主流选手", line:61, color:"#c9963c",
+  slogan:"市场的中坚力量，选择与被选各半",
+  desc:"你就是相亲市场的基本盘：条件说得上、竞争力说强不弱。这个段位最大的风险不是没人选，而是「被流程推着走」——见了一堆人，没沉淀任何判断。建议把每次接触当样本，认真复盘，你会比大盘走得快。"},
+ {id:"C", name:"潜力股", tag:"🌱 高潜力候选", line:53, color:"#7a9a6a",
+  slogan:"现值平平，增长曲线迷人",
+  desc:"当下的硬条件不算亮眼，但你的可塑性部分给出了亮色——估值是一时的，成长是一世的。相亲市场对「潜力股」并不苛刻：先把一两个能快速改善的短板拉起来（形象管理、表达、社交半径），行情半年内就能换一档。"},
+ {id:"D", name:"厚积薄发", tag:"🔧 基建进行时", line:0, color:"#5a7a8a",
+  slogan:"估值低不是判决书，是起涨点",
+  desc:"目前的综合分在低位，但请注意：本测试里最能改变的恰恰是形象、性格、情感这几维。别急着进场消耗信心——先用三到六个月补足基本盘，再回来重新估值。市场永远在，状态好的你再上场。"}
+];
+
+/* 分数→乐观自评百分位锚点（4 万次模拟），线性插值 */
+var CDF = [[25,0],[30,0],[35,0],[40,1],[45,4],[50,10],[55,21],[60,38],[65,57],[70,75],[75,89],[80,96],[85,99],[90,100],[100,100]];
+
+/* 动态解读：9 维的 强/中/弱 文案 + 行动清单 */
+var READ = {
+ 0:{s:"年龄正处市场黄金区间，选择面宽、时间成本低、试错余地大——这一项买不来也补不了，是标准硬通货。",m:"年龄处于主流区间，不占大优也不吃亏，重点是把其余维度拉起来形成合力。",w:"年龄与主流婚龄带有错位，可选项天然变窄。硬补无益，正确姿势是收窄目标画像、提高单次接触质量。",
+   adv:["把目标画像写具体：年龄带、城市、可接受条件，避免无效见面","若年龄偏大，用稳定性与成熟度补位，而不是硬拼活跃度","减少长周期不确定关系，及时止损就是止损"]},
+ 1:{s:"你扎根在城市能级的高地，优质人口基数大，可选池天然宽裕，这是别人羡慕不来的底盘。",m:"城市能级中等：池子有限但竞争也温和，把同城与近邻都市圈都纳入盘面即可。",w:"城市能级限制了可选池。要么拓宽地理半径（同城+通勤圈），要么把「迁移」作为一张明牌打出来。",
+   adv:["把地理半径明确扩大一档：同城 + 周边高铁 1 小时圈","若考虑迁移，提前评估目标城市的落户与就业，别停留在想法","用靠谱的线上渠道补足本地池子的不足"]},
+ 2:{s:"学历与职业是你的信誉资产——在简历先行、筛选前置的相亲市场，它直接决定你被推荐和被认真对待的优先级。",m:"学历职业处于中游：不是亮点也不是硬伤，用行业前景与稳定性叙述来补足含金量。",w:"学历职业是当前的估值洼地。学历已成定局，但职业叙事可以经营：技能证书、行业前景、稳定预期，都是能挣的分。",
+   adv:["准备一段 30 秒职业自述：做什么、前景如何、为什么稳","在职提升（证书 / 技能）比空窗焦虑有用得多","不谈「暂时将就」，展示方向感"]},
+ 3:{s:"经济结余能力是你的底气项——不靠家里、有储蓄习惯，这在长期关系里是实打实的安全感。",m:"经济收支平衡、略有结余，不拖后腿；理一理消费结构，结余率就是隐形加分项。",w:"经济结余是短板：月光或负债会在谈判桌上被直接折价。先理顺现金流再密集进场，这一项回升最快。",
+   adv:["先记账三个月，把结余率提到 20% 以上再谈匹配","清掉高息负债，它是估值表上最刺眼的一项","准备一句体面的经济现状描述：坦诚 + 有规划感"]},
+ 4:{s:"家庭资产与住房配置到位，婚姻的启动资金问题基本不构成压力，谈判桌上这是明牌优势。",m:"住房与资产处于常规水平：有基础但需规划。把「已有 / 计划中」说清楚，比含糊其辞加分得多。",w:"住房与资产是当前最薄的一环。认清现实路径：储蓄计划、公积金、双方共担都是可行解；硬撑门面反而崩得快。",
+   adv:["写一份 3 年住房 / 储蓄计划，见面时能讲清楚就是加分","与家人把可支持边界谈清楚，避免临时变卦","不虚报资产——纸包不住火且直接出局"]},
+ 5:{s:"家庭结构健康：父母自足、边界清晰、支持有余，婚后摩擦的最大源头被提前拆掉。",m:"家庭结构常规，有小摩擦但可控。提前想好「小家与原生家庭的边界」怎么答——这题几乎必问。",w:"家庭结构复杂度偏高（支持有限或牵扯精力多），市场会对这一项打折。对策不是隐瞒，而是展示处理能力与提前规划。",
+   adv:["想清楚婚后与父母的边界方案（居住 / 财务），讲得明白就是成熟","盘点家庭支持：能帮衬什么、不能帮衬什么，坦率沟通","把家庭复杂度转化为你的责任感叙事"]},
+ 6:{s:"外形是你的显性加分项——第一印象就能过线，见面转化率天然高，务必保持住。",m:"外形中等、靠打理维持：这是最值得投入的一维，因为回报立竿见影。",w:"外形是当前被低估的一环，但也是改得最快的一环：发型、体态、穿搭三件套，一个月就能换一档印象分。",
+   adv:["本周就去剪一个适合自己的发型——最快见效的单笔投资","体态优先于体重：挺拔和精气神比秤上数字重要","备好两套拿得出门的约会着装，别临场凑合"]},
+ 7:{s:"性格是你的长期牌：情绪稳、好相处，相处越久越加分，属于「越处越值钱」的类型。",m:"性格中规中矩，无大短板也无强记忆点。选一个鲜明标签放大它（可靠 / 幽默 / 执行力），让人记得住你。",w:"性格维度偏弱：敏感内耗或社交退缩会在密集接触期被放大。先做减法减少消耗源，再逐步练习低压力社交。",
+   adv:["给自己找一个鲜明的性格标签，写进自我介绍","内耗严重时减少多线接触，一次只认真处一个","规律运动是最便宜的情绪稳定剂，先动起来"]},
+ 8:{s:"情感态度成熟：会复盘、能自省、敢推进。和你谈恋爱是「省心且有望修成正果」的体验，这是长期市场里的稀缺品。",m:"情感态度尚可：不算主动也不至于被动。约会后的复盘习惯，是从中游跃升的关键杠杆。",w:"情感态度是最需要补的课：回避、内耗或被动等待都在消耗你的市场寿命。先建立「约会后复盘」的微习惯，改变从记录开始。",
+   adv:["每次见面后写三行复盘：哪里好 / 哪里卡 / 下次怎么改","被拒绝设 48 小时冷静期，第三天强制行动","把「推进关系」的动作列成清单（约下次 / 表达心意），逐项练习"]}
+};
+
+/* ================= 状态 ================= */
+var S = {answers:new Array(QUESTIONS.length).fill(null), idx:0, maxIdx:0, gender:null};
+var LS_KEY = "xq_value_v2";
+var autoTimer = null;
+
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify({a:S.answers,i:S.idx,m:S.maxIdx,g:S.gender})); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(LS_KEY); if(!raw) return false;
+    var d = JSON.parse(raw);
+    if(!d || !Array.isArray(d.a) || d.a.length !== QUESTIONS.length) return false;
+    S.answers = d.a.map(function(x,i){
+      if(QUESTIONS[i].type==="s") return (typeof x==="number" && x>=QUESTIONS[i].min && x<=QUESTIONS[i].max)?x:null;
+      return (typeof x==="number" && x>=0 && x<QUESTIONS[i].opts.length)?x:null;
+    });
+    S.idx = Math.min(Math.max(0, d.i|0), QUESTIONS.length-1);
+    S.maxIdx = Math.min(Math.max(0, d.m|0), QUESTIONS.length-1);
+    S.gender = (d.g==="f"||d.g==="m")?d.g:null;
+    if(S.gender) syncGenderBtns();
+    return S.answers.some(function(x){return x!==null;});
+  }catch(e){ return false; }
+}
+function clearState(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
+function syncGenderBtns(){
+  document.getElementById("g-f").classList.toggle("sel", S.gender==="f");
+  document.getElementById("g-m").classList.toggle("sel", S.gender==="m");
+}
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(function(p){ p.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+  try{ window.scrollTo({top:0, behavior:"smooth"}); }catch(e){ window.scrollTo(0,0); }
+}
+var toastTimer = null;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+function cancelAuto(){ if(autoTimer){ clearTimeout(autoTimer); autoTimer = null; } }
+
+/* ================= 计分（确定性，无随机） ================= */
+function ageScore(a){ return a<=27 ? 40+(a-20)*8.571 : 100-(a-27)*5; }
+function qPoints(i){ /* 第 i 题 → 1-10 分制 */
+  var q = QUESTIONS[i], a = S.answers[i];
+  if(a === null) return null;
+  if(q.type==="s") return 1 + ageScore(a)/100*9;
+  return q.opts[a].p;
+}
+function compute(){
+  var dimVals = [], dimScores = [];
+  for(var d=0; d<9; d++){
+    var qs = DIMQ[d], sum = 0, n = 0;
+    qs.forEach(function(qi){ var p = qPoints(qi-1); if(p!==null){ sum += p; n++; } });
+    dimVals.push(n ? sum/n : null);
+    dimScores.push(n ? Math.round((sum/n-1)/9*100) : 0);
+  }
+  var total = 0;
+  for(d=0; d<9; d++) total += DIMS[d].w * dimScores[d];
+  total = Math.round(total);
+  var tier = TIERS[0];
+  for(d=0; d<TIERS.length; d++){ if(total >= TIERS[d].line){ tier = TIERS[d]; break; } }
+  var order = [0,1,2,3,4,5,6,7,8].sort(function(a,b){ return dimScores[b]-dimScores[a]; });
+  return {dims:dimScores, total:total, tier:tier, best:order[0], worst:order[8]};
+}
+function beatPct(v){
+  if(v <= CDF[0][0]) return CDF[0][1];
+  for(var i=1;i<CDF.length;i++){
+    if(v <= CDF[i][0]){
+      var a=CDF[i-1], b=CDF[i];
+      return Math.min(99, Math.round(a[1] + (b[1]-a[1])*(v-a[0])/(b[0]-a[0])));
+    }
+  }
+  return 99;
+}
+function tierIndex(id){ for(var i=0;i<TIERS.length;i++) if(TIERS[i].id===id) return i; return 0; }
+
+/* ================= 渲染：答题 ================= */
+function renderDots(){
+  var box = document.getElementById("dots");
+  box.innerHTML = "";
+  QUESTIONS.forEach(function(_,i){
+    var dt = document.createElement("span");
+    dt.className = "dot" + (S.answers[i]!==null?" answered":"") + (i===S.idx?" cur":"");
+    (function(idx){
+      dt.addEventListener("click", function(){
+        cancelAuto();
+        if(idx <= S.maxIdx){ S.idx = idx; renderQuiz(); saveState(); }
+        else toast("请按顺序作答，或先答完当前题");
+      });
+    })(i);
+    box.appendChild(dt);
+  });
+}
+function renderQuiz(){
+  cancelAuto();
+  var q = QUESTIONS[S.idx], dim = q.d>=0 ? DIMS[q.d] : {name:"择偶期待"};
+  document.getElementById("q-counter").textContent = "第 " + (S.idx+1) + " / " + QUESTIONS.length + " 题";
+  document.getElementById("q-dim").textContent = "维度：" + dim.name;
+  var tag = document.getElementById("q-dim-tag");
+  tag.textContent = dim.name; tag.style.background = q.d>=0 ? DIMS[q.d].color : "var(--teal)";
+  document.getElementById("q-text").textContent = q.q;
+  var box = document.getElementById("opts");
+  box.innerHTML = "";
+  if(q.type==="o"){
+    q.opts.forEach(function(o,i){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt" + (S.answers[S.idx]===i?" sel":"");
+      b.textContent = o.t;
+      b.addEventListener("click", function(){
+        S.answers[S.idx] = i;
+        bumpMax(); saveState(); renderQuiz();
+        armAuto();
+      });
+      box.appendChild(b);
+    });
+  }else{
+    var a0 = (typeof S.answers[S.idx]==="number") ? S.answers[S.idx] : Math.round((q.min+q.max)/2);
+    var wrap = document.createElement("div"); wrap.className = "slider-box";
+    wrap.innerHTML = '<div class="slider-val" id="sl-val">'+a0+q.unit+'</div>'
+      +'<input type="range" id="sl" min="'+q.min+'" max="'+q.max+'" step="1" value="'+a0+'">'
+      +'<div class="slider-ends"><span>'+q.min+q.unit+'</span><span>'+q.max+q.unit+'</span></div>';
+    box.appendChild(wrap);
+    var sl = wrap.querySelector("#sl");
+    sl.addEventListener("input", function(){
+      S.answers[S.idx] = parseInt(sl.value,10);
+      wrap.querySelector("#sl-val").textContent = sl.value + q.unit;
+      bumpMax(); saveState();
+      document.querySelectorAll(".dot")[S.idx].classList.add("answered");
+    });
+    sl.addEventListener("change", function(){ armAuto(); }); /* 松手后自动跳 */
+  }
+  document.getElementById("pbar-fill").style.width = (S.idx/QUESTIONS.length*100) + "%";
+  renderDots();
+}
+function bumpMax(){
+  S.maxIdx = Math.max(S.maxIdx, Math.min(QUESTIONS.length-1, S.idx+1));
+}
+function armAuto(){
+  cancelAuto();
+  autoTimer = setTimeout(function(){
+    autoTimer = null;
+    if(S.idx < QUESTIONS.length-1){ S.idx++; saveState(); renderQuiz(); }
+    else showResult();
+  }, 560);
+}
+function advance(){
+  var q = QUESTIONS[S.idx];
+  if(q.type==="o" && S.answers[S.idx]===null){
+    toast("请先选择一个选项");
+    var card = document.querySelector(".q-card");
+    var start = performance.now();
+    (function shake(t){
+      var k = (t-start)/400;
+      if(k<1){ card.style.transform = "translateX(" + Math.sin(k*Math.PI*4)*(1-k)*7 + "px)"; requestAnimationFrame(shake); }
+      else card.style.transform = "";
+    })(start);
+    return;
+  }
+  if(q.type==="s" && S.answers[S.idx]===null){
+    var sl = document.getElementById("sl");
+    S.answers[S.idx] = parseInt(sl.value,10);
+    bumpMax(); saveState();
+  }
+  if(S.idx < QUESTIONS.length-1){ S.idx++; saveState(); renderQuiz(); }
+  else showResult();
+}
+
+/* ================= 双画像 ================= */
+function cityTier(v){ return v>=85?0 : v>=60?1 : v>=35?2 : 3; }
+function lv(v){ return v>=68 ? 2 : v>=45 ? 1 : 0; } /* 2强 1中 0弱 */
+function buildPortrait(r, exp){
+  /* exp: 0苛刻 1略高 2匹配 3随和；r.dims 九维分 */
+  var g = S.gender==="m" ? "他" : "她";
+  var city = cityTier(r.dims[1]);
+  var incI = [["2万–4万/月","1.5万–3万/月","1.2万–2.5万/月","8千–2万/月"],
+              ["1.5万–3万/月","1万–2万/月","8千–1.8万/月","6千–1.5万/月"],
+              ["1万–2万/月","8千–1.6万/月","6千–1.4万/月","5千–1.2万/月"],
+              ["7千–1.5万/月","5千–1.2万/月","4千–1万/月","3千–8千/月"]];
+  var incF = [["1万–2万/月","8千–1.8万/月","6千–1.5万/月","5千–1.2万/月"],
+              ["8千–1.8万/月","6千–1.4万/月","5千–1.2万/月","4千–1万/月"],
+              ["6千–1.4万/月","5千–1.1万/月","4千–9千/月","3千–7千/月"],
+              ["4千–9千/月","3.5千–8千/月","3千–6千/月","2千–5千/月"]];
+  var age = S.answers[0] || 27;
+  var eduTxt = ["硕士及以上","985/211 或以上","本科及以上","大专及以上","学历不限"];
+  var userEdu = (typeof S.answers[2]==="number") ? S.answers[2] : 2;
+  var assetI = ["工作城市有房无贷，或家庭资产厚实","有房（含计划 2 年内置业）","有购房计划与首付能力","有稳定居住安排即可"];
+  var famI  = ["父母有房有积蓄，能助力小家","家庭和睦，父母自足有余力","家庭正常，无重大债务","家庭无明显负担，能自给自足"];
+  var jobI  = ["体制内 / 金融互联网等高稳定或高收入","职业稳定，有发展空间","正当职业，收入稳定","职业不限，能自给自足"];
+  var cityI = ["同城优先，一线 / 新一线","同城或"+g+"可迁来","同城或可搬来","同城或异地（有明确计划）"];
+  var lookI = ["颜值出众，气场在线","颜值中上，上镜耐看","颜值普通以上，整洁得体","外貌正常，有精气神"];
+  var careI = ["无赡养压力","轻度赡养压力可接受","轻度赡养压力可接受","中度赡养压力可接受"];
+  var famLv = lv(r.dims[5]);
+  var portrait = {
+    ideal:[
+      ["年龄区间", Math.max(20,age-4) + "–" + (age+(exp===0?2:exp===1?3:5)) + "岁"],
+      ["月收入参考", incI[city][exp]],
+      ["资产 / 房产", assetI[exp]],
+      ["家庭出身背景", famI[Math.min(3, exp<=1?2-famLv+1:3)]],
+      ["学历要求", eduTxt[Math.max(0, userEdu-1 + (exp===0?0:1))]],
+      ["职业方向", jobI[exp]],
+      ["城市", cityI[exp]],
+      ["外貌形象", lookI[exp]],
+      ["赡养压力", careI[exp]]
+    ],
+    floor:[
+      ["年龄区间", Math.max(20,age-8) + "–" + Math.min(50,age+8) + "岁"],
+      ["月收入参考", incF[city][exp]],
+      ["资产 / 房产", "家庭无重大负担，能自给自足"],
+      ["家庭出身背景", "家庭无明显负担，父母能自给自足"],
+      ["学历要求", eduTxt[Math.min(4, userEdu+1)]],
+      ["职业方向", "职业不限，能自给自足"],
+      ["城市", "同城或异地（有明确来的计划）"],
+      ["外貌形象", "外貌正常，整洁，有精气神"],
+      ["赡养压力", "中度赡养压力可接受，不影响小家生活"]
+    ]
+  };
+  return portrait;
+}
+
+/* ================= 渲染：结果 ================= */
+function tierBadge(tier){
+  var c = tier.color;
+  return '<svg class="badge" viewBox="0 0 120 120" aria-hidden="true" style="display:none;"></svg>';
+}
+function showResult(){
+  cancelAuto();
+  var r = compute();
+  var tier = r.tier;
+  var ti = tierIndex(tier.id);
+  var exp = (typeof S.answers[14]==="number") ? S.answers[14] : 2;
+  var delta = [8,5,0,-6][exp];
+  var expTotal = Math.max(2, Math.min(98, r.total + delta));
+  var h = '';
+  h += '<div class="res-head"><div class="stars">✦ ✦ ✦</div><div class="overline">估值完成 · 本地计算 · 未上传任何信息</div>';
+  h += '<h2>你的相亲市场定位报告</h2></div>';
+
+  /* 段位 + 环形分 */
+  h += '<div class="tier-card card">';
+  h += '<span class="tier-tag">'+tier.tag+'</span>';
+  h += '<div class="tier-name">'+tier.id+' · '+tier.name+'</div>';
+  h += '<div class="tier-slogan">「'+tier.slogan+'」</div>';
+  h += '<div class="ring-wrap">'
+    +'<svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/>'
+    +'<circle class="ring-fg" id="ring" cx="60" cy="60" r="52" stroke="'+tier.color+'" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>'
+    +'<div class="ring-num"><b id="score-num">0</b><span>综合得分</span></div></div>';
+  h += '<div class="beat-line">超过了约 <b><span id="beat-num">0</span>%</b> 的乐观自评者</div>';
+  h += '<div class="segs">';
+  for(var i=0;i<5;i++) h += '<div class="seg'+(i<=ti?" on":"")+'"></div>';
+  h += '</div>';
+  h += '<div class="seg-label">五档中的第 '+(5-ti)+' 档 · '+tier.name+'</div>';
+  h += '<div class="seg-next">'+(ti===0 ? "已是最高档，保持你的稀缺性" : "距「"+TIERS[ti-1].id+" · "+TIERS[ti-1].name+"」还差 "+(TIERS[ti-1].line - r.total + 1)+" 分")+'</div>';
+  h += '<div class="tier-note">段位线经 4 万次模拟校准：乐观自评者中仅约 9% 能到 S 档，随机作答仅 0.8%——稀缺性即含金量</div>';
+  h += '</div>';
+
+  /* 风险提示 */
+  var risks = [];
+  if(S.answers[6]!==null && S.answers[6]>=2) risks.push("父母干涉度较高，画像中已标注，需要提前沟通边界。");
+  if(S.answers[5]===3) risks.push("家庭支持度偏弱，婚后财务与居住规划要提前谈清楚。");
+  if(S.answers[7]===3) risks.push("现金流偏紧是当前最刺眼的折价项，建议理顺后再密集进场。");
+  if(risks.length){
+    h += '<div style="margin-top:1rem;">';
+    risks.forEach(function(x){ h += '<div class="risk">⚠️ '+x+'</div>'; });
+    h += '</div>';
+  }
+
+  /* 九维卡 */
+  h += '<div class="card" style="padding:1.4rem 1.1rem 1rem;margin-top:1rem;">';
+  h += '<div class="sec-title"><span class="orn">✦</span> 你的专属九维画像 <span class="orn">✦</span></div>';
+  h += '<div class="dims-grid">';
+  DIMS.forEach(function(dim,i){
+    h += '<div class="dcard card"><div class="dcard-head"><span class="dcard-name">'+dim.name+'</span>'
+      +'<span class="dcard-val" style="color:'+dim.color+';" id="dv-'+i+'">0</span></div>'
+      +'<div class="dcard-track"><div class="dcard-fill" style="background:'+dim.color+';" id="df-'+i+'" data-w="'+r.dims[i]+'"></div></div></div>';
+  });
+  h += '</div>';
+  h += '<div class="meter-note" style="text-align:center;font-size:.72rem;color:#a3947d;margin-top:.8rem;">综合分 = 九维加权：年龄9% · 城市12% · 学历职业16% · 经济14% · 资产13% · 结构8% · 外貌12% · 性格8% · 情感8%</div>';
+  h += '</div>';
+
+  /* 期待 vs 位置 */
+  var dChips = expTotal - r.total;
+  var chipTxt = dChips >= 4 ? "要求明显高于自身" : (dChips >= 2 ? "要求略高于自身" : (dChips > -2 ? "要求和自己的基本匹配" : "愿意向下兼容"));
+  var chipBg = dChips >= 2 ? "#fdecec" : (dChips > -2 ? "#eef7ee" : "#eef3f7");
+  var chipC  = dChips >= 2 ? "#c2455a" : (dChips > -2 ? "#3a9e7c" : "#5a7a8a");
+  h += '<div class="card" style="padding:1.4rem 1.2rem 1.1rem;margin-top:1rem;">';
+  h += '<div class="sec-title"><span class="orn">✦</span> 我的期待 vs 我的位置 <span class="orn">✦</span></div>';
+  h += '<div class="delta-row"><span class="delta-num" style="color:'+(dChips>=2?"#c2455a":"#3a9e7c")+';">'+(dChips>=0?"+":"")+dChips+'</span>'
+    +'<span class="delta-chip" style="background:'+chipBg+';color:'+chipC+';">'+chipTxt+'</span></div>';
+  h += '<p style="font-size:.85rem;color:var(--ink2);text-align:center;margin-bottom:1rem;">综合来看：我的位置 <b>'+r.total+'</b> · 我的期待 <b>'+expTotal+'</b></p>';
+  DIMS.forEach(function(dim,i){
+    var ex = Math.max(2, Math.min(98, r.dims[i] + delta));
+    var meL = Math.max(2, Math.min(94, r.dims[i])), exL = Math.max(2, Math.min(94, ex));
+    var diff = ex - r.dims[i];
+    var cchip = diff > 1.5 ? '<span class="vs-chip" style="background:#fdecec;color:#c2455a;">要求偏高 +'+Math.round(diff)+'</span>'
+      : (diff < -1.5 ? '<span class="vs-chip" style="background:#eef7ee;color:#3a9e7c;">自己占优 '+Math.round(diff)+'</span>'
+      : '<span class="vs-chip" style="background:#f3efe4;color:#a3947d;">基本匹配</span>');
+    h += '<div class="vs-slider"><div class="vs-head"><span class="vs-name">'+dim.name+'</span>'+cchip+'</div>'
+      +'<div class="vs-track"><div class="vs-dot me" style="left:'+meL+'%;"></div><div class="vs-dot ex" style="left:'+exL+'%;"></div></div>'
+      +'<div class="vs-ends"><span>我 <b>'+r.dims[i]+'</b></span><span>期待 <b>'+Math.round(ex)+'</b></span></div></div>';
+  });
+  h += '<div class="vs-note">期待值由你第 15 题的择偶偏好推算（各维度同步浮动）。'+(dChips>=4?"要求整体偏高，适当放宽非核心项，可选的人会更多。":dChips>=2?"你的要求整体比自身条件高一点，适当放宽非核心项，可选的人会更多。":dChips>-2?"要求与自身基本匹配，这是最健康的期待结构。":"你的要求低于自身条件，选择面很大——但别忘了筛选质量。")+'</div>';
+  h += '</div>';
+
+  /* 双画像 */
+  var pt = buildPortrait(r, exp);
+  h += '<div class="sec-title" style="margin-top:1.6rem;"><span class="orn">✦</span> 你的专属双画像 <span class="orn">✦</span></div>';
+  h += '<div class="portrait-grid">';
+  [["理想型","#c2455a","💗 心中理想对象",pt.ideal],["底线型","#4a7a6a","🛡️ 最低可接受线",pt.floor]].forEach(function(p){
+    h += '<div class="pcard card"><div class="pcard-head" style="background:'+(p[0]==="理想型"?"#fdf0f0":"#eef5f0")+';">'
+      +'<span class="ptag" style="background:'+p[1]+';">'+p[0]+'</span><h3>'+p[2]+'</h3></div>';
+    p[3].forEach(function(row){ h += '<div class="prow"><div class="pk">'+row[0]+'</div><div class="pv">'+row[1]+'</div></div>'; });
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<div class="meter-note">双画像由你的九维作答与择偶偏好推算生成，仅供自查参照，不构成对任何具体个人的建议</div>';
+
+  /* 动态三段解读 */
+  var bd = r.best, wd = r.worst;
+  var blv = lv(r.dims[bd]), wlv = lv(r.dims[wd]);
+  h += '<div class="read-box card">';
+  h += '<h3><span class="dotc" style="background:'+DIMS[bd].color+';"></span>你的王牌：'+DIMS[bd].name+'（'+r.dims[bd]+' 分）</h3>';
+  h += '<p>'+READ[bd][blv]+'</p>';
+  h += '<h3 style="margin-top:1.1rem;"><span class="dotc" style="background:'+DIMS[wd].color+';"></span>你的短板：'+DIMS[wd].name+'（'+r.dims[wd]+' 分）</h3>';
+  h += '<p>'+READ[wd][wlv]+'</p>';
+  h += '<h3 style="margin-top:1.1rem;"><span class="dotc" style="background:var(--gold);"></span>给你的行动清单</h3>';
+  h += '<ul>' + READ[wd].adv.map(function(x){ return '<li>'+x+'</li>'; }).join("") + '</ul>';
+  h += '</div>';
+
+  /* 段位详说 */
+  h += '<div class="tier-read card"><div class="sec-title"><span class="orn">✦</span> '+tier.id+' 档详说 <span class="orn">✦</span></div><p>'+tier.desc+'</p></div>';
+
+  h += '<div class="res-btns">';
+  h += '<button class="btn btn-primary" id="btn-share">复制估值单分享</button>';
+  h += '<button class="btn btn-ghost" id="btn-edit">返回修改答案</button>';
+  h += '<button class="btn btn-ghost" id="btn-retest">重新测试</button>';
+  h += '</div>';
+  h += '<p class="disclaimer"><b>说明：</b>本测试为原创趣味自评，全部计分在本机完成、不上传任何信息；结果由你的作答确定性计算生成（无随机成分），修改任意答案后重新进入结果页即自动更新。综合分、段位、双画像与期待对比均为娱乐化推算，参照系为 4 万次乐观自评模拟，不代表真实婚恋市场定价，<b>更不代表人的价值</b>。不构成任何专业婚恋咨询或心理测评。</p>';
+
+  var wrap = document.getElementById("result-wrap");
+  wrap.innerHTML = h;
+  showPage("page-result");
+  /* 动画 */
+  setTimeout(function(){
+    var C = 326.7, target = r.total, t0 = performance.now();
+    var ring = document.getElementById("ring");
+    (function tick(t){
+      var k = Math.min(1,(t-t0)/1200); k = 1-Math.pow(1-k,3);
+      document.getElementById("score-num").textContent = Math.round(target*k);
+      ring.style.strokeDashoffset = C*(1 - target*k/100);
+      if(k<1) requestAnimationFrame(tick);
+    })(t0);
+    var bn = document.getElementById("beat-num"), bp = beatPct(r.total), b0 = performance.now();
+    (function btick(t){
+      var k = Math.min(1,(t-b0)/1200); k = 1-Math.pow(1-k,3);
+      bn.textContent = Math.round(bp*k);
+      if(k<1) requestAnimationFrame(btick);
+    })(b0);
+    DIMS.forEach(function(_,i){
+      setTimeout(function(){
+        document.getElementById("df-"+i).style.width = r.dims[i] + "%";
+        var v = document.getElementById("dv-"+i), c0 = performance.now();
+        (function tk(t){ var k=Math.min(1,(t-c0)/900); k=1-Math.pow(1-k,3);
+          v.textContent = Math.round(r.dims[i]*k);
+          if(k<1) requestAnimationFrame(tk); })(c0);
+      }, 150 + i*120);
+    });
+  }, 80);
+
+  document.getElementById("btn-edit").addEventListener("click", function(){
+    renderQuiz(); showPage("page-quiz");
+  });
+  document.getElementById("btn-retest").addEventListener("click", function(){
+    if(confirm("确定要重新测试吗？当前作答将被清空。")){
+      S.answers = new Array(QUESTIONS.length).fill(null);
+      S.idx = 0; S.maxIdx = 0; clearState();
+      renderQuiz(); showPage("page-quiz");
+    }
+  });
+  document.getElementById("btn-share").addEventListener("click", function(){
+    var g = S.gender==="m" ? "男生版" : "女生版";
+    var txt = "【相亲市场定位报告 · "+g+"】\n综合得分："+r.total+"/100\n段位："+tier.id+" · "+tier.name+"——"+tier.slogan+"\n"
+      +"九维："+DIMS.map(function(dm,i){return dm.name+" "+r.dims[i];}).join("｜")+"\n"
+      +"王牌："+DIMS[r.best].name+"｜短板："+DIMS[r.worst].name+"\n"
+      +"（15 题本地计算 · 纯娱乐自评）你也来测测值几分？";
+    function done(){ toast("估值单已复制，去分享吧"); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt); done(); });
+    }else{ fallbackCopy(txt); done(); }
+  });
+}
+function fallbackCopy(txt){
+  var ta = document.createElement("textarea");
+  ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); }catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ================= 事件 ================= */
+document.getElementById("g-f").addEventListener("click", function(){ S.gender="f"; syncGenderBtns(); saveState(); });
+document.getElementById("g-m").addEventListener("click", function(){ S.gender="m"; syncGenderBtns(); saveState(); });
+document.getElementById("btn-start").addEventListener("click", function(){
+  if(!S.gender){ toast("请先选择你的性别（用于生成专属双画像）"); return; }
+  S.answers = new Array(QUESTIONS.length).fill(null);
+  S.idx = 0; S.maxIdx = 0; clearState();
+  saveState();
+  renderQuiz(); showPage("page-quiz");
+});
+document.getElementById("btn-resume").addEventListener("click", function(){
+  if(!S.gender){ toast("请先选择你的性别"); return; }
+  renderQuiz(); showPage("page-quiz");
+  toast("已恢复到第 " + (S.idx+1) + " 题");
+});
+document.getElementById("btn-prev").addEventListener("click", function(){
+  cancelAuto();
+  if(S.idx > 0){ S.idx--; saveState(); renderQuiz(); }
+});
+document.getElementById("btn-next").addEventListener("click", advance);
+
+function refreshHome(){
+  var has = loadState();
+  document.getElementById("btn-resume").style.display = has ? "inline-block" : "none";
+}
+renderDots();
+refreshHome();
+</script>
+</body>
+</html>
