@@ -6,16 +6,16 @@
 <title>相亲市场定位测试 · 你到底值几分？</title>
 <style>
 :root{
-  --bg:#faf5ec; --bg2:#f3ead9; --card:#fffdf8; --line:#e4d6bd;
-  --ink:#33291f; --ink2:#7a6c58; --red:#c2455a; --red2:#a33348;
-  --gold:#c9963c; --teal:#4a7a6a; --shadow:0 4px 18px rgba(120,80,40,.10);
+  --bg:#fdf3f1; --bg2:#f8e6e4; --card:#fffbfa; --line:#f0d3ce;
+  --ink:#4a3230; --ink2:#96756e; --red:#d4607a; --red2:#b84360;
+  --gold:#d08a8f; --teal:#9a7bb0; --shadow:0 4px 18px rgba(180,100,110,.12);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{
   font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   background:var(--bg);color:var(--ink);line-height:1.75;min-height:100vh;
 }
-.toplace{height:10px;background:repeating-linear-gradient(90deg,var(--red) 0 14px,#fff 14px 20px,#e8b64c 20px 34px,#fff 34px 40px);opacity:.85;}
+.toplace{height:10px;background:repeating-linear-gradient(90deg,var(--red) 0 14px,#fff 14px 20px,#f0b8c4 20px 34px,#fff 34px 40px);opacity:.85;}
 .page{display:none;animation:fadeIn .45s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
@@ -33,15 +33,15 @@ h1,h2,h3,.serif{font-family:"Kaiti SC","STKaiti","KaiTi","FZKai-Z03S",serif;}
 .chip{border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:99px;padding:.22em 1em;font-size:.8rem;letter-spacing:1px;}
 .btn{display:inline-block;border:none;cursor:pointer;font-family:inherit;font-size:1.05rem;border-radius:6px;padding:.78em 2.4em;letter-spacing:5px;text-indent:5px;transition:transform .15s,opacity .15s;}
 .btn:active{transform:scale(.97);}
-.btn-primary{background:linear-gradient(135deg,#d05568,var(--red2));color:#fff;box-shadow:0 6px 16px rgba(194,69,90,.35);}
+.btn-primary{background:linear-gradient(135deg,#e07f95,var(--red2));color:#fff;box-shadow:0 6px 16px rgba(212,96,122,.4);}
 .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink2);}
 .center{text-align:center;}
-.privacy{background:#eef3ee;border:1px solid #cfdcce;border-radius:8px;padding:.85rem 1.1rem;font-size:.8rem;color:#3d5a4c;margin-top:1.2rem;text-align:justify;}
-.disclaimer{font-size:.72rem;color:#a3947d;letter-spacing:.5px;margin-top:1.2rem;text-align:center;line-height:1.9;}
+.privacy{background:#fdeef0;border:1px solid #f0cfd4;border-radius:8px;padding:.85rem 1.1rem;font-size:.8rem;color:#8a5560;margin-top:1.2rem;text-align:justify;}
+.disclaimer{font-size:.72rem;color:#b18f8b;letter-spacing:.5px;margin-top:1.2rem;text-align:center;line-height:1.9;}
 /* 性别 */
 .gender-card{padding:1.1rem 1.2rem;margin-bottom:1rem;}
 .gender-row{display:flex;gap:.8rem;margin-top:.5rem;}
-.gbtn{flex:1;padding:.85em 0;border-radius:6px;border:1.5px solid var(--line);background:#fdf9f0;font-family:inherit;font-size:1rem;letter-spacing:2px;cursor:pointer;transition:all .18s;color:var(--ink);}
+.gbtn{flex:1;padding:.85em 0;border-radius:6px;border:1.5px solid var(--line);background:#fdf4f2;font-family:inherit;font-size:1rem;letter-spacing:2px;cursor:pointer;transition:all .18s;color:var(--ink);}
 .gbtn.sel{border-color:var(--red);background:#fdf0f0;font-weight:700;color:var(--red2);}
 /* ===== 答题页 ===== */
 .quiz-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;}
@@ -50,28 +50,28 @@ h1,h2,h3,.serif{font-family:"Kaiti SC","STKaiti","KaiTi","FZKai-Z03S",serif;}
 .pbar{height:8px;background:var(--bg2);border-radius:99px;overflow:hidden;margin-bottom:.4rem;border:1px solid var(--line);}
 .pbar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:99px;transition:width .35s ease;}
 .dots{display:flex;flex-wrap:wrap;gap:6px;margin:.6rem 0 1.2rem;}
-.dot{width:11px;height:11px;border-radius:50%;background:#e8dcc4;border:1px solid #d8c8a8;cursor:pointer;transition:all .2s;}
+.dot{width:11px;height:11px;border-radius:50%;background:#f0d5d0;border:1px solid #e3bdb8;cursor:pointer;transition:all .2s;}
 .dot.answered{background:var(--gold);border-color:var(--gold);}
 .dot.cur{background:var(--red);border-color:var(--red);transform:scale(1.25);}
 .q-card{padding:1.5rem 1.3rem;}
 .q-dim{display:inline-block;font-size:.75rem;letter-spacing:2px;color:#fff;background:var(--red);border-radius:3px;padding:.12em .9em;margin-bottom:.7rem;}
 .q-text{font-family:"Kaiti SC","KaiTi",serif;font-size:1.22rem;letter-spacing:1px;line-height:1.8;margin-bottom:1.1rem;}
-.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:.95rem;color:var(--ink);background:#fdf9f0;border:1.5px solid var(--line);border-radius:6px;padding:.8em 1em .8em 2.6em;margin-bottom:.55rem;cursor:pointer;position:relative;transition:all .18s;}
-.opt::before{content:"";position:absolute;left:.9em;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;border:1.5px solid #d0bfa0;background:#fff;transition:all .18s;}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:.95rem;color:var(--ink);background:#fdf4f2;border:1.5px solid var(--line);border-radius:6px;padding:.8em 1em .8em 2.6em;margin-bottom:.55rem;cursor:pointer;position:relative;transition:all .18s;}
+.opt::before{content:"";position:absolute;left:.9em;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;border:1.5px solid #ddb6ae;background:#fff;transition:all .18s;}
 .opt:hover{border-color:var(--gold);}
 .opt.sel{border-color:var(--red);background:#fdf0f0;font-weight:600;}
 .opt.sel::before{border-color:var(--red);background:radial-gradient(circle,#fff 28%,var(--red) 30%);}
 /* 滑杆 */
 .slider-box{text-align:center;padding:.4rem 0 .2rem;}
 .slider-val{font-family:Georgia,"Kaiti SC",serif;font-size:2.1rem;font-weight:700;color:var(--red);margin-bottom:.3rem;}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;outline:none;background:linear-gradient(90deg,#d05568,#7a6fd0);cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid #d05568;box-shadow:0 2px 8px rgba(120,40,60,.3);}
-input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #d05568;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;outline:none;background:linear-gradient(90deg,#e07f95,#b08ac9);cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid #d4607a;box-shadow:0 2px 8px rgba(180,80,100,.3);}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #d4607a;}
 .slider-ends{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink2);margin-top:.35rem;}
 .auto-hint{font-size:.72rem;color:#b3a489;letter-spacing:1px;text-align:center;margin-top:.9rem;}
 .quiz-nav{display:flex;gap:.7rem;margin-top:1.1rem;}
 .quiz-nav .btn{flex:1;font-size:.98rem;padding:.7em 0;letter-spacing:3px;text-indent:3px;}
-.toast{position:fixed;left:50%;bottom:12%;transform:translateX(-50%) translateY(20px);background:rgba(47,41,31,.92);color:#fff;font-size:.85rem;letter-spacing:1px;padding:.6em 1.4em;border-radius:99px;opacity:0;pointer-events:none;transition:all .3s;z-index:99;}
+.toast{position:fixed;left:50%;bottom:12%;transform:translateX(-50%) translateY(20px);background:rgba(74,51,48,.92);color:#fff;font-size:.85rem;letter-spacing:1px;padding:.6em 1.4em;border-radius:99px;opacity:0;pointer-events:none;transition:all .3s;z-index:99;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 /* ===== 结果页 ===== */
 .res-head{text-align:center;margin-bottom:1.3rem;}
@@ -83,7 +83,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .tier-slogan{color:var(--ink2);letter-spacing:2px;font-size:.9rem;margin:.35rem auto 1.1rem;max-width:30em;}
 .ring-wrap{position:relative;width:170px;height:170px;margin:0 auto .4rem;}
 .ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
-.ring-bg{fill:none;stroke:#efe5d2;stroke-width:11;}
+.ring-bg{fill:none;stroke:#f3dfdc;stroke-width:11;}
 .ring-fg{fill:none;stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.7,.3,1);}
 .ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .ring-num b{font-family:Georgia,"Kaiti SC",serif;font-size:2.9rem;line-height:1;color:var(--ink);}
@@ -91,11 +91,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .beat-line{font-size:.85rem;color:var(--ink2);letter-spacing:1px;}
 .beat-line b{color:var(--red2);font-size:1.05rem;}
 .segs{display:flex;gap:6px;max-width:320px;margin:.7rem auto .4rem;}
-.seg{flex:1;height:9px;border-radius:99px;background:#eee3cd;}
+.seg{flex:1;height:9px;border-radius:99px;background:#f2dcd8;}
 .seg.on{background:var(--gold);}
 .seg-label{font-family:"Kaiti SC","KaiTi",serif;font-size:.92rem;letter-spacing:2px;color:var(--ink);}
-.seg-next{font-size:.75rem;color:#a3947d;letter-spacing:1px;}
-.tier-note{font-size:.72rem;color:#a3947d;margin-top:.7rem;letter-spacing:.5px;}
+.seg-next{font-size:.75rem;color:#b18f8b;letter-spacing:1px;}
+.tier-note{font-size:.72rem;color:#b18f8b;margin-top:.7rem;letter-spacing:.5px;}
 /* 九维卡 */
 .dims-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;}
 .dcard{padding:.8rem .85rem .7rem;}
@@ -105,7 +105,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .dcard-track{height:7px;background:var(--bg2);border-radius:99px;overflow:hidden;}
 .dcard-fill{height:100%;width:0;border-radius:99px;transition:width 1s cubic-bezier(.2,.7,.3,1);}
 /* 风险 */
-.risk{border-left:4px solid #e0a23c;background:#fdf6e4;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;margin-bottom:.6rem;text-align:justify;color:#6b5320;}
+.risk{border-left:4px solid #d98a9a;background:#fdeef0;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;margin-bottom:.6rem;text-align:justify;color:#8a5560;}
 /* 期待对比 */
 .delta-row{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:.3rem;}
 .delta-num{font-family:Georgia,serif;font-size:2.5rem;font-weight:700;}
@@ -116,11 +116,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .vs-chip{font-size:.72rem;border-radius:99px;padding:.1em .8em;font-weight:700;}
 .vs-track{position:relative;height:8px;background:var(--bg2);border-radius:99px;margin:.5rem 0 .2rem;}
 .vs-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.25);}
-.vs-dot.me{background:#7a6c58;z-index:1;}
-.vs-dot.ex{background:#c2455a;width:14px;height:14px;z-index:2;}
+.vs-dot.me{background:#b98a92;z-index:1;}
+.vs-dot.ex{background:#d4607a;width:14px;height:14px;z-index:2;}
 .vs-ends{display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink2);}
 .vs-ends b{color:var(--ink);}
-.vs-note{font-size:.72rem;color:#a3947d;margin-top:.5rem;text-align:center;letter-spacing:.5px;}
+.vs-note{font-size:.72rem;color:#b18f8b;margin-top:.5rem;text-align:center;letter-spacing:.5px;}
 /* 双画像 */
 .portrait-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
 .pcard{padding:0;overflow:hidden;}
@@ -168,39 +168,39 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
       <line x1="580" y1="18" x2="580" y2="122" stroke="#b8a888" stroke-width="3"/>
       <line x1="60" y1="18" x2="580" y2="18" stroke="#b8a888" stroke-width="3"/>
       <g transform="translate(130,52)">
-        <path d="M-46 8 Q-46 -34 0 -34 Q46 -34 46 8 Q30 0 23 8 Q12 0 0 8 Q-12 0 -23 8 Q-30 0 -46 8 Z" fill="#c2455a"/>
-        <path d="M-46 8 Q-30 0 -23 8 M0 8 Q-12 0 -23 8 M0 8 Q12 0 23 8 M23 8 Q30 0 46 8" stroke="#8f2536" stroke-width="1.4" fill="none"/>
-        <line x1="0" y1="8" x2="0" y2="66" stroke="#8f2536" stroke-width="3"/>
-        <path d="M-4 66 L4 66 L2.5 74 L-2.5 74 Z" fill="#c9963c"/>
+        <path d="M-46 8 Q-46 -34 0 -34 Q46 -34 46 8 Q30 0 23 8 Q12 0 0 8 Q-12 0 -23 8 Q-30 0 -46 8 Z" fill="#d4607a"/>
+        <path d="M-46 8 Q-30 0 -23 8 M0 8 Q-12 0 -23 8 M0 8 Q12 0 23 8 M23 8 Q30 0 46 8" stroke="#b84360" stroke-width="1.4" fill="none"/>
+        <line x1="0" y1="8" x2="0" y2="66" stroke="#b84360" stroke-width="3"/>
+        <path d="M-4 66 L4 66 L2.5 74 L-2.5 74 Z" fill="#d0995f"/>
       </g>
       <g transform="translate(250,34)">
         <line x1="0" y1="0" x2="0" y2="8" stroke="#b8a888" stroke-width="2"/>
-        <rect x="-34" y="8" width="68" height="88" rx="4" fill="#fffdf8" stroke="#c2455a" stroke-width="2"/>
+        <rect x="-34" y="8" width="68" height="88" rx="4" fill="#fffdf8" stroke="#d4607a" stroke-width="2"/>
         <rect x="-26" y="18" width="52" height="7" rx="3" fill="#e8b6bd"/>
         <rect x="-26" y="32" width="40" height="6" rx="3" fill="#e4d6bd"/>
         <rect x="-26" y="44" width="48" height="6" rx="3" fill="#e4d6bd"/>
         <rect x="-26" y="56" width="34" height="6" rx="3" fill="#e4d6bd"/>
-        <rect x="-26" y="72" width="30" height="14" rx="3" fill="#c9963c" opacity=".85"/>
-        <circle cx="22" cy="79" r="9" fill="#c2455a"/>
+        <rect x="-26" y="72" width="30" height="14" rx="3" fill="#d0995f" opacity=".85"/>
+        <circle cx="22" cy="79" r="9" fill="#d4607a"/>
       </g>
       <g transform="translate(360,34)">
         <line x1="0" y1="0" x2="0" y2="8" stroke="#b8a888" stroke-width="2"/>
-        <rect x="-30" y="8" width="60" height="76" rx="4" fill="#fffdf8" stroke="#4a7a6a" stroke-width="2"/>
+        <rect x="-30" y="8" width="60" height="76" rx="4" fill="#fffdf8" stroke="#7fae94" stroke-width="2"/>
         <rect x="-22" y="18" width="44" height="7" rx="3" fill="#b9d2c6"/>
         <rect x="-22" y="32" width="34" height="6" rx="3" fill="#dbe6dc"/>
         <rect x="-22" y="44" width="42" height="6" rx="3" fill="#dbe6dc"/>
-        <rect x="-22" y="58" width="24" height="12" rx="3" fill="#4a7a6a" opacity=".8"/>
+        <rect x="-22" y="58" width="24" height="12" rx="3" fill="#7fae94" opacity=".8"/>
       </g>
       <g transform="translate(500,40)">
         <line x1="0" y1="-6" x2="0" y2="14" stroke="#8a6a35" stroke-width="3"/>
         <line x1="-52" y1="20" x2="52" y2="20" stroke="#8a6a35" stroke-width="3"/>
         <line x1="-52" y1="20" x2="-52" y2="38" stroke="#8a6a35" stroke-width="1.6"/>
         <line x1="52" y1="20" x2="52" y2="38" stroke="#8a6a35" stroke-width="1.6"/>
-        <path d="M-66 38 L-38 38 L-52 54 Z" fill="#c9963c"/>
-        <path d="M38 38 L66 38 L52 54 Z" fill="#c2455a"/>
-        <circle cx="0" cy="14" r="4" fill="#c9963c"/>
+        <path d="M-66 38 L-38 38 L-52 54 Z" fill="#d0995f"/>
+        <path d="M38 38 L66 38 L52 54 Z" fill="#d4607a"/>
+        <circle cx="0" cy="14" r="4" fill="#d0995f"/>
       </g>
-      <text x="320" y="146" text-anchor="middle" font-size="13" fill="#a3947d" letter-spacing="6">条件明码 · 行情有价 · 估值有据</text>
+      <text x="320" y="146" text-anchor="middle" font-size="13" fill="#b18f8b" letter-spacing="6">条件明码 · 行情有价 · 估值有据</text>
     </svg>
 
     <div class="intro card">
@@ -270,15 +270,15 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <script>
 /* ================= 数据 ================= */
 var DIMS = [
-  {name:"年龄",    w:0.09, color:"#d0556b"},
-  {name:"城市",    w:0.12, color:"#7a6fd0"},
-  {name:"学历职业", w:0.16, color:"#3a9e7c"},
-  {name:"个人经济", w:0.14, color:"#c9963c"},
-  {name:"家庭资产", w:0.13, color:"#2fa38a"},
-  {name:"家庭结构", w:0.08, color:"#d0723c"},
-  {name:"外貌形象", w:0.12, color:"#c25438"},
-  {name:"性格特质", w:0.08, color:"#6a5ad0"},
-  {name:"情感态度", w:0.08, color:"#b08a2e"}
+  {name:"年龄",    w:0.09, color:"#e06b81"},
+  {name:"城市",    w:0.12, color:"#9a7bb0"},
+  {name:"学历职业", w:0.16, color:"#dd8f56"},
+  {name:"个人经济", w:0.14, color:"#cf9c3f"},
+  {name:"家庭资产", w:0.13, color:"#58a893"},
+  {name:"家庭结构", w:0.08, color:"#d67d45"},
+  {name:"外貌形象", w:0.12, color:"#c96a4e"},
+  {name:"性格特质", w:0.08, color:"#8477d6"},
+  {name:"情感态度", w:0.08, color:"#b4838e"}
 ];
 /* 每维包含的题号（1-based；题15为期待题，不计入九维） */
 var DIMQ = [[1],[2],[3,4],[8],[5],[6,7],[9,10],[11,12],[13,14]];
@@ -334,19 +334,19 @@ var QUESTIONS = [
 
 /* 段位线经 4 万次乐观自评模拟校准：S 档实测 8.90%（随机作答仅 0.78%） */
 var TIERS = [
- {id:"S", name:"天选局", tag:"👑 金字塔尖候选", line:76.3, color:"#c2455a",
+ {id:"S", name:"天选局", tag:"👑 金字塔尖候选", line:76.3, color:"#d4607a",
   slogan:"不是你找市场，是市场找你",
   desc:"你处在估值分布的最顶端——九个维度几乎无短板。对你的建议从来不是「如何被选中」，而是「如何筛选」：把主动权用在甄别诚意上，别被高曝光反噬。金字塔尖风大，站稳比攀高更要紧。"},
- {id:"A", name:"主动权在你", tag:"⭐ 高性价比候选", line:67, color:"#d05568",
+ {id:"A", name:"主动权在你", tag:"⭐ 高性价比候选", line:67, color:"#e07f95",
   slogan:"你挑得起，也等得起",
   desc:"综合条件与能力都在线，市场对你有明确需求，只是还没到「被追着走」的程度。你的胜负手在节奏：不必海投，把精力集中在少量高匹配目标上，用议价权换筛选权。A 到 S 的差距，往往只差一个爆款短板。"},
- {id:"B", name:"大盘主流", tag:"💪 市场主流选手", line:61, color:"#c9963c",
+ {id:"B", name:"大盘主流", tag:"💪 市场主流选手", line:61, color:"#d0995f",
   slogan:"市场的中坚力量，选择与被选各半",
   desc:"你就是相亲市场的基本盘：条件说得上、竞争力说强不弱。这个段位最大的风险不是没人选，而是「被流程推着走」——见了一堆人，没沉淀任何判断。建议把每次接触当样本，认真复盘，你会比大盘走得快。"},
- {id:"C", name:"潜力股", tag:"🌱 高潜力候选", line:53, color:"#7a9a6a",
+ {id:"C", name:"潜力股", tag:"🌱 高潜力候选", line:53, color:"#7fae94",
   slogan:"现值平平，增长曲线迷人",
   desc:"当下的硬条件不算亮眼，但你的可塑性部分给出了亮色——估值是一时的，成长是一世的。相亲市场对「潜力股」并不苛刻：先把一两个能快速改善的短板拉起来（形象管理、表达、社交半径），行情半年内就能换一档。"},
- {id:"D", name:"厚积薄发", tag:"🔧 基建进行时", line:0, color:"#5a7a8a",
+ {id:"D", name:"厚积薄发", tag:"🔧 基建进行时", line:0, color:"#8a93b5",
   slogan:"估值低不是判决书，是起涨点",
   desc:"目前的综合分在低位，但请注意：本测试里最能改变的恰恰是形象、性格、情感这几维。别急着进场消耗信心——先用三到六个月补足基本盘，再回来重新估值。市场永远在，状态好的你再上场。"}
 ];
@@ -655,26 +655,26 @@ function showResult(){
       +'<div class="dcard-track"><div class="dcard-fill" style="background:'+dim.color+';" id="df-'+i+'" data-w="'+r.dims[i]+'"></div></div></div>';
   });
   h += '</div>';
-  h += '<div class="meter-note" style="text-align:center;font-size:.72rem;color:#a3947d;margin-top:.8rem;">综合分 = 九维加权：年龄9% · 城市12% · 学历职业16% · 经济14% · 资产13% · 结构8% · 外貌12% · 性格8% · 情感8%</div>';
+  h += '<div class="meter-note" style="text-align:center;font-size:.72rem;color:#b18f8b;margin-top:.8rem;">综合分 = 九维加权：年龄9% · 城市12% · 学历职业16% · 经济14% · 资产13% · 结构8% · 外貌12% · 性格8% · 情感8%</div>';
   h += '</div>';
 
   /* 期待 vs 位置 */
   var dChips = expTotal - r.total;
   var chipTxt = dChips >= 4 ? "要求明显高于自身" : (dChips >= 2 ? "要求略高于自身" : (dChips > -2 ? "要求和自己的基本匹配" : "愿意向下兼容"));
   var chipBg = dChips >= 2 ? "#fdecec" : (dChips > -2 ? "#eef7ee" : "#eef3f7");
-  var chipC  = dChips >= 2 ? "#c2455a" : (dChips > -2 ? "#3a9e7c" : "#5a7a8a");
+  var chipC  = dChips >= 2 ? "#d4607a" : (dChips > -2 ? "#58a893" : "#8a93b5");
   h += '<div class="card" style="padding:1.4rem 1.2rem 1.1rem;margin-top:1rem;">';
   h += '<div class="sec-title"><span class="orn">✦</span> 我的期待 vs 我的位置 <span class="orn">✦</span></div>';
-  h += '<div class="delta-row"><span class="delta-num" style="color:'+(dChips>=2?"#c2455a":"#3a9e7c")+';">'+(dChips>=0?"+":"")+dChips+'</span>'
+  h += '<div class="delta-row"><span class="delta-num" style="color:'+(dChips>=2?"#d4607a":"#58a893")+';">'+(dChips>=0?"+":"")+dChips+'</span>'
     +'<span class="delta-chip" style="background:'+chipBg+';color:'+chipC+';">'+chipTxt+'</span></div>';
   h += '<p style="font-size:.85rem;color:var(--ink2);text-align:center;margin-bottom:1rem;">综合来看：我的位置 <b>'+r.total+'</b> · 我的期待 <b>'+expTotal+'</b></p>';
   DIMS.forEach(function(dim,i){
     var ex = Math.max(2, Math.min(98, r.dims[i] + delta));
     var meL = Math.max(2, Math.min(94, r.dims[i])), exL = Math.max(2, Math.min(94, ex));
     var diff = ex - r.dims[i];
-    var cchip = diff > 1.5 ? '<span class="vs-chip" style="background:#fdecec;color:#c2455a;">要求偏高 +'+Math.round(diff)+'</span>'
-      : (diff < -1.5 ? '<span class="vs-chip" style="background:#eef7ee;color:#3a9e7c;">自己占优 '+Math.round(diff)+'</span>'
-      : '<span class="vs-chip" style="background:#f3efe4;color:#a3947d;">基本匹配</span>');
+    var cchip = diff > 1.5 ? '<span class="vs-chip" style="background:#fdecec;color:#d4607a;">要求偏高 +'+Math.round(diff)+'</span>'
+      : (diff < -1.5 ? '<span class="vs-chip" style="background:#eaf5f0;color:#4a9a83;">自己占优 '+Math.round(diff)+'</span>'
+      : '<span class="vs-chip" style="background:#f3efe4;color:#b18f8b;">基本匹配</span>');
     h += '<div class="vs-slider"><div class="vs-head"><span class="vs-name">'+dim.name+'</span>'+cchip+'</div>'
       +'<div class="vs-track"><div class="vs-dot me" style="left:'+meL+'%;"></div><div class="vs-dot ex" style="left:'+exL+'%;"></div></div>'
       +'<div class="vs-ends"><span>我 <b>'+r.dims[i]+'</b></span><span>期待 <b>'+Math.round(ex)+'</b></span></div></div>';
@@ -686,7 +686,7 @@ function showResult(){
   var pt = buildPortrait(r, exp);
   h += '<div class="sec-title" style="margin-top:1.6rem;"><span class="orn">✦</span> 你的专属双画像 <span class="orn">✦</span></div>';
   h += '<div class="portrait-grid">';
-  [["理想型","#c2455a","💗 心中理想对象",pt.ideal],["底线型","#4a7a6a","🛡️ 最低可接受线",pt.floor]].forEach(function(p){
+  [["理想型","#d4607a","💗 心中理想对象",pt.ideal],["底线型","#7fae94","🛡️ 最低可接受线",pt.floor]].forEach(function(p){
     h += '<div class="pcard card"><div class="pcard-head" style="background:'+(p[0]==="理想型"?"#fdf0f0":"#eef5f0")+';">'
       +'<span class="ptag" style="background:'+p[1]+';">'+p[0]+'</span><h3>'+p[2]+'</h3></div>';
     p[3].forEach(function(row){ h += '<div class="prow"><div class="pk">'+row[0]+'</div><div class="pv">'+row[1]+'</div></div>'; });
